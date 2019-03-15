@@ -16,9 +16,11 @@ Goal: Allow users to discover people in their life that increase or decrease the
 - How did it make the user feel?
 
 
-## Setup
+## App Setup
 
 ```
 npm install -g expo-cli
+cd app
+yarn
 npm start
 ```
