@@ -3,7 +3,7 @@ import Emoji from 'react-native-emoji';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { ThemeProvider, Avatar, Button, ButtonGroup, colors, Divider, Input, Text } from 'react-native-elements';
 import { Platform, StyleSheet, ScrollView, View } from 'react-native';
-import { emojiButtons, timeOfDay, socialContexts, interactionMediums } from './config/constants'
+import { emojiButtons, timeOfDay, socialContexts, interactionMediums } from '../config/constants'
 
 const RobText = props => <Text style={styles.text} {...props} />
 
