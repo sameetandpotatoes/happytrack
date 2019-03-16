@@ -13,15 +13,15 @@ const rage = () => <Emoji name="rage" style={{fontSize: emojiFont}} />
 const sleeping = () => <Emoji name="sleeping" style={{fontSize: emojiFont}} />
 
 const emojiButtons = [
-  { element: grinning },
-  { element: blush },
-  { element: neutral_face },
-  { element: sweat },
-  { element: confounded },
-  { element: worried },
-  { element: weary },
-  { element: rage },
-  { element: sleeping },
+  { element: grinning, text: "grinning" },
+  { element: blush, text: "blush"},
+  { element: neutral_face, text: "neutral_face" },
+  { element: sweat, text: "sweat" },
+  { element: confounded, text: "confounded" },
+  { element: worried, text: "worried" },
+  { element: weary, text: "weary" },
+  { element: rage, text: "rage" },
+  { element: sleeping, text: "sleeping" },
 ]
 
 const timeOfDay = [ 'Morning', 'Afternoon', 'Evening' ]
