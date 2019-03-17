@@ -4,7 +4,7 @@ import InteractionList from './components/InteractionList';
 import NewInteraction from './components/NewInteraction';
 import {createSwitchNavigator, createStackNavigator, createAppContainer} from 'react-navigation';
 
-const AppStack = createStackNavigator({ NewInteraction: NewInteraction });
+const AppStack = createStackNavigator({ InteractionList: InteractionList, NewInteraction: NewInteraction });
 // const AuthStack = createStackNavigator({ SignIn: SignInScreen });
 
 export default createAppContainer(createSwitchNavigator(
@@ -13,6 +13,7 @@ export default createAppContainer(createSwitchNavigator(
     App: AppStack,
   },
   {
-    initialRouteName: 'HomeScreen',
+    initialRouteName: 'App',
+    headerMode: 'screen'
   }
 ));

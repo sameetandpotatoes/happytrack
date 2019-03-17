@@ -1,9 +1,10 @@
 import React from 'react';
 import Emoji from 'react-native-emoji';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { ThemeProvider, Avatar, Button, ButtonGroup, colors, Divider, Input, Text } from 'react-native-elements';
+import { Constants } from 'expo';
+import { ThemeProvider, Avatar, Button, ButtonGroup, colors, Divider, Header, Input, Text } from 'react-native-elements';
 import { Platform, StyleSheet, ScrollView, View } from 'react-native';
-import { emojiButtons, timeOfDay, socialContexts, interactionMediums } from '../config/constants'
+import { emojiButtons, timeOfDay, socialContexts, interactionMedium } from '../config/constants'
 
 const RobText = props => <Text style={styles.text} {...props} />
 
@@ -17,6 +18,7 @@ const theme = {
 };
 
 export default class NewInteraction extends React.Component {
+  static navigationOptions = { header: null };
   constructor() {
     super()
     this.state = {
@@ -63,72 +65,74 @@ export default class NewInteraction extends React.Component {
     let medium = (selMedium == -1) ? null : interactionMediums[selMedium];
 
     // TODO submit post request to backend with all info
+
+    // TODO go back to all interaction page
   }
 
   render() {
     const { selEmoji, selTimeOfDay, selContext, selMedium } = this.state
 
     return (
-      <ThemeProvider theme={theme}>
-        <View style={styles.container}>
-          <ScrollView contentContainerStyle={styles.scrollView}>
-            <RobText h3>New Interaction</RobText>
+      <View style={styles.container}>
+        <Header
+          leftComponent={null}
+          centerComponent={{ text: 'New Interaction', style: { color: '#fff' } }}
+          rightComponent={null} />
+        <ScrollView contentContainerStyle={styles.scrollView}>
+          <RobText h4>Required Fields</RobText>
 
-            <RobText h4>Required Fields</RobText>
+          <RobText>Who did you interact with?*</RobText>
+          <Input
+            placeholder='John Smith'
+            errorStyle={{ color: 'red' }}
+            errorMessage='* = Required field'
+            leftIcon={
+              <Icon
+                name='user'
+                size={24}
+                color='black'
+              />
+            }
+            leftIconContainerStyle={{
+              marginRight: 10
+            }}
+          />
 
-            <RobText>Who did you interact with?*</RobText>
-            <Input
-              placeholder='John Smith'
-              errorStyle={{ color: 'red' }}
-              errorMessage='* = Required field'
-              leftIcon={
-                <Icon
-                  name='user'
-                  size={24}
-                  color='black'
-                />
-              }
-              leftIconContainerStyle={{
-                marginRight: 10
-              }}
-            />
+          <RobText>How did the interaction make you feel?</RobText>
+          <ButtonGroup
+            onPress={this.updateEmojiIndex}
+            selectedIndex={selEmoji}
+            buttons={emojiButtons}
+            containerStyle={{height: 65}} />
 
-            <RobText>How did the interaction make you feel?</RobText>
-            <ButtonGroup
-              onPress={this.updateEmojiIndex}
-              selectedIndex={selEmoji}
-              buttons={emojiButtons}
-              containerStyle={{height: 65}} />
+          <RobText h4>Optional Fields</RobText>
 
-            <RobText h4>Optional Fields</RobText>
+          <RobText>Time Of Day</RobText>
+          <ButtonGroup
+            onPress={this.updateTimeOfDayIndex}
+            selectedIndex={selTimeOfDay}
+            buttons={timeOfDay} />
 
-            <RobText>Time Of Day</RobText>
-            <ButtonGroup
-              onPress={this.updateTimeOfDayIndex}
-              selectedIndex={selTimeOfDay}
-              buttons={timeOfDay} />
+          <RobText>Social Context</RobText>
+          <ButtonGroup
+            onPress={this.updateContextIndex}
+            selectedIndex={selContext}
+            buttons={socialContexts} />
 
-            <RobText>Social Context</RobText>
-            <ButtonGroup
-              onPress={this.updateContextIndex}
-              selectedIndex={selContext}
-              buttons={socialContexts} />
+          <RobText>Interaction Medium</RobText>
+          <ButtonGroup
+            onPress={this.updateMediumIndex}
+            selectedIndex={selMedium}
+            buttons={interactionMediums} />
 
-            <RobText>Interaction Medium</RobText>
-            <ButtonGroup
-              onPress={this.updateMediumIndex}
-              selectedIndex={selMedium}
-              buttons={interactionMediums} />
-
-            <Button
-              buttonStyle={styles.button}
-              title="Save Interaction"
-              type="solid"
-              onPress={this.postInteraction}
-            />
-          </ScrollView>
-        </View>
-      </ThemeProvider>
+          <Button
+            buttonStyle={styles.button}
+            title="Save Interaction"
+            type="solid"
+            onPress={this.postInteraction}
+          />
+        </ScrollView>
+      </View>
     );
   }
 }
@@ -138,7 +142,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     justifyContent: 'center',
-    marginTop: 20,
   },
   scrollView: {
     padding: '5%',

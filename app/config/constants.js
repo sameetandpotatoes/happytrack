@@ -25,12 +25,33 @@ const emojiButtons = [
 ]
 
 const timeOfDay = [ 'Morning', 'Afternoon', 'Evening' ]
-const socialContexts = [ 'academic', 'social', 'volunteer', 'work' ]
-const interactionMediums = [ 'in person', 'phone', 'online' ]
+const timeOfDayEmojis = {
+  'Morning': "city_sunrise",
+  'Afternoon': "city_sunset",
+  'Evening': "bridge_at_night",
+}
+
+const socialContexts = [ 'academic', 'social', 'work' ]
+const socialContextsEmojis = {
+  'academic': "blue_book",
+  'social': "left_speech_bubble",
+  'work': "briefcase",
+}
+
+
+const interactionMedium = [ 'in person', 'phone', 'online' ]
+const interactionMediumEmojis = {
+  'in person':"handshake",
+  'phone': "phone",
+  'online': "computer",
+}
 
 export {
   emojiButtons,
   timeOfDay,
+  timeOfDayEmojis,
   socialContexts,
-  interactionMediums
+  socialContextsEmojis,
+  interactionMedium,
+  interactionMediumEmojis
 }
