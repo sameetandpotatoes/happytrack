@@ -13,7 +13,7 @@ export default createAppContainer(createSwitchNavigator(
     App: AppStack,
   },
   {
-    initialRouteName: 'App',
+    initialRouteName: 'HomeScreen',
     headerMode: 'screen'
   }
 ));

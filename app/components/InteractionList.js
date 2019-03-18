@@ -1,7 +1,7 @@
 import React from 'react';
 import Emoji from 'react-native-emoji';
-import { ThemeProvider, colors, Avatar, Header, ListItem, Text } from 'react-native-elements';
-import { Platform, StyleSheet, View } from 'react-native';
+import { ThemeProvider, colors, Avatar, Button, Header, Icon, ListItem, Text } from 'react-native-elements';
+import { Platform, StyleSheet, ScrollView, View } from 'react-native';
 import { timeOfDayEmojis, socialContextsEmojis, interactionMediumEmojis } from '../config/constants'
 
 export default class InteractionList extends React.Component {
@@ -12,12 +12,90 @@ export default class InteractionList extends React.Component {
     this.state = {
       interactions: []
     }
+
+    this.navToNewInteraction = this.navToNewInteraction.bind(this)
+  }
+
+  navToNewInteraction() {
+    this.props.navigation.navigate('NewInteraction')
   }
 
   componentDidMount() {
-    // TODO what fake data looks like, should be sorted by timestamp in descending order probably, and then labeled by week?
+    // TODO what fake data looks like, should be sorted by timestamp in descending order probably, and then labeled by week in the app?
     this.setState({
       interactions: [
+        {
+          name: 'John Smith',
+          emoji: 'grinning',
+          timeOfDay: 'Morning',
+          context: 'academic',
+          medium: 'in person',
+          timestamp: 1426967129
+        },
+        {
+          name: 'John Smith',
+          emoji: 'grinning',
+          timeOfDay: 'Morning',
+          context: 'academic',
+          medium: 'in person',
+          timestamp: 1426967129
+        },
+        {
+          name: 'John Smith',
+          emoji: 'grinning',
+          timeOfDay: 'Morning',
+          context: 'academic',
+          medium: 'in person',
+          timestamp: 1426967129
+        },
+        {
+          name: 'John Smith',
+          emoji: 'grinning',
+          timeOfDay: 'Morning',
+          context: 'academic',
+          medium: 'in person',
+          timestamp: 1426967129
+        },
+        {
+          name: 'John Smith',
+          emoji: 'grinning',
+          timeOfDay: 'Morning',
+          context: 'academic',
+          medium: 'in person',
+          timestamp: 1426967129
+        },
+        {
+          name: 'John Smith',
+          emoji: 'grinning',
+          timeOfDay: 'Morning',
+          context: 'academic',
+          medium: 'in person',
+          timestamp: 1426967129
+        },
+        {
+          name: 'John Smith',
+          emoji: 'grinning',
+          timeOfDay: 'Morning',
+          context: 'academic',
+          medium: 'in person',
+          timestamp: 1426967129
+        },
+        {
+          name: 'John Smith',
+          emoji: 'grinning',
+          timeOfDay: 'Morning',
+          context: 'academic',
+          medium: 'in person',
+          timestamp: 1426967129
+        },
+        {
+          name: 'John Smith',
+          emoji: 'grinning',
+          timeOfDay: 'Morning',
+          context: 'academic',
+          medium: 'in person',
+          timestamp: 1426967129
+        },
         {
           name: 'John Smith',
           emoji: 'grinning',
@@ -59,36 +137,56 @@ export default class InteractionList extends React.Component {
     return (
       <View style={styles.container}>
         <Header
-          leftComponent={{ text: 'Logged in User' }}
+          leftComponent={null}
           centerComponent={{ text: 'All interactions', style: { color: '#fff' } }}
           rightComponent={null} />
 
-        <View>
-          {
-            this.state.interactions.map((l, i) => (
-              <ListItem
-                key={i}
-                leftAvatar={<Avatar rounded title={this.getInitials(l.name)} />}
-                title={l.name}
-                subtitle={
-                  <View style={styles.subtitleView}>
-                    <Emoji name={l.emoji} style={{fontSize: emojiFS, position: 'absolute', right: 0, justifyContent: 'center', alignItems: 'center'}} />
-                    { l.timeOfDay != '' &&
-                      <Emoji name={timeOfDayEmojis[l.timeOfDay]} style={{fontSize: emojiFS, position: 'absolute', right: 50, justifyContent: 'center', alignItems: 'center'}} />
-                    }
-                    { l.context != '' &&
-                      <Emoji name={socialContextsEmojis[l.context]} style={{fontSize: emojiFS, position: 'absolute', right: 100, justifyContent: 'center', alignItems: 'center'}} />
-                    }
-                    { l.medium != '' &&
-                      <Emoji name={interactionMediumEmojis[l.medium]} style={{fontSize: emojiFS, position: 'absolute', right: 150, justifyContent: 'center', alignItems: 'center'}} />
-                    }
-                    <Text>{this.getDate(l.timestamp) + " at " + this.getTime(l.timestamp)}</Text>
-                  </View>
-                }
-              />
-            ))
-          }
+        <View style={{flex: 1}}>
+          <ScrollView>
+            {
+              this.state.interactions.map((l, i) => (
+                <ListItem
+                  key={i}
+                  leftAvatar={<Avatar rounded title={this.getInitials(l.name)} />}
+                  title={l.name}
+                  subtitle={
+                    <View style={styles.subtitleView}>
+                      <Emoji name={l.emoji} style={{fontSize: emojiFS, position: 'absolute', right: 0}} />
+                      { l.timeOfDay != '' &&
+                        <Emoji name={timeOfDayEmojis[l.timeOfDay]} style={{fontSize: emojiFS, position: 'absolute', right: 50}} />
+                      }
+                      { l.context != '' &&
+                        <Emoji name={socialContextsEmojis[l.context]} style={{fontSize: emojiFS, position: 'absolute', right: 100}} />
+                      }
+                      { l.medium != '' &&
+                        <Emoji name={interactionMediumEmojis[l.medium]} style={{fontSize: emojiFS, position: 'absolute', right: 150}} />
+                      }
+                      <Text>{this.getDate(l.timestamp) + " at " + this.getTime(l.timestamp)}</Text>
+                    </View>
+                  }
+                />
+              ))
+            }
+          </ScrollView>
         </View>
+
+        <Button
+          icon={<Icon name="person-add" type="material" color="white" />}
+          title=""
+          containerViewStyle={{ width: 100 }}
+          buttonStyle={{
+            flexDirection: 'column',
+            alignItems:'center',
+            justifyContent:'center',
+            width:70,
+            position: 'absolute',
+            bottom: 25,
+            right: 25,
+            height:70,
+            borderRadius:100,
+          }}
+          onPress={this.navToNewInteraction}
+        />
       </View>
     )
   }

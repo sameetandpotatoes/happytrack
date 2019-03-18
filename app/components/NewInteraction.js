@@ -62,7 +62,7 @@ export default class NewInteraction extends React.Component {
     let emoji = emojiButtons[selEmoji].text;
     let timeOfDay = (selTimeOfDay == -1) ? null : timeOfDay[selTimeOfDay];
     let context = (selContext == -1) ? null : socialContexts[selContext];
-    let medium = (selMedium == -1) ? null : interactionMediums[selMedium];
+    let medium = (selMedium == -1) ? null : interactionMedium[selMedium];
 
     // TODO submit post request to backend with all info
 
@@ -75,7 +75,12 @@ export default class NewInteraction extends React.Component {
     return (
       <View style={styles.container}>
         <Header
-          leftComponent={null}
+          leftComponent={
+            <Button
+              title="Go back"
+              onPress={() => this.props.navigation.goBack()}
+            />
+          }
           centerComponent={{ text: 'New Interaction', style: { color: '#fff' } }}
           rightComponent={null} />
         <ScrollView contentContainerStyle={styles.scrollView}>
@@ -123,7 +128,7 @@ export default class NewInteraction extends React.Component {
           <ButtonGroup
             onPress={this.updateMediumIndex}
             selectedIndex={selMedium}
-            buttons={interactionMediums} />
+            buttons={interactionMedium} />
 
           <Button
             buttonStyle={styles.button}
