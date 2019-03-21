@@ -1,1 +1,2 @@
 Django==2.1.7
+jsonschema==2.6.0
