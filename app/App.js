@@ -24,7 +24,7 @@ const AppStack = createBottomTabNavigator(
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
         const { routeName } = navigation.state;
-        let IconComponent = Ionicons; // can change if we want
+        let IconComponent = Ionicons;
         let iconName;
         if (routeName === 'Interactions') {
           iconName = `ios-information-circle${focused ? '' : '-outline'}`;
@@ -50,7 +50,6 @@ const AppStack = createBottomTabNavigator(
 
 
 // const AuthStack = createStackNavigator({ SignIn: SignInScreen });
-
 
 export default createAppContainer(createSwitchNavigator(
   {
