@@ -23,7 +23,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "edu.uiuc.happytrack"
+    },
+    "android": {
+      "package": "edu.uiuc.happytrack"
     }
   }
 }

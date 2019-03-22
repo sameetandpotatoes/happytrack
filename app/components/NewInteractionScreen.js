@@ -1,7 +1,6 @@
 import React from 'react';
 import Emoji from 'react-native-emoji';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Constants } from 'expo';
 import { ThemeProvider, Avatar, Button, ButtonGroup, colors, Divider, Header, Input, Text } from 'react-native-elements';
 import { Platform, StyleSheet, ScrollView, View } from 'react-native';
 import { emojiButtons, timeOfDay, socialContexts, interactionMedium } from '../config/constants'
