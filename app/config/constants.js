@@ -31,19 +31,19 @@ const timeOfDayEmojis = {
   'Evening': "bridge_at_night",
 }
 
-const socialContexts = [ 'academic', 'social', 'work' ]
+const socialContexts = [ 'Academic', 'Social', 'Work' ]
 const socialContextsEmojis = {
-  'academic': "blue_book",
-  'social': "left_speech_bubble",
-  'work': "briefcase",
+  'Academic': "blue_book",
+  'Social': "left_speech_bubble",
+  'Work': "briefcase",
 }
 
 
-const interactionMedium = [ 'in person', 'phone', 'online' ]
+const interactionMedium = [ 'In Person', 'Phone', 'Online' ]
 const interactionMediumEmojis = {
-  'in person':"handshake",
-  'phone': "phone",
-  'online': "computer",
+  'In Person': "handshake",
+  'Phone': "phone",
+  'Online': "computer",
 }
 
 export {

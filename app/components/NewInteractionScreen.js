@@ -17,7 +17,7 @@ const theme = {
   },
 };
 
-export default class NewInteraction extends React.Component {
+export default class NewInteractionScreen extends React.Component {
   static navigationOptions = { header: null };
   constructor() {
     super()

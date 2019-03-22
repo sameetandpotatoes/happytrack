@@ -4,7 +4,7 @@ import { ThemeProvider, colors, Avatar, Button, Header, Icon, ListItem, Text } f
 import { Platform, StyleSheet, ScrollView, View } from 'react-native';
 import { timeOfDayEmojis, socialContextsEmojis, interactionMediumEmojis } from '../config/constants'
 
-export default class InteractionList extends React.Component {
+export default class InteractionScreen extends React.Component {
   static navigationOptions = { header: null };
   constructor() {
     super()
@@ -13,11 +13,11 @@ export default class InteractionList extends React.Component {
       interactions: []
     }
 
-    this.navToNewInteraction = this.navToNewInteraction.bind(this)
+    this.navToNewInteractionScreen = this.navToNewInteractionScreen.bind(this)
   }
 
-  navToNewInteraction() {
-    this.props.navigation.navigate('NewInteraction')
+  navToNewInteractionScreen() {
+    this.props.navigation.navigate('NewInteractionScreen')
   }
 
   componentDidMount() {
@@ -28,88 +28,88 @@ export default class InteractionList extends React.Component {
           name: 'John Smith',
           emoji: 'grinning',
           timeOfDay: 'Morning',
-          context: 'academic',
-          medium: 'in person',
+          context: 'Academic',
+          medium: 'In Person',
           timestamp: 1426967129
         },
         {
           name: 'John Smith',
           emoji: 'grinning',
           timeOfDay: 'Morning',
-          context: 'academic',
-          medium: 'in person',
+          context: 'Academic',
+          medium: 'In Person',
           timestamp: 1426967129
         },
         {
           name: 'John Smith',
           emoji: 'grinning',
           timeOfDay: 'Morning',
-          context: 'academic',
-          medium: 'in person',
+          context: 'Academic',
+          medium: 'In Person',
           timestamp: 1426967129
         },
         {
           name: 'John Smith',
           emoji: 'grinning',
           timeOfDay: 'Morning',
-          context: 'academic',
-          medium: 'in person',
+          context: 'Academic',
+          medium: 'In Person',
           timestamp: 1426967129
         },
         {
           name: 'John Smith',
           emoji: 'grinning',
           timeOfDay: 'Morning',
-          context: 'academic',
-          medium: 'in person',
+          context: 'Academic',
+          medium: 'In Person',
           timestamp: 1426967129
         },
         {
           name: 'John Smith',
           emoji: 'grinning',
           timeOfDay: 'Morning',
-          context: 'academic',
-          medium: 'in person',
+          context: 'Academic',
+          medium: 'In Person',
           timestamp: 1426967129
         },
         {
           name: 'John Smith',
           emoji: 'grinning',
           timeOfDay: 'Morning',
-          context: 'academic',
-          medium: 'in person',
+          context: 'Academic',
+          medium: 'In Person',
           timestamp: 1426967129
         },
         {
           name: 'John Smith',
           emoji: 'grinning',
           timeOfDay: 'Morning',
-          context: 'academic',
-          medium: 'in person',
+          context: 'Academic',
+          medium: 'In Person',
           timestamp: 1426967129
         },
         {
           name: 'John Smith',
           emoji: 'grinning',
           timeOfDay: 'Morning',
-          context: 'academic',
-          medium: 'in person',
+          context: 'Academic',
+          medium: 'In Person',
           timestamp: 1426967129
         },
         {
           name: 'John Smith',
           emoji: 'grinning',
           timeOfDay: 'Morning',
-          context: 'academic',
-          medium: 'in person',
+          context: 'Academic',
+          medium: 'In Person',
           timestamp: 1426967129
         },
         {
           name: 'Yasha Mostofi',
           emoji: 'sweat',
           timeOfDay: 'Morning',
-          context: '',
-          medium: '',
+          context: null,
+          medium: null,
           timestamp: 1552846376
         }
       ]
@@ -152,13 +152,13 @@ export default class InteractionList extends React.Component {
                   subtitle={
                     <View style={styles.subtitleView}>
                       <Emoji name={l.emoji} style={{fontSize: emojiFS, position: 'absolute', right: 0}} />
-                      { l.timeOfDay != '' &&
+                      { l.timeOfDay && l.timeOfDay != '' &&
                         <Emoji name={timeOfDayEmojis[l.timeOfDay]} style={{fontSize: emojiFS, position: 'absolute', right: 50}} />
                       }
-                      { l.context != '' &&
+                      { l.context && l.context != '' &&
                         <Emoji name={socialContextsEmojis[l.context]} style={{fontSize: emojiFS, position: 'absolute', right: 100}} />
                       }
-                      { l.medium != '' &&
+                      { l.medium && l.medium != '' &&
                         <Emoji name={interactionMediumEmojis[l.medium]} style={{fontSize: emojiFS, position: 'absolute', right: 150}} />
                       }
                       <Text>{this.getDate(l.timestamp) + " at " + this.getTime(l.timestamp)}</Text>
@@ -185,7 +185,7 @@ export default class InteractionList extends React.Component {
             height:70,
             borderRadius:100,
           }}
-          onPress={this.navToNewInteraction}
+          onPress={this.navToNewInteractionScreen}
         />
       </View>
     )
