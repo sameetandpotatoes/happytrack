@@ -2,6 +2,7 @@ import React from 'react';
 import Emoji from 'react-native-emoji';
 import { ThemeProvider, colors, Avatar, Button, Header, Icon, ListItem, Overlay, Text } from 'react-native-elements';
 import { Platform, StyleSheet, ScrollView, View } from 'react-native';
+import { LoginManager } from 'react-native-fbsdk';
 import { timeOfDayEmojis, socialContextsEmojis, interactionMediumEmojis } from '../config/constants'
 
 export default class InteractionScreen extends React.Component {
@@ -16,6 +17,7 @@ export default class InteractionScreen extends React.Component {
 
     this.navToNewInteractionScreen = this.navToNewInteractionScreen.bind(this)
     this.getDetailedInteraction = this.getDetailedInteraction.bind(this)
+    this.handleLogout = this.handleLogout.bind(this)
   }
 
   navToNewInteractionScreen() {
@@ -139,6 +141,12 @@ export default class InteractionScreen extends React.Component {
     this.setState({ overlayInteractionIndex: index })
   }
 
+  handleLogout() {
+    LoginManager.logOut()
+    const { navigate } = this.props.navigation
+    navigate('HomeScreen')
+  }
+
   getDetailedInteraction(index) {
     if (index == -1) {
       console.error("can't display this");
@@ -173,10 +181,12 @@ export default class InteractionScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Header
-        containerStyle={{marginTop: Platform.OS === 'ios' ? 0 : - 30}}
-          leftComponent={null}
+          containerStyle={{marginTop: Platform.OS === 'ios' ? 0 : - 30}}
+          leftComponent={{text: 'HappyTrack', style: {fontSize: 24, width: 300, color: '#FFFFFF'}}}
           centerComponent={null}
-          rightComponent={null} />
+          rightComponent={
+            <Icon name="sign-out" type="font-awesome" color="#fff" onPress={this.handleLogout} />
+          } />
 
         { this.state.overlayInteractionIndex != -1 &&
           <Overlay
