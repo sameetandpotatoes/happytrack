@@ -6,7 +6,6 @@ import { LoginManager } from 'react-native-fbsdk';
 import { timeOfDayEmojis, socialContextsEmojis, interactionMediumEmojis } from '../config/constants'
 
 export default class InteractionScreen extends React.Component {
-  // static navigationOptions = { header: null };
   constructor() {
     super()
 
@@ -37,78 +36,6 @@ export default class InteractionScreen extends React.Component {
           timestamp: 1426967129
         },
         {
-          name: 'John Smith',
-          emoji: 'grinning',
-          timeOfDay: 'Morning',
-          context: 'Academic',
-          medium: 'In Person',
-          timestamp: 1426967129
-        },
-        {
-          name: 'John Smith',
-          emoji: 'grinning',
-          timeOfDay: 'Morning',
-          context: 'Academic',
-          medium: 'In Person',
-          timestamp: 1426967129
-        },
-        {
-          name: 'John Smith',
-          emoji: 'grinning',
-          timeOfDay: 'Morning',
-          context: 'Academic',
-          medium: 'In Person',
-          timestamp: 1426967129
-        },
-        {
-          name: 'John Smith',
-          emoji: 'grinning',
-          timeOfDay: 'Morning',
-          context: 'Academic',
-          medium: 'In Person',
-          timestamp: 1426967129
-        },
-        {
-          name: 'John Smith',
-          emoji: 'grinning',
-          timeOfDay: 'Morning',
-          context: 'Academic',
-          medium: 'In Person',
-          timestamp: 1426967129
-        },
-        {
-          name: 'John Smith',
-          emoji: 'grinning',
-          timeOfDay: 'Morning',
-          context: 'Academic',
-          medium: 'In Person',
-          timestamp: 1426967129
-        },
-        {
-          name: 'John Smith',
-          emoji: 'grinning',
-          timeOfDay: 'Morning',
-          context: 'Academic',
-          medium: 'In Person',
-          timestamp: 1426967129
-        },
-        {
-          name: 'John Smith',
-          emoji: 'grinning',
-          timeOfDay: 'Morning',
-          context: 'Academic',
-          medium: 'In Person',
-          timestamp: 1426967129
-        },
-        {
-          name: 'John Smith',
-          emoji: 'grinning',
-          timeOfDay: 'Morning',
-          context: 'Academic',
-          medium: 'In Person',
-          timestamp: 1426967129
-        },
-        {
           name: 'Yasha Mostofi',
           emoji: 'sweat',
           timeOfDay: 'Morning',
@@ -118,6 +45,8 @@ export default class InteractionScreen extends React.Component {
         }
       ]
     })
+
+    // TODO query me
   }
 
   getDate(epoch) {
@@ -185,7 +114,10 @@ export default class InteractionScreen extends React.Component {
           leftComponent={{text: 'HappyTrack', style: {fontSize: 24, width: 300, color: '#FFFFFF'}}}
           centerComponent={null}
           rightComponent={
-            <Icon name="sign-out" type="font-awesome" color="#fff" onPress={this.handleLogout} />
+            <View>
+              <Text style={{fontSize: 24}}>Logout</Text>
+              <Icon name="sign-out" type="font-awesome" color="#fff" onPress={this.handleLogout} />
+            </View>
           } />
 
         { this.state.overlayInteractionIndex != -1 &&

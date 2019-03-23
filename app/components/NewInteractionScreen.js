@@ -1,7 +1,7 @@
 import React from 'react';
 import Emoji from 'react-native-emoji';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { ThemeProvider, Avatar, Button, ButtonGroup, colors, Divider, Header, Input, Text } from 'react-native-elements';
+import { ThemeProvider, Avatar, Button, ButtonGroup, colors, Divider, Header, Icon as IC, Input, Text } from 'react-native-elements';
 import { Platform, StyleSheet, ScrollView, View } from 'react-native';
 import { emojiButtons, timeOfDay, socialContexts, interactionMedium } from '../config/constants'
 
@@ -73,13 +73,11 @@ export default class NewInteractionScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Header
+          containerStyle={{marginTop: Platform.OS === 'ios' ? 0 : - 30}}
           leftComponent={
-            <Button
-              title="Go back"
-              onPress={() => this.props.navigation.goBack()}
-            />
+            <IC name="chevron-left" type="font-awesome" color="#fff" onPress={() => this.props.navigation.goBack()} />
           }
-          centerComponent={{ text: 'New Interaction', style: { color: '#fff' } }}
+          centerComponent={{ text: 'New Interaction', style: { fontSize: 22, color: '#fff' } }}
           rightComponent={null} />
         <ScrollView contentContainerStyle={styles.scrollView}>
           <RobText h4>Required Fields</RobText>
@@ -88,7 +86,7 @@ export default class NewInteractionScreen extends React.Component {
           <Input
             placeholder='John Smith'
             errorStyle={{ color: 'red' }}
-            errorMessage='* = Required field'
+            errorMessage=''
             leftIcon={
               <Icon
                 name='user'

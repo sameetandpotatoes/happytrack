@@ -2,10 +2,10 @@ import React from 'react';
 import Emoji from 'react-native-emoji';
 import { ThemeProvider, colors, Avatar, Button, Header, Icon, ListItem, Text } from 'react-native-elements';
 import { Platform, StyleSheet, ScrollView, View } from 'react-native';
-import { timeOfDayEmojis, socialContextsEmojis, interactionMediumEmojis } from '../config/constants'
+import { timeOfDayEmojis, socialContextsEmojis, interactionMediumEmojis } from '../config/constants';
+import { Svg, G, Rect } from 'react-native-svg';
 
 export default class SummaryScreen extends React.Component {
-  static navigationOptions = { header: null };
   constructor() {
     super()
 
@@ -32,86 +32,6 @@ export default class SummaryScreen extends React.Component {
           medium: 'In Person',
           timestamp: 1426967129
         },
-        {
-          name: 'John Smith',
-          emoji: 'grinning',
-          timeOfDay: 'Morning',
-          context: 'Academic',
-          medium: 'In Person',
-          timestamp: 1426967129
-        },
-        {
-          name: 'John Smith',
-          emoji: 'grinning',
-          timeOfDay: 'Morning',
-          context: 'Academic',
-          medium: 'In Person',
-          timestamp: 1426967129
-        },
-        {
-          name: 'John Smith',
-          emoji: 'grinning',
-          timeOfDay: 'Morning',
-          context: 'Academic',
-          medium: 'In Person',
-          timestamp: 1426967129
-        },
-        {
-          name: 'John Smith',
-          emoji: 'grinning',
-          timeOfDay: 'Morning',
-          context: 'Academic',
-          medium: 'In Person',
-          timestamp: 1426967129
-        },
-        {
-          name: 'John Smith',
-          emoji: 'grinning',
-          timeOfDay: 'Morning',
-          context: 'Academic',
-          medium: 'In Person',
-          timestamp: 1426967129
-        },
-        {
-          name: 'John Smith',
-          emoji: 'grinning',
-          timeOfDay: 'Morning',
-          context: 'Academic',
-          medium: 'In Person',
-          timestamp: 1426967129
-        },
-        {
-          name: 'John Smith',
-          emoji: 'grinning',
-          timeOfDay: 'Morning',
-          context: 'Academic',
-          medium: 'In Person',
-          timestamp: 1426967129
-        },
-        {
-          name: 'John Smith',
-          emoji: 'grinning',
-          timeOfDay: 'Morning',
-          context: 'Academic',
-          medium: 'In Person',
-          timestamp: 1426967129
-        },
-        {
-          name: 'John Smith',
-          emoji: 'grinning',
-          timeOfDay: 'Morning',
-          context: 'Academic',
-          medium: 'In Person',
-          timestamp: 1426967129
-        },
-        {
-          name: 'Yasha Mostofi',
-          emoji: 'sweat',
-          timeOfDay: 'Morning',
-          context: null,
-          medium: null,
-          timestamp: 1552846376
-        }
       ]
     })
   }
@@ -132,62 +52,25 @@ export default class SummaryScreen extends React.Component {
   }
 
   render() {
-    const emojiFS = 23;
+    const SVGHeight = 60
+    const SVGWidth = 60
+    const graphHeight = 50
 
     return (
-      <View style={styles.container}>
-        <Header
-          leftComponent={null}
-          centerComponent={{ text: 'All interactions', style: { color: '#fff' } }}
-          rightComponent={null} />
-
-        <View style={{flex: 1}}>
-          <ScrollView>
-            {
-              this.state.interactions.map((l, i) => (
-                <ListItem
-                  key={i}
-                  leftAvatar={<Avatar rounded title={this.getInitials(l.name)} />}
-                  title={l.name}
-                  subtitle={
-                    <View style={styles.subtitleView}>
-                      <Emoji name={l.emoji} style={{fontSize: emojiFS, position: 'absolute', right: 0}} />
-                      { l.timeOfDay && l.timeOfDay != '' &&
-                        <Emoji name={timeOfDayEmojis[l.timeOfDay]} style={{fontSize: emojiFS, position: 'absolute', right: 50}} />
-                      }
-                      { l.context && l.context != '' &&
-                        <Emoji name={socialContextsEmojis[l.context]} style={{fontSize: emojiFS, position: 'absolute', right: 100}} />
-                      }
-                      { l.medium && l.medium != '' &&
-                        <Emoji name={interactionMediumEmojis[l.medium]} style={{fontSize: emojiFS, position: 'absolute', right: 150}} />
-                      }
-                      <Text>{this.getDate(l.timestamp) + " at " + this.getTime(l.timestamp)}</Text>
-                    </View>
-                  }
-                />
-              ))
-            }
-          </ScrollView>
-        </View>
-
-        <Button
-          icon={<Icon name="person-add" type="material" color="white" />}
-          title=""
-          containerViewStyle={{ width: 100 }}
-          buttonStyle={{
-            flexDirection: 'column',
-            alignItems:'center',
-            justifyContent:'center',
-            width:70,
-            position: 'absolute',
-            bottom: 25,
-            right: 25,
-            height:70,
-            borderRadius:100,
-          }}
-          onPress={this.navToNewInteractionScreen}
-        />
-      </View>
+      <Svg width={SVGWidth} height={SVGHeight}>
+        {/* translate for 'graphHeight' on y axis */}
+        <G y={graphHeight}>
+          <Rect
+              x="15"
+              y="-15"
+              width="20"
+              height="20"
+              stroke="red"
+              strokeWidth="4"
+              fill="yellow"
+            />
+        </G>
+      </Svg>
     )
   }
 }

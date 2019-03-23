@@ -17,6 +17,10 @@ export default class HomeScreen extends React.Component {
   constructor() {
     super()
 
+    this.state = {
+      isLoading: true
+    }
+
     this.loginWithTwitter = this.loginWithTwitter.bind(this)
     this.loginWithFacebook = this.loginWithFacebook.bind(this)
   }
@@ -38,6 +42,7 @@ export default class HomeScreen extends React.Component {
   componentWillMount() {
     AccessToken.getCurrentAccessToken()
       .then((data) => {
+        // this.setState({isLoading: false})
         if (data.accessToken) {
           const { navigate } = this.props.navigation
           navigate('AppScreen')
@@ -45,6 +50,7 @@ export default class HomeScreen extends React.Component {
       })
       .catch(error => {
         console.log(error)
+        // this.setState({isLoading: false})
       });
   }
 
@@ -58,7 +64,8 @@ export default class HomeScreen extends React.Component {
       <ThemeProvider theme={theme}>
         <View style={styles.container}>
           <ImageBackground source={require('../assets/home.jpg')} style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%'}}>
-            <View style={styles.overlayedContent}>
+            { !this.state.isLoading &&
+              <View style={styles.overlayedContent}>
                 <View>
                   <Text h4>Welcome to HappyTrack!</Text>
                   <Text>Track daily social interactions with friends, co-workers, etc. by name as well as an interaction "rating"</Text>
@@ -77,7 +84,11 @@ export default class HomeScreen extends React.Component {
                     type='twitter'
                   />
                 </View>
-            </View>
+              </View>
+            }
+            { this.state.isLoading &&
+              <ActivityIndicator style={{ height: 80 }} size="large" color="#d3d3d3" />
+            }
           </ImageBackground>
         </View>
       </ThemeProvider>
