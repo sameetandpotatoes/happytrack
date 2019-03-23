@@ -87,10 +87,10 @@ const AppStack = createBottomTabNavigator(
 export default createAppContainer(createSwitchNavigator(
   {
     HomeScreen: HomeScreen,
-    App: AppStack,
+    AppScreen: AppStack,
   },
   {
-    initialRouteName: 'App',
+    initialRouteName: 'HomeScreen',
     headerMode: 'screen'
   }
 ));

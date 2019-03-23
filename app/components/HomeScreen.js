@@ -2,6 +2,10 @@ import React from 'react';
 import { ThemeProvider, colors, Image, Overlay, SocialIcon, Text } from 'react-native-elements';
 import { ActivityIndicator, ImageBackground, Platform, StyleSheet, ScrollView, View } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
+const FBSDK = require('react-native-fbsdk');
+const {
+  LoginManager,
+} = FBSDK;
 
 const theme = {
   colors: {
@@ -21,13 +25,24 @@ export default class HomeScreen extends React.Component {
   }
 
   loginWithFacebook() {
-    const {navigate} = this.props.navigation;
-    navigate('App')
+    LoginManager.logInWithReadPermissions(['email', 'public_profile']).then(
+      function(result) {
+        if (result.isCancelled) {
+          alert('Login was cancelled');
+        } else {
+          alert('Login was successful with permissions: '
+            + result.grantedPermissions.toString());
+        }
+      },
+      function(error) {
+        alert('Login failed with error: ' + error);
+      }
+    );
   }
 
   loginWithTwitter() {
-    const {navigate} = this.props.navigation;
-    navigate('App')
+    const {navigate} = this.props.navigation
+    navigate('AppScreen')
   }
 
   render() {
