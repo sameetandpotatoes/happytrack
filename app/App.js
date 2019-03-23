@@ -1,4 +1,5 @@
 import React from 'react';
+import { Easing, Animated } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from './components/HomeScreen';
 import InteractionScreen from './components/InteractionScreen';
@@ -6,10 +7,42 @@ import NewInteractionScreen from './components/NewInteractionScreen';
 import SummaryScreen from './components/SummaryScreen';
 import {createSwitchNavigator, createBottomTabNavigator, createStackNavigator, createAppContainer} from 'react-navigation';
 
-const InteractionStack = createStackNavigator({
+const InteractionStack = createStackNavigator(
+  {
     InteractionScreen: InteractionScreen,
     NewInteractionScreen: NewInteractionScreen
-});
+  },
+  {
+    headerMode: 'none',
+    defaultNavigationOptions: {
+      gesturesEnabled: false,
+    },
+    transitionConfig: () => ({
+      transitionSpec: {
+        duration: 300,
+        easing: Easing.out(Easing.poly(4)),
+        timing: Animated.timing,
+      },
+      screenInterpolator: sceneProps => {
+        const { layout, position, scene } = sceneProps;
+        const { index } = scene;
+
+        const height = layout.initHeight;
+        const translateY = position.interpolate({
+          inputRange: [index - 1, index, index + 1],
+          outputRange: [height, 0, 0],
+        });
+
+        const opacity = position.interpolate({
+          inputRange: [index - 1, index - 0.99, index],
+          outputRange: [0, 1, 1],
+        });
+
+        return { opacity, transform: [{ translateY }] };
+      },
+    }),
+  }
+);
 
 const SummaryStack = createStackNavigator({
   SummaryScreen: SummaryScreen
@@ -35,14 +68,14 @@ const AppStack = createBottomTabNavigator(
         }
 
         // You can return any component that you like here!
-        return <IconComponent name={iconName} size={25} color={tintColor} />;
+        return <IconComponent name={iconName} size={30} color={tintColor} />;
       },
     }),
     tabBarOptions: {
       activeTintColor: 'tomato',
       inactiveTintColor: 'gray',
       labelStyle: {
-        fontSize: 14,
+        fontSize: 10
       },
     },
   }
@@ -57,7 +90,7 @@ export default createAppContainer(createSwitchNavigator(
     App: AppStack,
   },
   {
-    initialRouteName: 'HomeScreen',
+    initialRouteName: 'App',
     headerMode: 'screen'
   }
 ));
