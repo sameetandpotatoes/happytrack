@@ -2,81 +2,80 @@ import React from 'react';
 import Emoji from 'react-native-emoji';
 import { ThemeProvider, colors, Avatar, Button, Header, Icon, ListItem, Text } from 'react-native-elements';
 import { Platform, StyleSheet, ScrollView, View } from 'react-native';
+import { LoginManager } from 'react-native-fbsdk';
 import { timeOfDayEmojis, socialContextsEmojis, interactionMediumEmojis } from '../config/constants';
-import { Svg, G, Rect } from 'react-native-svg';
+import BarChartVerticalWithLabels from './BarChartVerticalWithLabels';
+import PieChartWithCenteredLabels from './PieChartWithCenteredLabels';
 
 export default class SummaryScreen extends React.Component {
   constructor() {
     super()
 
     this.state = {
-      interactions: []
+      summaries: []
     }
 
-    this.navToNewInteractionScreen = this.navToNewInteractionScreen.bind(this)
-  }
-
-  navToNewInteractionScreen() {
-    this.props.navigation.navigate('NewInteractionScreen')
+    this.handleLogout = this.handleLogout.bind(this)
   }
 
   componentDidMount() {
     // TODO what fake data looks like, should be sorted by timestamp in descending order probably, and then labeled by week in the app?
     this.setState({
-      interactions: [
+      summaries: [
         {
-          name: 'John Smith',
-          emoji: 'grinning',
-          timeOfDay: 'Morning',
-          context: 'Academic',
-          medium: 'In Person',
-          timestamp: 1426967129
+          week: 'Week of 03/18 - 03/24',
+
+        },
+        {
+          week: 'Week of 03/11 - 03/16',
+
         },
       ]
     })
   }
 
-  getDate(epoch) {
-    return new Date(epoch).toLocaleDateString("en-US")
-  }
-
-  getTime(epoch) {
-    return new Date(epoch).toLocaleTimeString("en-US")
-  }
-
-  /**
-  * Get the first character of the name
-  */
-  getInitials(name) {
-    return name.split(" ").map(s => s.charAt(0)).join('').toUpperCase();
+  handleLogout() {
+    LoginManager.logOut()
+    const { navigate } = this.props.navigation
+    navigate('HomeScreen')
   }
 
   render() {
-    const SVGHeight = 60
-    const SVGWidth = 60
-    const graphHeight = 50
+    const WeeklySummaries = (
+      this.state.summaries.map((value, index) => {
+        const { week } = value;
+        return (
+          <View key={index}>
+            <Text h3>{week}</Text>
+            <BarChartVerticalWithLabels />
+            <PieChartWithCenteredLabels />
+          </View>
+        )
+      })
+    );
 
     return (
-      <Svg width={SVGWidth} height={SVGHeight}>
-        {/* translate for 'graphHeight' on y axis */}
-        <G y={graphHeight}>
-          <Rect
-              x="15"
-              y="-15"
-              width="20"
-              height="20"
-              stroke="red"
-              strokeWidth="4"
-              fill="yellow"
-            />
-        </G>
-      </Svg>
+      <View style={styles.container}>
+        <Header
+          containerStyle={{marginTop: Platform.OS === 'ios' ? 0 : - 30}}
+          leftComponent={{text: 'HappyTrack', style: {fontSize: 24, width: 300, color: '#FFFFFF'}}}
+          centerComponent={null}
+          rightComponent={
+          <View>
+            <Icon name="sign-out" type="font-awesome" color="#fff" onPress={this.handleLogout} />
+          </View>
+          }
+        />
+        <ScrollView>
+          {WeeklySummaries}
+        </ScrollView>
+      </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
-  },
+    flex: 1,
+  }
 });

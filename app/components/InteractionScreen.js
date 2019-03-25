@@ -115,7 +115,6 @@ export default class InteractionScreen extends React.Component {
           centerComponent={null}
           rightComponent={
             <View>
-              <Text style={{fontSize: 24}}>Logout</Text>
               <Icon name="sign-out" type="font-awesome" color="#fff" onPress={this.handleLogout} />
             </View>
           } />

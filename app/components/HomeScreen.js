@@ -42,7 +42,7 @@ export default class HomeScreen extends React.Component {
   componentWillMount() {
     AccessToken.getCurrentAccessToken()
       .then((data) => {
-        // this.setState({isLoading: false})
+        this.setState({isLoading: false})
         if (data.accessToken) {
           const { navigate } = this.props.navigation
           navigate('AppScreen')
@@ -50,7 +50,7 @@ export default class HomeScreen extends React.Component {
       })
       .catch(error => {
         console.log(error)
-        // this.setState({isLoading: false})
+        this.setState({isLoading: false})
       });
   }
 
