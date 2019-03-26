@@ -33,7 +33,8 @@ export default class InteractionScreen extends React.Component {
           timeOfDay: 'Morning',
           context: 'Academic',
           medium: 'In Person',
-          timestamp: 1426967129
+          timestamp: 1426967129,
+          other_loggable_text: 'This interaction was not great.',
         },
         {
           name: 'Yasha Mostofi',
@@ -41,7 +42,8 @@ export default class InteractionScreen extends React.Component {
           timeOfDay: 'Morning',
           context: null,
           medium: null,
-          timestamp: 1552846376
+          timestamp: 1552846376,
+          other_loggable_text: 'This interaction was great.'
         }
       ]
     })
@@ -82,22 +84,40 @@ export default class InteractionScreen extends React.Component {
       return <View>An error occurred. Please close this.</View>;
     }
 
-    const { timeOfDay, context, medium, timestamp, emoji, name } = this.state.interactions[index];
+    const {
+      timeOfDay, context, medium, timestamp,
+      emoji, name, other_loggable_text
+    } = this.state.interactions[index];
     return (
       <View style={styles.detailInteraction}>
-        <Text h3>Your interaction with {name}</Text>
+        <Text h4>Your interaction with {name}</Text>
         <Text style={styles.text}>Time: {this.getDate(timestamp) + " at " + this.getTime(timestamp)}</Text>
 
         { timeOfDay && timeOfDay != '' &&
-          <Text style={styles.text}>Time Of Day: {timeOfDay}</Text>
+          <Text style={styles.text}>
+            Time Of Day:
+            <Text style={{fontWeight: "bold"}}> {timeOfDay}</Text>
+          </Text>
         }
 
         { medium && medium != '' &&
-          <Text style={styles.text} >Social Interaction Medium: {medium}</Text>
+          <Text style={styles.text}>
+            Social Interaction Medium:
+            <Text style={{fontWeight: "bold"}}> {medium}</Text>
+          </Text>
         }
 
         { context && context != '' &&
-          <Text style={styles.text}>Social Context: {context}</Text>
+          <Text style={styles.text}>
+            Social Context:
+            <Text style={{fontWeight: "bold"}}> {context}</Text>
+          </Text>
+        }
+
+        { other_loggable_text && other_loggable_text != '' &&
+          <Text style={styles.text}>
+            Interaction Notes: {"\n\n" + other_loggable_text}
+          </Text>
         }
       </View>
     );
@@ -166,11 +186,11 @@ export default class InteractionScreen extends React.Component {
             flexDirection: 'column',
             alignItems:'center',
             justifyContent:'center',
-            width:70,
+            width: 70,
             position: 'absolute',
             bottom: 25,
             right: 25,
-            height:70,
+            height: 70,
             borderRadius:100,
           }}
           onPress={this.navToNewInteractionScreen}
@@ -185,9 +205,11 @@ const styles = StyleSheet.create({
     flex: 1
   },
   detailInteraction: {
-    flex: 1
+    flex: 1,
+    padding: 20
   },
   text: {
-    fontSize: 24
+    fontSize: 20,
+    margin: 5,
   },
 });

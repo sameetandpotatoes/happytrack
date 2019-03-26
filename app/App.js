@@ -1,10 +1,10 @@
 import React from 'react';
 import { Easing, Animated } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import HomeScreen from './components/HomeScreen';
-import InteractionScreen from './components/InteractionScreen';
-import NewInteractionScreen from './components/NewInteractionScreen';
-import SummaryScreen from './components/SummaryScreen';
+import HomeScreen from './screens/HomeScreen';
+import InteractionScreen from './screens/InteractionScreen';
+import NewInteractionScreen from './screens/NewInteractionScreen';
+import SummaryScreen from './screens/SummaryScreen';
 import {createSwitchNavigator, createBottomTabNavigator, createStackNavigator, createAppContainer} from 'react-navigation';
 
 const defaultNavOptions = {

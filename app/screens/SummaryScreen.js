@@ -4,8 +4,8 @@ import { ThemeProvider, colors, Avatar, Button, Header, Icon, ListItem, Text } f
 import { Platform, StyleSheet, ScrollView, View } from 'react-native';
 import { LoginManager } from 'react-native-fbsdk';
 import { timeOfDayEmojis, socialContextsEmojis, interactionMediumEmojis } from '../config/constants';
-import BarChartVerticalWithLabels from './BarChartVerticalWithLabels';
-import PieChartWithCenteredLabels from './PieChartWithCenteredLabels';
+import BarChartVerticalWithLabels from '../components/BarChartVerticalWithLabels';
+import PieChartWithCenteredLabels from '../components/PieChartWithCenteredLabels';
 
 export default class SummaryScreen extends React.Component {
   constructor() {

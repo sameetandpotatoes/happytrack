@@ -2,7 +2,8 @@ import React from 'react';
 import Emoji from 'react-native-emoji';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { ThemeProvider, Avatar, Button, ButtonGroup, colors, Divider, Header, Icon as IC, Input, Text } from 'react-native-elements';
-import { Platform, StyleSheet, ScrollView, View } from 'react-native';
+import { Platform, StyleSheet, ScrollView, TextInput, View } from 'react-native';
+import TextField from '../components/TextField'
 import { emojiButtons, timeOfDay, socialContexts, interactionMedium } from '../config/constants'
 
 const RobText = props => <Text style={styles.text} {...props} />
@@ -24,8 +25,11 @@ export default class NewInteractionScreen extends React.Component {
       selEmoji: -1,
       selTimeOfDay: -1, // TODO set time of day based on current time?
       selContext: -1,
-      selMedium: -1
+      selMedium: -1,
+      nameError: null,
+      emojiError: null
     }
+    this.updateName = this.updateName.bind(this)
     this.updateEmojiIndex = this.updateEmojiIndex.bind(this)
     this.updateTimeOfDayIndex = this.updateTimeOfDayIndex.bind(this)
     this.updateContextIndex = this.updateContextIndex.bind(this)
@@ -33,8 +37,18 @@ export default class NewInteractionScreen extends React.Component {
     this.postInteraction = this.postInteraction.bind(this)
   }
 
+  updateName(name) {
+    this.setState({
+      name: name,
+      nameError: this.validate('name', name)
+    })
+  }
+
   updateEmojiIndex(selEmoji) {
-    this.setState({selEmoji})
+    this.setState({
+      selEmoji: selEmoji,
+      emojiError: this.validate('emoji', selEmoji)
+    })
   }
 
   updateTimeOfDayIndex(selTimeOfDay) {
@@ -52,9 +66,18 @@ export default class NewInteractionScreen extends React.Component {
   postInteraction(e) {
     const { name, selEmoji, selTimeOfDay, selContext, selMedium } = this.state
 
-    // Required fields
-    if (selEmoji == -1 || name == '') {
-      // TODO handle required field issue
+    // null if no error
+    const emojiError = this.validate('emoji', selEmoji);
+    const nameError = this.validate('name', name);
+
+    this.setState({
+      nameError: nameError,
+      emojiError: emojiError
+    })
+
+    // return early if error was found
+    if (emojiError || nameError) {
+      return
     }
 
     let emoji = emojiButtons[selEmoji].text;
@@ -65,6 +88,15 @@ export default class NewInteractionScreen extends React.Component {
     // TODO submit post request to backend with all info
 
     // TODO go back to all interaction page
+  }
+
+  validate(formKey, formValue) {
+    if (formKey === 'name') {
+      return formValue === '' ? 'Name must not be empty' : null
+    }
+    if (formKey == 'emoji') {
+      return formValue == -1 ? 'An emoji must be selected' : null
+    }
   }
 
   render() {
@@ -82,21 +114,10 @@ export default class NewInteractionScreen extends React.Component {
         <ScrollView contentContainerStyle={styles.scrollView}>
           <RobText h4>Required Fields</RobText>
 
-          <RobText>Who did you interact with?*</RobText>
-          <Input
-            placeholder='John Smith'
-            errorStyle={{ color: 'red' }}
-            errorMessage=''
-            leftIcon={
-              <Icon
-                name='user'
-                size={24}
-                color='black'
-              />
-            }
-            leftIconContainerStyle={{
-              marginRight: 10
-            }}
+          <RobText>Who did you interact with?</RobText>
+          <TextField
+            onChangeText={this.updateName}
+            error={this.state.nameError}
           />
 
           <RobText>How did the interaction make you feel?</RobText>
@@ -105,6 +126,7 @@ export default class NewInteractionScreen extends React.Component {
             selectedIndex={selEmoji}
             buttons={emojiButtons}
             containerStyle={{height: 65}} />
+          {this.state.emojiError && <Text style={styles.error}>{this.state.emojiError}</Text>}
 
           <RobText h4>Optional Fields</RobText>
 
@@ -125,6 +147,11 @@ export default class NewInteractionScreen extends React.Component {
             onPress={this.updateMediumIndex}
             selectedIndex={selMedium}
             buttons={interactionMedium} />
+
+          <RobText>Any Last Thoughts?</RobText>
+          <TextInput
+            style={{height: 100, borderColor: 'gray', borderWidth: 1}}
+          />
 
           <Button
             buttonStyle={styles.button}
@@ -156,5 +183,8 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 25,
     marginBottom: 25
+  },
+  error: {
+    color: 'red'
   }
 });
