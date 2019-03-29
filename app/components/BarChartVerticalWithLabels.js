@@ -1,7 +1,8 @@
 import React from 'react'
 import { View } from 'react-native'
-import { BarChart, Grid } from 'react-native-svg-charts'
+import { BarChart, XAxis } from 'react-native-svg-charts'
 import { Text } from 'react-native-svg'
+import * as scale from 'd3-scale'
 
 export default class BarChartVerticalWithLabels extends React.PureComponent {
   render() {
@@ -25,7 +26,7 @@ export default class BarChartVerticalWithLabels extends React.PureComponent {
     )
 
     return (
-      <View style={{ flexDirection: 'row', height: 200, paddingVertical: 16 }}>
+      <View style={{ height: 200, paddingVertical: 16 }}>
           <BarChart
               style={{ flex: 1 }}
               data={data}
@@ -34,9 +35,15 @@ export default class BarChartVerticalWithLabels extends React.PureComponent {
               spacing={0.2}
               gridMin={0}
           >
-              <Grid direction={Grid.Direction.HORIZONTAL}/>
               <Labels/>
           </BarChart>
+          <XAxis
+              style={{ marginTop: 10 }}
+              data={ data }
+              scale={scale.scaleBand}
+              formatLabel={ (value, index) => index }
+              labelStyle={ { color: 'black' } }
+          />
       </View>
     )
   }

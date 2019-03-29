@@ -1,13 +1,15 @@
 import React from 'react';
 import Emoji from 'react-native-emoji';
-import { ThemeProvider, colors, Avatar, Button, Header, Icon, ListItem, Text } from 'react-native-elements';
+import { ThemeProvider, colors, Avatar, Button, Divider, Header, Icon, ListItem, Text } from 'react-native-elements';
 import { Platform, StyleSheet, ScrollView, View } from 'react-native';
 import { LoginManager } from 'react-native-fbsdk';
-import { timeOfDayEmojis, socialContextsEmojis, interactionMediumEmojis } from '../config/constants';
 import BarChartVerticalWithLabels from '../components/BarChartVerticalWithLabels';
 import PieChartWithCenteredLabels from '../components/PieChartWithCenteredLabels';
 
 export default class SummaryScreen extends React.Component {
+  static navigationOptions = {
+    headerTitle: 'HappyTrack',
+  };
   constructor() {
     super()
 
@@ -45,10 +47,11 @@ export default class SummaryScreen extends React.Component {
       this.state.summaries.map((value, index) => {
         const { week } = value;
         return (
-          <View key={index}>
+          <View key={index} style={styles.summaryView}>
             <Text h3>{week}</Text>
             <BarChartVerticalWithLabels />
             <PieChartWithCenteredLabels />
+            <Divider />
           </View>
         )
       })
@@ -56,7 +59,7 @@ export default class SummaryScreen extends React.Component {
 
     return (
       <View style={styles.container}>
-        <Header
+        {/* <Header
           containerStyle={{marginTop: Platform.OS === 'ios' ? 0 : - 30}}
           leftComponent={{text: 'HappyTrack', style: {fontSize: 24, width: 300, color: '#FFFFFF'}}}
           centerComponent={null}
@@ -65,8 +68,8 @@ export default class SummaryScreen extends React.Component {
             <Icon name="sign-out" type="font-awesome" color="#fff" onPress={this.handleLogout} />
           </View>
           }
-        />
-        <ScrollView>
+        /> */}
+        <ScrollView style={styles.scrollView}>
           {WeeklySummaries}
         </ScrollView>
       </View>
@@ -77,5 +80,11 @@ export default class SummaryScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  scrollView: {
+    padding: 20
+  },
+  summaryView: {
+    padding: 20
   }
 });

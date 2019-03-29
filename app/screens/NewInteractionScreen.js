@@ -8,16 +8,11 @@ import { emojiButtons, timeOfDay, socialContexts, interactionMedium } from '../c
 
 const RobText = props => <Text style={styles.text} {...props} />
 
-const theme = {
-  colors: {
-    ...Platform.select({
-      default: colors.platform.android,
-      ios: colors.platform.ios,
-    }),
-  },
-};
-
 export default class NewInteractionScreen extends React.Component {
+  static navigationOptions = {
+    title: 'HappyTrack'
+  };
+
   constructor() {
     super()
     this.state = {
@@ -104,13 +99,13 @@ export default class NewInteractionScreen extends React.Component {
 
     return (
       <View style={styles.container}>
-        <Header
+        {/*<Header
           containerStyle={{marginTop: Platform.OS === 'ios' ? 0 : - 30}}
           leftComponent={
             <IC name="chevron-left" type="font-awesome" color="#fff" onPress={() => this.props.navigation.goBack()} />
           }
           centerComponent={{ text: 'New Interaction', style: { fontSize: 22, color: '#fff' } }}
-          rightComponent={null} />
+        rightComponent={null} />*/}
         <ScrollView contentContainerStyle={styles.scrollView}>
           <RobText h4>Required Fields</RobText>
 

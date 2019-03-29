@@ -1,22 +1,48 @@
 import React from 'react';
 import Emoji from 'react-native-emoji';
 import { ThemeProvider, colors, Avatar, Button, Header, Icon, ListItem, Overlay, Text } from 'react-native-elements';
-import { Platform, StyleSheet, ScrollView, View } from 'react-native';
+import { Platform, StyleSheet, RefreshControl, ScrollView, View } from 'react-native';
 import { LoginManager } from 'react-native-fbsdk';
 import { timeOfDayEmojis, socialContextsEmojis, interactionMediumEmojis } from '../config/constants'
+import * as moment from 'moment'
+
+class LogoTitle extends React.Component {
+  render() {
+    return (
+      <View style={{flexDirection: 'row'}}>
+        <Text style={{ fontSize: 20, marginLeft: 15, color: '#fff', fontWeight: 'bold' }}>HappyTrack</Text>
+        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', right: 15}}>
+          <Icon name="sign-out" type="font-awesome" color="#fff" onPress={this.handleLogout} />
+        </View>
+      </View>
+    );
+  }
+}
 
 export default class InteractionScreen extends React.Component {
+  static navigationOptions = {
+    headerTitle: <LogoTitle/>
+  };
   constructor() {
     super()
 
     this.state = {
       interactions: [],
-      overlayInteractionIndex: -1
+      overlayInteractionIndex: -1,
+      refreshing: false
     }
 
     this.navToNewInteractionScreen = this.navToNewInteractionScreen.bind(this)
     this.getDetailedInteraction = this.getDetailedInteraction.bind(this)
     this.handleLogout = this.handleLogout.bind(this)
+  }
+
+  _onRefresh = () => {
+    this.setState({refreshing: true});
+    // TODO actually get data again
+    new Promise(resolve => setTimeout(resolve, 1000)).then(() => {
+      this.setState({refreshing: false});
+    });
   }
 
   navToNewInteractionScreen() {
@@ -53,12 +79,12 @@ export default class InteractionScreen extends React.Component {
 
   getDate(epoch) {
     // TODO: format to MM/DD instead
-    return new Date(epoch).toLocaleDateString("en-US")
+    return moment.unix(epoch).format('dddd, MM/DD')
   }
 
   getTime(epoch) {
     // TODO format to hh:mm instead
-    return new Date(epoch).toLocaleTimeString("en-US")
+    return moment.unix(epoch).format('h:mm a')
   }
 
   /**
@@ -91,7 +117,7 @@ export default class InteractionScreen extends React.Component {
     return (
       <View style={styles.detailInteraction}>
         <Text h4>Your interaction with {name}</Text>
-        <Text style={styles.text}>Time: {this.getDate(timestamp) + " at " + this.getTime(timestamp)}</Text>
+        <Text style={styles.text}>Recorded at: {this.getDate(timestamp) + " at " + this.getTime(timestamp)}</Text>
 
         { timeOfDay && timeOfDay != '' &&
           <Text style={styles.text}>
@@ -129,15 +155,16 @@ export default class InteractionScreen extends React.Component {
 
     return (
       <View style={styles.container}>
-        <Header
-          containerStyle={{marginTop: Platform.OS === 'ios' ? 0 : - 30}}
-          leftComponent={{text: 'HappyTrack', style: {fontSize: 24, width: 300, color: '#FFFFFF'}}}
+        {/*<Header
+          containerStyle={styles.headerContainer}
+          leftComponent={{text: 'HappyTrack', style: { flex: 1, textAlignVertical: 'center', justifyContent: 'center', alignItems: 'center', fontSize: 24, width: 300, color: '#FFFFFF'}}}
           centerComponent={null}
           rightComponent={
-            <View>
+            <View style={{ alignSelf: 'center', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
               <Icon name="sign-out" type="font-awesome" color="#fff" onPress={this.handleLogout} />
             </View>
           } />
+        */}
 
         { this.state.overlayInteractionIndex != -1 &&
           <Overlay
@@ -149,7 +176,13 @@ export default class InteractionScreen extends React.Component {
         }
 
         <View style={{flex: 1}}>
-          <ScrollView>
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this._onRefresh.bind(this)}
+              />
+            }>
             {
               this.state.interactions.map((l, i) => (
                 <ListItem
@@ -212,4 +245,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     margin: 5,
   },
+  headerContainer: {
+    height: Platform.select({
+      android: 56,
+      default: 44,
+    })
+  }
 });

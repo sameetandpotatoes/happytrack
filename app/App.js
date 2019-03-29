@@ -8,9 +8,15 @@ import SummaryScreen from './screens/SummaryScreen';
 import {createSwitchNavigator, createBottomTabNavigator, createStackNavigator, createAppContainer} from 'react-navigation';
 
 const defaultNavOptions = {
-  headerMode: 'none',
   defaultNavigationOptions: {
     gesturesEnabled: false,
+    headerTintColor: '#fff',
+    headerStyle: {
+      backgroundColor: '#1E90FF',
+    },
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
   },
   transitionConfig: () => ({
     transitionSpec: {
