@@ -1,7 +1,7 @@
 import React from 'react';
 import Emoji from 'react-native-emoji';
-import { ThemeProvider, colors, Avatar, Button, Header, Icon, ListItem, Overlay, Text } from 'react-native-elements';
-import { Platform, StyleSheet, RefreshControl, ScrollView, TouchableOpacity, View, UIManager } from 'react-native';
+import { Avatar, Button, Icon, ListItem, Overlay, Text } from 'react-native-elements';
+import { Platform, StyleSheet, RefreshControl, ScrollView, View } from 'react-native';
 import { timeOfDayEmojis, socialContextsEmojis, interactionMediumEmojis } from '../config/constants';
 import * as moment from 'moment'
 

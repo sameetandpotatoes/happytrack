@@ -1,7 +1,6 @@
 import React from 'react';
-import { ThemeProvider, colors, Image, Overlay, SocialIcon, Text } from 'react-native-elements';
-import { ActivityIndicator, ImageBackground, Platform, StyleSheet, ScrollView, View } from 'react-native';
-import { NavigationEvents } from 'react-navigation';
+import { ThemeProvider, colors, SocialIcon, Text } from 'react-native-elements';
+import { ActivityIndicator, ImageBackground, Platform, StyleSheet, View } from 'react-native';
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
 
 const theme = {

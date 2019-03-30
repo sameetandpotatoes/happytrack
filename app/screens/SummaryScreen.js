@@ -1,23 +1,33 @@
 import React from 'react';
-import Emoji from 'react-native-emoji';
-import { ThemeProvider, colors, Avatar, Button, Divider, Header, Icon, ListItem, Text } from 'react-native-elements';
-import { Platform, StyleSheet, ScrollView, View } from 'react-native';
-import { LoginManager } from 'react-native-fbsdk';
+import { Button, Divider, Icon, Text } from 'react-native-elements';
+import { StyleSheet, ScrollView, View } from 'react-native';
 import BarChartVerticalWithLabels from '../components/BarChartVerticalWithLabels';
 import PieChartWithCenteredLabels from '../components/PieChartWithCenteredLabels';
 
 export default class SummaryScreen extends React.Component {
-  static navigationOptions = {
-    headerTitle: 'HappyTrack',
-  };
+  static navigationOptions = ({ navigation }) => ({    
+    headerLeft: (
+      <Button
+        icon={
+          <Icon
+            name="menu"
+            size={24}
+            color="white"
+          />
+        }
+        onPress={() => navigation.openDrawer()} 
+        style={{position: 'absolute', left: 20}}>
+      </Button>
+    ),
+    headerTitle: 'HappyTrack'
+  });
+
   constructor() {
     super()
 
     this.state = {
       summaries: []
     }
-
-    this.handleLogout = this.handleLogout.bind(this)
   }
 
   componentDidMount() {
@@ -34,12 +44,6 @@ export default class SummaryScreen extends React.Component {
         },
       ]
     })
-  }
-
-  handleLogout() {
-    LoginManager.logOut()
-    const { navigate } = this.props.navigation
-    navigate('HomeScreen')
   }
 
   render() {
@@ -59,16 +63,6 @@ export default class SummaryScreen extends React.Component {
 
     return (
       <View style={styles.container}>
-        {/* <Header
-          containerStyle={{marginTop: Platform.OS === 'ios' ? 0 : - 30}}
-          leftComponent={{text: 'HappyTrack', style: {fontSize: 24, width: 300, color: '#FFFFFF'}}}
-          centerComponent={null}
-          rightComponent={
-          <View>
-            <Icon name="sign-out" type="font-awesome" color="#fff" onPress={this.handleLogout} />
-          </View>
-          }
-        /> */}
         <ScrollView style={styles.scrollView}>
           {WeeklySummaries}
         </ScrollView>

@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import { Button, Text } from 'react-native-elements';
