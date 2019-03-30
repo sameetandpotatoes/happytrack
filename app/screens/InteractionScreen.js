@@ -1,28 +1,28 @@
 import React from 'react';
 import Emoji from 'react-native-emoji';
 import { ThemeProvider, colors, Avatar, Button, Header, Icon, ListItem, Overlay, Text } from 'react-native-elements';
-import { Platform, StyleSheet, RefreshControl, ScrollView, View } from 'react-native';
-import { LoginManager } from 'react-native-fbsdk';
-import { timeOfDayEmojis, socialContextsEmojis, interactionMediumEmojis } from '../config/constants'
+import { Platform, StyleSheet, RefreshControl, ScrollView, TouchableOpacity, View, UIManager } from 'react-native';
+import { timeOfDayEmojis, socialContextsEmojis, interactionMediumEmojis } from '../config/constants';
 import * as moment from 'moment'
 
-class LogoTitle extends React.Component {
-  render() {
-    return (
-      <View style={{flexDirection: 'row'}}>
-        <Text style={{ fontSize: 20, marginLeft: 15, color: '#fff', fontWeight: 'bold' }}>HappyTrack</Text>
-        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', right: 15}}>
-          <Icon name="sign-out" type="font-awesome" color="#fff" onPress={this.handleLogout} />
-        </View>
-      </View>
-    );
-  }
-}
-
 export default class InteractionScreen extends React.Component {
-  static navigationOptions = {
-    headerTitle: <LogoTitle/>
-  };
+  static navigationOptions = ({ navigation }) => ({    
+    headerLeft: (
+      <Button
+        icon={
+          <Icon
+            name="menu"
+            size={24}
+            color="white"
+          />
+        }
+        onPress={() => navigation.openDrawer()} 
+        style={{position: 'absolute', left: 20}}>
+      </Button>
+    ),
+    headerTitle: 'HappyTrack'
+  });
+
   constructor() {
     super()
 
@@ -34,7 +34,6 @@ export default class InteractionScreen extends React.Component {
 
     this.navToNewInteractionScreen = this.navToNewInteractionScreen.bind(this)
     this.getDetailedInteraction = this.getDetailedInteraction.bind(this)
-    this.handleLogout = this.handleLogout.bind(this)
   }
 
   _onRefresh = () => {
@@ -73,17 +72,13 @@ export default class InteractionScreen extends React.Component {
         }
       ]
     })
-
-    // TODO query me
   }
 
   getDate(epoch) {
-    // TODO: format to MM/DD instead
     return moment.unix(epoch).format('dddd, MM/DD')
   }
 
   getTime(epoch) {
-    // TODO format to hh:mm instead
     return moment.unix(epoch).format('h:mm a')
   }
 
@@ -96,12 +91,6 @@ export default class InteractionScreen extends React.Component {
 
   viewDetail(index) {
     this.setState({ overlayInteractionIndex: index })
-  }
-
-  handleLogout() {
-    LoginManager.logOut()
-    const { navigate } = this.props.navigation
-    navigate('HomeScreen')
   }
 
   getDetailedInteraction(index) {

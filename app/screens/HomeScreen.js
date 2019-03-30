@@ -26,17 +26,19 @@ export default class HomeScreen extends React.Component {
   }
 
   loginWithFacebook() {
-    LoginManager.logInWithReadPermissions(['email', 'public_profile']).then(
+    const { navigate } = this.props.navigation
+    LoginManager.logInWithReadPermissions(['email']).then(
       function(result) {
         if (!result.isCancelled) {
-          const { navigate } = this.props.navigation
           navigate('AppScreen')
         }
       },
       function(error) {
         alert('Login failed with error: ' + error);
       }
-    );
+    ).catch(error => {
+      console.log(error);
+    });
   }
 
   componentWillMount() {

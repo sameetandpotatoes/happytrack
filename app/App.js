@@ -1,68 +1,72 @@
 import React from 'react';
-import { Easing, Animated } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from './screens/HomeScreen';
-import InteractionScreen from './screens/InteractionScreen';
-import NewInteractionScreen from './screens/NewInteractionScreen';
-import SummaryScreen from './screens/SummaryScreen';
-import {createSwitchNavigator, createBottomTabNavigator, createStackNavigator, createAppContainer} from 'react-navigation';
+import SideMenu from './components/SideMenu';
 
-const defaultNavOptions = {
-  defaultNavigationOptions: {
-    gesturesEnabled: false,
-    headerTintColor: '#fff',
-    headerStyle: {
-      backgroundColor: '#1E90FF',
-    },
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
-  },
-  transitionConfig: () => ({
-    transitionSpec: {
-      duration: 300,
-      easing: Easing.out(Easing.poly(4)),
-      timing: Animated.timing,
-    },
-    screenInterpolator: sceneProps => {
-      const { layout, position, scene } = sceneProps;
-      const { index } = scene;
+import InteractionNavigator from './navigators/InteractionNavigator';
+import SummaryNavigator from './navigators/SummaryNavigator';
 
-      const height = layout.initHeight;
-      const translateY = position.interpolate({
-        inputRange: [index - 1, index, index + 1],
-        outputRange: [height, 0, 0],
-      });
+import {createSwitchNavigator, createDrawerNavigator, createBottomTabNavigator, createStackNavigator, createAppContainer} from 'react-navigation';
 
-      const opacity = position.interpolate({
-        inputRange: [index - 1, index - 0.99, index],
-        outputRange: [0, 1, 1],
-      });
+// const defaultNavOptions = {
+//   defaultNavigationOptions: {
+//     gesturesEnabled: false,
+//     headerTintColor: '#fff',
+//     headerStyle: {
+//       backgroundColor: '#1E90FF',
+//     },
+//     headerTitleStyle: {
+//       fontWeight: 'bold',
+//     },
+//   },
+//   transitionConfig: () => ({
+//     transitionSpec: {
+//       duration: 300,
+//       easing: Easing.out(Easing.poly(4)),
+//       timing: Animated.timing,
+//     },
+//     screenInterpolator: sceneProps => {
+//       const { layout, position, scene } = sceneProps;
+//       const { index } = scene;
 
-      return { opacity, transform: [{ translateY }] };
-    },
-  }),
-};
+//       const height = layout.initHeight;
+//       const translateY = position.interpolate({
+//         inputRange: [index - 1, index, index + 1],
+//         outputRange: [height, 0, 0],
+//       });
 
-const InteractionStack = createStackNavigator(
-  {
-    InteractionScreen: InteractionScreen,
-    NewInteractionScreen: NewInteractionScreen
-  },
-  defaultNavOptions
+//       const opacity = position.interpolate({
+//         inputRange: [index - 1, index - 0.99, index],
+//         outputRange: [0, 1, 1],
+//       });
+
+//       return { opacity, transform: [{ translateY }] };
+//     },
+//   }),
+// };
+
+const DrawerStackInteraction = createDrawerNavigator({
+    InteractionScreen: InteractionNavigator,
+    SummaryScreen: SummaryNavigator
+  }, {
+    initialRouteName: 'InteractionScreen',
+    contentComponent: SideMenu,
+  }
 );
 
-const SummaryStack = createStackNavigator(
-  {
-    SummaryScreen: SummaryScreen
-  },
-  defaultNavOptions
+const DrawerStackSummary = createDrawerNavigator({
+  InteractionScreen: InteractionNavigator,
+  SummaryScreen: SummaryNavigator
+}, {
+  initialRouteName: 'SummaryScreen',
+  contentComponent: SideMenu
+}
 );
 
 const AppStack = createBottomTabNavigator(
   {
-    Interactions: InteractionStack,
-    Summary: SummaryStack
+    Interactions: DrawerStackInteraction,
+    Summary: DrawerStackSummary
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
