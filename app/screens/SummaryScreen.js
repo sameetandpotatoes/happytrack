@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Divider, Icon, Text } from 'react-native-elements';
-import { StyleSheet, ScrollView, View } from 'react-native';
+import { Platform, StyleSheet, ScrollView, View } from 'react-native';
 import BarChartVerticalWithLabels from '../components/BarChartVerticalWithLabels';
 import PieChartWithCenteredLabels from '../components/PieChartWithCenteredLabels';
 
@@ -15,8 +15,10 @@ export default class SummaryScreen extends React.Component {
             color="white"
           />
         }
+        transparent='true'
         onPress={() => navigation.openDrawer()} 
-        style={{position: 'absolute', left: 20}}>
+        buttonStyle={{backgroundColor: 'rgba(0,0,0,0)'}}
+        style={{position: 'absolute', left: 20, top: (Platform.OS === 'ios' ) ? -25 : 0}}>
       </Button>
     ),
     headerTitle: 'HappyTrack'

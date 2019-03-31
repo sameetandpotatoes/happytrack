@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "adm-zip": "^0.4.13",
+    "faker": "^4.1.0",
+    "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "plist": "^3.0.1",
     "react": "16.6.3",

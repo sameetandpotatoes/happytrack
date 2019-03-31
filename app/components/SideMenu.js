@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import { Button, Text } from 'react-native-elements';
+import { Avatar, Button, Text } from 'react-native-elements';
 import { GraphRequest, GraphRequestManager, LoginManager } from 'react-native-fbsdk';
 import {ScrollView, StyleSheet, View} from 'react-native';
 
@@ -10,6 +10,7 @@ class SideMenu extends Component {
 
     this.state = {
       oauth: {
+        id: 0,
         name: '',
         email: '',
         profile_pic_url: ''
@@ -25,6 +26,7 @@ class SideMenu extends Component {
     } else {
       this.setState({
         oauth: {
+          id: result.id,
           name: result.name,
           email: result.email
         }
@@ -56,7 +58,14 @@ class SideMenu extends Component {
             <Text style={styles.sectionHeadingStyle}>
               {this.state.oauth.name}
             </Text>
-            <View style={styles.navSectionStyle}>
+            <Avatar
+              large
+              source={{uri: `https://graph.facebook.com/${this.state.oauth.id}/picture?type=large&width=720&height=720`}}
+              activeOpacity={0.8}
+              style={{width: 200, height: 200}}
+            />
+            <View>
+              <Text>Logged in as:</Text>
               <Text style={styles.navItemStyle}>
                 {this.state.oauth.email}
               </Text>
@@ -79,22 +88,20 @@ SideMenu.propTypes = {
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 20,
-        flex: 1
+      marginTop: 120,
+      padding: 10,
+      flex: 1
     },
     navItemStyle: {
-        padding: 10
-    },
-    navSectionStyle: {
-        backgroundColor: 'lightgrey'
+      fontSize: 16
     },
     sectionHeadingStyle: {
-        paddingVertical: 10,
-        paddingHorizontal: 5
+      paddingVertical: 10,
+      paddingHorizontal: 5,
+      fontSize: 24
     },
     footerContainer: {
-        padding: 20,
-        backgroundColor: 'lightgrey'
+        padding: 20
     }
 });
 

@@ -1,9 +1,13 @@
 import React from 'react';
 import Emoji from 'react-native-emoji';
 import { Avatar, Button, Icon, ListItem, Overlay, Text } from 'react-native-elements';
-import { Platform, StyleSheet, RefreshControl, ScrollView, View } from 'react-native';
-import { timeOfDayEmojis, socialContextsEmojis, interactionMediumEmojis } from '../config/constants';
-import * as moment from 'moment'
+import { Platform, SectionList, StyleSheet, RefreshControl, ScrollView, View } from 'react-native';
+import moment from 'moment';
+import Faker from 'faker';
+import { timeOfDay, timeOfDayEmojis, socialContexts, socialContextsEmojis, interactionMedium, interactionMediumEmojis } from '../config/constants';
+const _ = require('lodash');
+
+Date.prototype.getUnixTime = function() { return this.getTime()/1000|0 };
 
 export default class InteractionScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({    
@@ -16,8 +20,10 @@ export default class InteractionScreen extends React.Component {
             color="white"
           />
         }
+        transparent='true'
         onPress={() => navigation.openDrawer()} 
-        style={{position: 'absolute', left: 20}}>
+        buttonStyle={{backgroundColor: 'rgba(0,0,0,0)'}}
+        style={{position: 'absolute', left: 25, top: (Platform.OS === 'ios' ) ? -25 : 0}}>
       </Button>
     ),
     headerTitle: 'HappyTrack'
@@ -39,8 +45,11 @@ export default class InteractionScreen extends React.Component {
   _onRefresh = () => {
     this.setState({refreshing: true});
     // TODO actually get data again
-    new Promise(resolve => setTimeout(resolve, 1000)).then(() => {
-      this.setState({refreshing: false});
+    this.fetchData().then((data) => {
+      this.setState({
+        interactions: data,
+        refreshing: false
+      });
     });
   }
 
@@ -48,30 +57,31 @@ export default class InteractionScreen extends React.Component {
     this.props.navigation.navigate('NewInteractionScreen')
   }
 
-  componentDidMount() {
-    // TODO what fake data looks like, should be sorted by timestamp in descending order probably, and then labeled by week in the app?
-    this.setState({
-      interactions: [
-        {
-          name: 'John Smith',
-          emoji: 'grinning',
-          timeOfDay: 'Morning',
-          context: 'Academic',
-          medium: 'In Person',
-          timestamp: 1426967129,
-          other_loggable_text: 'This interaction was not great.',
-        },
-        {
-          name: 'Yasha Mostofi',
-          emoji: 'sweat',
-          timeOfDay: 'Morning',
-          context: null,
-          medium: null,
-          timestamp: 1552846376,
-          other_loggable_text: 'This interaction was great.'
+  fetchData() {
+    return new Promise(
+      function (resolve, reject) {
+        // TODO fetch from API
+        let fakeData = [];
+
+        for (let i = 0; i < 50; i++) {
+          fakeData.push({
+            name: Faker.name.findName(),
+            emoji: _.sample(['grinning', 'blush', 'neutral_face', 'sweat', 'confounded']),
+            timeOfDay: _.sample(timeOfDay),
+            context: _.sample(socialContexts),
+            medium: _.sample(interactionMedium),
+            timestamp: new Date(Faker.date.between('2019-03-03', '2019-03-15')).getUnixTime(),
+            other_loggable_text: Faker.lorem.sentences(3, 3)
+          });
         }
-      ]
-    })
+  
+        resolve(fakeData);
+      }
+    );
+  }
+
+  componentDidMount() {
+    this._onRefresh();
   }
 
   getDate(epoch) {
@@ -83,10 +93,11 @@ export default class InteractionScreen extends React.Component {
   }
 
   /**
-  * Get the first character of the name
+  * Gets the initials of the name, max of 2 characters (for first and last name)
   */
   getInitials(name) {
-    return name.split(" ").map(s => s.charAt(0)).join('').toUpperCase()
+    const initials = name.split(" ").map(s => s.charAt(0)).join('').toUpperCase();
+    return initials.charAt(0) + initials.charAt(initials.length - 1);
   }
 
   viewDetail(index) {
@@ -139,22 +150,27 @@ export default class InteractionScreen extends React.Component {
 
   }
 
+  FlatListItemSeparator = () => {
+    return (
+      //Item Separator
+      <View style={{height: 0.5, width: '100%', backgroundColor: '#C8C8C8'}}/>
+    );
+  };
+
   render() {
-    const emojiFS = 21;
+    const emojiFS = 23;
+
+    const sortedInteractions = 
+        _(this.state.interactions)
+        .groupBy(event => moment.unix(event.timestamp).format('MM/DD/YYYY'))
+        .toPairs()
+        .sortBy(value => value[0])
+        .map((value, key) => ({title: moment(value[0], 'MM/DD/YYYY').format('ddd MMMM DD'), data: value[1]}))
+        .value()
+        .reverse();
 
     return (
       <View style={styles.container}>
-        {/*<Header
-          containerStyle={styles.headerContainer}
-          leftComponent={{text: 'HappyTrack', style: { flex: 1, textAlignVertical: 'center', justifyContent: 'center', alignItems: 'center', fontSize: 24, width: 300, color: '#FFFFFF'}}}
-          centerComponent={null}
-          rightComponent={
-            <View style={{ alignSelf: 'center', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <Icon name="sign-out" type="font-awesome" color="#fff" onPress={this.handleLogout} />
-            </View>
-          } />
-        */}
-
         { this.state.overlayInteractionIndex != -1 &&
           <Overlay
             isVisible={true}
@@ -172,31 +188,35 @@ export default class InteractionScreen extends React.Component {
                 onRefresh={this._onRefresh.bind(this)}
               />
             }>
-            {
-              this.state.interactions.map((l, i) => (
-                <ListItem
-                  key={i}
-                  leftAvatar={<Avatar rounded title={this.getInitials(l.name)} />}
-                  onPress={() => this.viewDetail(i)}
-                  title={l.name}
-                  subtitle={
-                    <View style={styles.subtitleView}>
-                      <Emoji name={l.emoji} style={{fontSize: emojiFS, position: 'absolute', right: 0}} />
-                      { l.timeOfDay && l.timeOfDay != '' &&
-                        <Emoji name={timeOfDayEmojis[l.timeOfDay]} style={{fontSize: emojiFS, position: 'absolute', right: 40}} />
-                      }
-                      { l.context && l.context != '' &&
-                        <Emoji name={socialContextsEmojis[l.context]} style={{fontSize: emojiFS, position: 'absolute', right: 80}} />
-                      }
-                      { l.medium && l.medium != '' &&
-                        <Emoji name={interactionMediumEmojis[l.medium]} style={{fontSize: emojiFS, position: 'absolute', right: 120}} />
-                      }
-                      <Text>{this.getDate(l.timestamp) + " at " + this.getTime(l.timestamp)}</Text>
-                    </View>
-                  }
-                />
-              ))
-            }
+            <SectionList
+              ItemSeparatorComponent={this.FlatListItemSeparator}
+              sections={sortedInteractions}
+              renderSectionHeader={({ section }) => (
+                <Text style={styles.SectionHeaderStyle}> {section.title} </Text>
+              )}
+              renderItem={({item, index, section}) => (
+                <View style={styles.SectionListItems}>
+                  <Avatar rounded size="medium" title={this.getInitials(item.name)} />
+                  <View style={{flexDirection: 'column', marginLeft: 5}}>
+                    <Text style={{fontSize: 22}}>{item.name}</Text>
+                    <Text style={{fontSize: 18}}>{"at " + this.getTime(item.timestamp)}</Text>
+                  </View>
+                  <View style={styles.subtitleView}>
+                    <Emoji name={item.emoji} style={{fontSize: emojiFS, position: 'absolute', right: 0, bottom: 10}} />
+                    { item.timeOfDay && item.timeOfDay != '' &&
+                      <Emoji name={timeOfDayEmojis[item.timeOfDay]} style={{fontSize: emojiFS, position: 'absolute', right: 40, bottom: 10}} />
+                    }
+                    { item.context && item.context != '' &&
+                      <Emoji name={socialContextsEmojis[item.context]} style={{fontSize: emojiFS, position: 'absolute', right: 80, bottom: 10}} />
+                    }
+                    { item.medium && item.medium != '' &&
+                      <Emoji name={interactionMediumEmojis[item.medium]} style={{fontSize: emojiFS, position: 'absolute', right: 120, bottom: 10}} />
+                    }
+                  </View>
+                </View>
+              )}
+              keyExtractor={(item, index) => index}
+              />
           </ScrollView>
         </View>
 
@@ -239,5 +259,24 @@ const styles = StyleSheet.create({
       android: 56,
       default: 44,
     })
+  },
+  SectionHeaderStyle: {
+    backgroundColor : '#64B5F6',
+    fontSize : 20,
+    padding: 5,
+    color: '#fff',
+    fontWeight: 'bold'
+  },
+  SectionListItems: {
+    fontSize : 16,
+    flex: 1,
+    flexDirection: 'row',
+    display: 'flex',
+    padding: 10,
+    color: '#000',
+    backgroundColor : '#F5F5F5',
+  },
+  subtitleView: {
+    marginLeft: 'auto'
   }
 });

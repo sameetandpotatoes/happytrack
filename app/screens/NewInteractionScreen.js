@@ -8,7 +8,7 @@ const RobText = props => <Text style={styles.text} {...props} />
 
 export default class NewInteractionScreen extends React.Component {
   static navigationOptions = {
-    title: 'HappyTrack'
+    title: 'New Interaction'
   };
 
   constructor() {
@@ -168,7 +168,6 @@ const styles = StyleSheet.create({
     padding: '5%',
   },
   text: {
-    fontFamily: 'sans-serif-light',
     fontSize: 19,
     marginTop: 8,
     marginBottom: 8
