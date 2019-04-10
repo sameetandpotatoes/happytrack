@@ -106,8 +106,19 @@ def interaction(request):
     Post changes in interaction
 
     Input:
+    {
+        loggee_id: int, # Who is getting logged
+        time: str, # Time of data
+        social: str, # Social context
+        medium: str, # Medium
+        description: optional(str), # Any additional information
+    }
 
     Output:
+    {
+        logger_id: int, # Who was logging
+        loggee_id: int, # Who was logged
+    }
     """
 
     json_body = json.loads(request.body)
@@ -145,19 +156,60 @@ def interaction(request):
 @restrict_function(allowed=['GET', 'POST'])
 def friends(request):
     """
+    Get:
+    Retrieves all friends for logged in users
+
+    Input:
+    Empty Body
+
+    Output:
+    [
+        Friends
+    ]
+
+    ====
+
+    Post:
+    Adds a friend
+
+    Input:
+    {
+        name: str,
+    }
+
+    Output:
+    Empty Body
+
     """
 
     json_body = json.loads(request.body)
     if request.method == 'GET':
-        pass
+        return HttpResponse(status=501)
     elif request.method == 'POST':
-        pass
+        ret = validate(json_body, summary_get_schema)
+        if ret is not None:
+            return ret
+        return HttpResponse(status=501)
 
 
 @csrf_exempt
 @restrict_function(allowed=['GET'])
 def summary(request):
     """
+    Get:
+    Returns a list of recommendations
+
+    Input:
+    {
+        from: optional(str, date)
+        to: optional(str, date)
+    }
+
+    Output:
+    [
+        Summary
+    ]
+
     """
 
     json_body = json.loads(request.body)
@@ -165,20 +217,52 @@ def summary(request):
     if ret is not None:
         return ret
     # TODO: What should this look like?
+    return HttpResponse(status=501)
 
 @csrf_exempt
 @restrict_function(allowed=['GET', 'POST'])
 def recommendation(request):
     """
+    Get:
+    Returns a list of recommendations
+
+    Input:
+    {
+        from: optional(str),
+        to: optional(str),
+    }
+
+    Output:
+    [
+        Recommendation
+    ]
+
+    ===
+
+    Input:
+    {
+        feedback_id: int,
+        feedback: str,
+    }
+
+    Output:
+    Empty Body
+
+    Post:
+    Updates a piece of feedback for piece of recommendation
     """
 
     json_body = json.loads(request.body)
     if request.method == 'GET':
-        ret = validate(json_body, interaction_get_schema)
+        ret = validate(json_body, recommendation_get_schema)
         if ret is not None:
             return ret
 
+        return HttpResponse(status=501)
+
     elif request.method == 'POST':
-        ret = validate(json_body, interaction_get_schema)
+        ret = validate(json_body, recommendation_post_schema)
         if ret is not None:
             return ret
+
+        return HttpResponse(status=501)

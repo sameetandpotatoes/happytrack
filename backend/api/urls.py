@@ -22,7 +22,6 @@ urlpatterns = [
     path('login/', views.login),
     path('logout/', views.logout),
     path('interaction/', views.interaction),
-    path('me/', views.me),
     path('friends/', views.friends),
     path('summary/', views.summary),
     path('recommendation/', views.recommendation),

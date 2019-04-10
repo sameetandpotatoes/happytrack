@@ -76,18 +76,27 @@ interaction_post_schema = {
 summary_get_schema = {
     "type": "object",
     "properties": {
-        'logger_id': {
-            'type': 'number',
+        'from': {
+            'type': 'string',
+            'format': 'date-time',
+        },
+        'to': {
+            'type': 'string',
+            'format': 'date-time',
         },
     },
-    'required': ['logger_id'],
 }
 
 recommendation_get_schema = {
     "type": "object",
     "properties": {
-        "logger_id": {
-            'type': 'number',
+        'from': {
+            'type': 'string',
+            'format': 'date-time',
+        },
+        'to': {
+            'type': 'string',
+            'format': 'date-time',
         },
     },
 }
@@ -95,9 +104,6 @@ recommendation_get_schema = {
 recommendation_post_schema = {
     "type": "object",
     "properties": {
-        "logger_id": {
-            'type': 'number',
-        },
         "feedback_id": {
             'type': 'number',
         },
@@ -105,6 +111,7 @@ recommendation_post_schema = {
             'anyOf': any_of_enum(models.RecommendationFeedback.FEEDBACK_CHOICES),
         },
     },
+    "required": ["feedback_id", "feedback"],
 }
 
 login_post_schema = {
@@ -115,4 +122,14 @@ login_post_schema = {
         },
     },
     'required': ['token'],
+}
+
+friend_post_schema = {
+    "type": "object",
+    "properties": {
+        "token": {
+            'name': 'string',
+        },
+    },
+    'required': ['name'],
 }
