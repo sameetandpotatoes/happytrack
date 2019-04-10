@@ -23,10 +23,24 @@ SESSION_USER_KEY = 'user-id'
 @csrf_exempt
 @restrict_function(allowed=['POST'])
 def login(request):
+    """
+    Logs into the backend of the appe
+
+    Input
+    {
+        token: str
+    }
+
+    Output:
+    Empty Body
+
+    """
+
     json_body = json.loads(request.body)
     ret = validate(json_body, utils.login_posts_schema)
     if ret is not None:
         return ret
+
     # Validate token
     token = json_body['token']
     request.session[SESSION_TOKEN_KEY] = token
@@ -47,21 +61,55 @@ def login(request):
     m.save()
 
     # Store in session
-    request.session[SESSION_USER_KEY] = m.id
+    request.session[SESSION_USER_KEY] = str(m.id)
+    return HttpResponse("", status=200)
 
 @csrf_exempt
 @restrict_function(allowed=['POST'])
 def logout(request):
-    token = request.session['token']
-    # Invalidate token
+    """
+    Get:
+    Logs into the backend of the appe
 
-    # Clear session
-    request.session['token'] = ''
-    request.session['id'] = ''
+    Input:
+    Ignored
+
+    Output:
+    Empty Body
+
+    """
+
+    request.session[SESSION_TOKEN_KEY] = ''
+    request.session[SESSION_USER_KEY] = ''
 
 @csrf_exempt
 @restrict_function(allowed=['GET', 'POST'])
 def interaction(request):
+    """
+    Get:
+    Logs an interaction
+
+    Input:
+    {
+        from: optional(str, date)
+        to: optional(str, date)
+    }
+
+    Output:
+    [
+      Logs
+    ]
+
+    ====
+
+    Post:
+    Post changes in interaction
+
+    Input:
+
+    Output:
+    """
+
     json_body = json.loads(request.body)
     if request.method == 'GET':
         ret = validate(json_body, interaction_get_schema)
@@ -83,7 +131,7 @@ def interaction(request):
         entry.reaction = json_body['reaction']
 
         entry.loggee_id = int(json_body['loggee_id'])
-        entry.logger_id = int(request.session['id'])
+        entry.logger_id = int(request.session[SESSION_USER_KEY])
         entry.time_of_day = json_body['time']
         entry.social_context = json_body['social']
         entry.interaction_medium = json_body['medium']
@@ -92,17 +140,13 @@ def interaction(request):
         ret = json.dumps(dict(logger_id=entry.logger_id, loggee_id = entry.loggee_id))
         return HttpResponse(json.dumps(ret), content_type='application/json', status=200)
 
-@csrf_exempt
-@restrict_function(allowed=['GET'])
-def me(request):
-    json_body = json.loads(request.body)
-    string = serializers.serialize('json', base.all())
-    return HttpResponse(string, content_type='application/json', status=200)
-
 
 @csrf_exempt
 @restrict_function(allowed=['GET', 'POST'])
 def friends(request):
+    """
+    """
+
     json_body = json.loads(request.body)
     if request.method == 'GET':
         pass
@@ -110,21 +154,30 @@ def friends(request):
         pass
 
 
+@csrf_exempt
 @restrict_function(allowed=['GET'])
 def summary(request):
+    """
+    """
+
     json_body = json.loads(request.body)
     ret = validate(json_body, summary_get_schema)
     if ret is not None:
         return ret
     # TODO: What should this look like?
 
+@csrf_exempt
 @restrict_function(allowed=['GET', 'POST'])
 def recommendation(request):
+    """
+    """
+
     json_body = json.loads(request.body)
     if request.method == 'GET':
         ret = validate(json_body, interaction_get_schema)
         if ret is not None:
             return ret
+
     elif request.method == 'POST':
         ret = validate(json_body, interaction_get_schema)
         if ret is not None:
