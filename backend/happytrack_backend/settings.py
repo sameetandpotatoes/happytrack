@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CSRF_USE_SESSIONS = True
+
 
 # Application definition
 

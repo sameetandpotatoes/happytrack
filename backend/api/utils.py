@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from . import models
 
 class restrict_function(object):
     def __init__(self, allowed=None):
@@ -29,9 +30,6 @@ def any_of_enum(enum):
 interaction_get_schema = {
     "type": "object",
     "properties": {
-        'logger_id': {
-            'type': 'number',
-        },
         'from': {
             'type': 'string',
             'format': 'date-time',
@@ -41,7 +39,7 @@ interaction_get_schema = {
             'format': 'date-time',
         }
     },
-    'required': ['logger_id'],
+    'required': [],
 }
 
 interaction_post_schema = {
@@ -65,12 +63,6 @@ interaction_post_schema = {
                 { 'type': 'string', },
             ],
         },
-        'logger_id': {
-            'anyOf': [
-                { 'type': 'number', },
-                { 'type': 'string', },
-            ],
-        },
         'description': {
             'type': 'string',
             'maxLength': 512,
@@ -78,7 +70,7 @@ interaction_post_schema = {
     },
     "required": ["reaction", "time",
                  'social', 'medium',
-                 'loggee_id', 'logger_id'],
+                 'loggee_id'],
 }
 
 summary_get_schema = {
@@ -113,4 +105,14 @@ recommendation_post_schema = {
             'anyOf': any_of_enum(models.RecommendationFeedback.FEEDBACK_CHOICES),
         },
     },
+}
+
+login_post_schema = {
+    "type": "object",
+    "properties": {
+        "token": {
+            'type': 'string',
+        },
+    },
+    'required': ['token'],
 }

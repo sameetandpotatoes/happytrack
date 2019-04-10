@@ -1,11 +1,21 @@
 from django.db import models
 
-class Person(models.Model):
+class User(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=64)
+    email = models.CharField(max_length=512)
 
     def __str__(self):
         return 'Person("{}")'.format(self.name)
+
+class Friend(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=64)
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return 'Person("{}")'.format(self.name)
+
 
 class LogEntry(models.Model):
     REACTION_CHOICES = (
@@ -27,7 +37,7 @@ class LogEntry(models.Model):
         ('NA', 'Not Applicable'),
         ('AC', 'Academic'),
         ('SO', 'Social'),
-        ('CO', 'Context'),
+        ('OC', 'Other'),
         ('WO', 'Work'),
     )
 
@@ -41,8 +51,8 @@ class LogEntry(models.Model):
     id = models.AutoField(primary_key=True)
     reaction = models.CharField(max_length=2, choices=REACTION_CHOICES)
     # Who is logged about
-    loggee = models.ForeignKey('Person', models.SET_NULL, related_name='loggee_person', null=True)
-    logger = models.ForeignKey('Person', models.CASCADE, related_name='logger_person')
+    loggee = models.ForeignKey('Friend', models.SET_NULL, related_name='loggee_person', null=True)
+    logger = models.ForeignKey('User', models.CASCADE, related_name='logger_person')
     time_of_day = models.CharField(max_length=2, choices=TIME_CHOICES)
     social_context = models.CharField(max_length=2, choices=SOCIAL_CHOICES)
     interaction_medium = models.CharField(max_length=2, choices=MEDIUM_CHOICES)
@@ -60,8 +70,8 @@ class Recommendation(models.Model):
     )
     rec_typ = models.CharField(max_length=2, choices=RECOMMENDATION_CHOICES)
     recommendation = models.CharField(max_length=128)
-    recommend_person = models.ForeignKey('Person', models.CASCADE, related_name='recommend_person')
-    about_person = models.ForeignKey('Person', models.SET_NULL, related_name='about_person', null=True)
+    recommend_person = models.ForeignKey('User', models.CASCADE, related_name='recommend_person')
+    about_person = models.ForeignKey('Friend', models.SET_NULL, related_name='about_person', null=True)
 
 class RecommendationFeedback(models.Model):
     FEEDBACK_CHOICES = (
