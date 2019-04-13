@@ -67,9 +67,11 @@ class Recommendation(models.Model):
         ('PO', 'Positive'),
         ('NE', 'Negative'),
         ('AV', 'Avoidance'),
+        ('GE', 'Generic'),
     )
     rec_typ = models.CharField(max_length=2, choices=RECOMMENDATION_CHOICES)
     recommendation = models.CharField(max_length=128)
+    rec_description = models.CharField(max_length=512, default='')
     recommend_person = models.ForeignKey('User', models.CASCADE, related_name='recommend_person')
     about_person = models.ForeignKey('Friend', models.SET_NULL, related_name='about_person', null=True)
 
