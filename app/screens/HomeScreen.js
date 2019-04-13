@@ -2,6 +2,7 @@ import React from 'react';
 import { ThemeProvider, colors, SocialIcon, Text } from 'react-native-elements';
 import { ActivityIndicator, ImageBackground, Platform, StyleSheet, View } from 'react-native';
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
+import { loginBackend } from '../utils/api';
 
 const theme = {
   colors: {
@@ -22,14 +23,15 @@ export default class HomeScreen extends React.Component {
 
     this.loginWithTwitter = this.loginWithTwitter.bind(this)
     this.loginWithFacebook = this.loginWithFacebook.bind(this)
+    this.checkForAccessToken = this.checkForAccessToken.bind(this)
   }
 
   loginWithFacebook() {
-    const { navigate } = this.props.navigation
+    const checkForAccessToken = this.checkForAccessToken;
     LoginManager.logInWithReadPermissions(['email']).then(
       function(result) {
         if (!result.isCancelled) {
-          navigate('AppScreen')
+          checkForAccessToken();
         }
       },
       function(error) {
@@ -40,19 +42,25 @@ export default class HomeScreen extends React.Component {
     });
   }
 
-  componentWillMount() {
+  checkForAccessToken() {
     AccessToken.getCurrentAccessToken()
       .then((data) => {
         this.setState({isLoading: false})
-        if (data.accessToken) {
+        if (data && data.accessToken) {
           const { navigate } = this.props.navigation
-          navigate('AppScreen')
+          loginBackend(data.accessToken, function(response) {
+            navigate('AppScreen')
+          });
         }
       })
       .catch(error => {
         console.log(error)
         this.setState({isLoading: false})
       });
+  }
+
+  componentWillMount() {
+    this.checkForAccessToken();
   }
 
   loginWithTwitter() {

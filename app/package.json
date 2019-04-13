@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "adm-zip": "^0.4.13",
+    "axios": "^0.18.0",
     "faker": "^4.1.0",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
