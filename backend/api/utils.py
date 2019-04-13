@@ -54,6 +54,9 @@ interaction_post_schema = {
         'medium': {
             'anyOf': any_of_enum(models.LogEntry.MEDIUM_CHOICES),
         },
+        'content': {
+            'anyOf': any_of_enum(models.LogEntry.CONTENT_CHOICES),
+        },
         'loggee_id': {
             'anyOf': [
                 { 'type': 'number', },

@@ -48,6 +48,12 @@ class LogEntry(models.Model):
         ('PH', 'Over The Phone'),
     )
 
+    CONTENT_CHOICES = (
+        ('SM', 'Small Talk'),
+        ('OP', 'One Personal'),
+        ('BP', 'Both Personal'),
+    )
+
     id = models.AutoField(primary_key=True)
     reaction = models.CharField(max_length=2, choices=REACTION_CHOICES)
     # Who is logged about
@@ -56,6 +62,7 @@ class LogEntry(models.Model):
     time_of_day = models.CharField(max_length=2, choices=TIME_CHOICES)
     social_context = models.CharField(max_length=2, choices=SOCIAL_CHOICES)
     interaction_medium = models.CharField(max_length=2, choices=MEDIUM_CHOICES)
+    content_class = models.CharField(max_length=2, choices=CONTENT_CHOICES)
     other_loggable_text = models.CharField(max_length=512)
 
     created_at = models.DateTimeField(auto_now_add=True)
