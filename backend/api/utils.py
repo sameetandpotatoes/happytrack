@@ -39,7 +39,6 @@ interaction_get_schema = {
             'format': 'date-time',
         }
     },
-    'required': [],
 }
 
 interaction_post_schema = {
