@@ -24,7 +24,7 @@ SESSION_USER_KEY = 'user-id'
 @restrict_function(allowed=['POST'])
 def login(request):
     """
-    Logs into the backend of the appe
+    Logs into the backend of the app
 
     Input
     {
@@ -69,7 +69,7 @@ def login(request):
 def logout(request):
     """
     Get:
-    Logs into the backend of the appe
+    Logs out of the backend of the app
 
     Input:
     Ignored
