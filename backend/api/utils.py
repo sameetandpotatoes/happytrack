@@ -25,8 +25,6 @@ def any_of_enum(enum):
     vals = valid_values_for_enum(enum)
     return [{'type': 'string', 'pattern': x} for x in vals]
 
-
-
 interaction_get_schema = {
     "type": "object",
     "properties": {
