@@ -321,10 +321,18 @@ def recommendation(request):
         return JsonResponse(recs, status=200)
 
     elif request.method == 'POST':
-        ret = validate(json_body, recommendation_post_schema)
+        ret = validate(json_body, utils.recommendation_post_schema)
         if ret is not None:
             return ret
-        return HttpResponse(status=501)
+        try:
+            recommendation = models.Recommendation.objects.get(id=json_body['feedback_id'])
+        except models.Recommendation.DoesNotExist as e:
+            return HttpResponseBadRequest("Recommendation with ID {} does not exist.".format(json_body['feedback_id']))
+        feedback = models.RecommendationFeedback()
+        feedback.rec = recommendation
+        feedback.feedback_typ = json_body['feedback']
+        feedback.save()
+        return HttpResponse(status=200)
 
 
 # Sources:
