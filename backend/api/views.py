@@ -318,3 +318,12 @@ def recommendation(request):
             return ret
 
         return HttpResponse(status=501)
+
+
+# https://www.psychologytoday.com/us/blog/ulterior-motives/201810/does-the-quantity-social-interactions-affect-happiness
+# https://journals.sagepub.com/doi/full/10.1177/0956797610362675
+# https://www.ncbi.nlm.nih.gov/pubmed/22001229
+# https://www.ncbi.nlm.nih.gov/pubmed/29704967
+# https://www.sciencedirect.com/science/article/abs/pii/S0277953611005636
+# http://www.dr-mueck.de/HM_Angst/Ways-to-improve-social-interaction.htm
+# https://www.sciencedirect.com/science/article/pii/S0191886902002428
