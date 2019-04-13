@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 import json
 from .utils import restrict_function, interaction_get_schema, interaction_post_schema, summary_get_schema
 from . import utils
@@ -172,9 +172,12 @@ def friends(request):
     Empty Body
 
     Output:
-    [
-        Friends
-    ]
+    {
+        friends:
+        [
+            Friends
+        ]
+    }
 
     ====
 
@@ -197,12 +200,21 @@ def friends(request):
         return HttpResponseBadRequest(str(e))
 
     if request.method == 'GET':
-        return HttpResponse(status=501)
+        user = models.User.objects.get(id=request.session[SESSION_USER_KEY])
+        query_result = models.Friend.objects.filter(user=user)
+        result = [f.name for f in query_result]
+        return JsonResponse({"friends": result}, status=200)
     elif request.method == 'POST':
-        ret = validate(json_body, summary_get_schema)
+        ret = validate(json_body, utils.friend_post_schema)
         if ret is not None:
             return ret
-        return HttpResponse(status=501)
+        user = models.User.objects.get(id=request.session[SESSION_USER_KEY])
+        m, created = models.Friend.objects.get_or_create(
+            user=user,
+            name=json_body['name'],
+        )
+        m.save()
+        return HttpResponse(status=200)
 
 
 @csrf_exempt

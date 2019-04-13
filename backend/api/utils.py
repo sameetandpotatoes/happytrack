@@ -127,8 +127,8 @@ login_post_schema = {
 friend_post_schema = {
     "type": "object",
     "properties": {
-        "token": {
-            'name': 'string',
+        "name": {
+            'type': 'string',
         },
     },
     'required': ['name'],
