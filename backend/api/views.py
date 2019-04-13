@@ -245,8 +245,29 @@ def summary(request):
     ret = validate(json_body, summary_get_schema)
     if ret is not None:
         return ret
-    # TODO: What should this look like?
-    return HttpResponse(status=501)
+    response = {
+        "interactions": [],
+        "recommendations": []
+    }
+    user_id = request.session[SESSION_USER_KEY]
+    base = models.LogEntry.objects.filter(logger_id=user_id)
+    if 'from' in json_body:
+        base = base.filter(created_at__ge=json_body['from'])
+    if 'to' in json_body:
+        base = base.filter(created_at__lt=json_body['to'])
+    for interaction in base:
+        interaction_json = {
+            "reaction": interaction.reaction,
+            "loggee": interaction.loggee.name,
+            "time_of_day": interaction.time_of_day,
+            "social_context": interaction.social_context,
+            "interaction_medium": interaction.interaction_medium,
+            "other_loggable_text": interaction.other_loggable_text,
+            "created_at": interaction.created_at,
+            "updated_at": interaction.updated_at,
+        }
+        response['interactions'].append(interaction_json)
+    return JsonResponse(response, status=200)
 
 @csrf_exempt
 @restrict_function(allowed=['GET', 'POST'])
