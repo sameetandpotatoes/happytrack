@@ -4,6 +4,7 @@ import json
 from .utils import restrict_function, interaction_get_schema, interaction_post_schema, summary_get_schema
 from . import utils
 from . import models
+from . import recommender
 import jsonschema
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import SuspiciousOperation
@@ -282,7 +283,7 @@ def recommendation(request):
 
     Output:
     [
-        Recommendation
+        Recommendations
     ]
 
     ===
@@ -306,20 +307,27 @@ def recommendation(request):
         return HttpResponseBadRequest(str(e))
 
     if request.method == 'GET':
-        ret = validate(json_body, recommendation_get_schema)
+        ret = validate(json_body, utils.recommendation_get_schema)
         if ret is not None:
             return ret
-
-        return HttpResponse(status=501)
+        user_id = request.session[SESSION_USER_KEY]
+        base = models.LogEntry.objects.filter(logger_id=user_id)
+        if 'from' in json_body:
+            base = base.filter(created_at__ge=json_body['from'])
+        if 'to' in json_body:
+            base = base.filter(created_at__lt=json_body['to'])
+        recs = recommender.recommendations_from_logs(list(base), user_id)
+        # TODO: also include ML'd recs
+        return JsonResponse(recs, status=200)
 
     elif request.method == 'POST':
         ret = validate(json_body, recommendation_post_schema)
         if ret is not None:
             return ret
-
         return HttpResponse(status=501)
 
 
+# Sources:
 # https://www.psychologytoday.com/us/blog/ulterior-motives/201810/does-the-quantity-social-interactions-affect-happiness
 # https://journals.sagepub.com/doi/full/10.1177/0956797610362675
 # https://www.ncbi.nlm.nih.gov/pubmed/22001229
