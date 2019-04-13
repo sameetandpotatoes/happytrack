@@ -66,7 +66,7 @@ def login(request):
 
     # Store in session
     request.session[SESSION_USER_KEY] = str(m.id)
-    return HttpResponse("", status=200)
+    return HttpResponse(status=200)
 
 @csrf_exempt
 @restrict_function(allowed=['POST'])
@@ -85,6 +85,7 @@ def logout(request):
 
     request.session[SESSION_TOKEN_KEY] = ''
     request.session[SESSION_USER_KEY] = ''
+    return HttpResponse(status=200)
 
 @csrf_exempt
 @restrict_function(allowed=['GET', 'POST'])
