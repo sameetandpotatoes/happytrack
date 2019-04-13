@@ -202,7 +202,7 @@ def friends(request):
     if request.method == 'GET':
         user = models.User.objects.get(id=request.session[SESSION_USER_KEY])
         query_result = models.Friend.objects.filter(user=user)
-        result = [f.name for f in query_result]
+        result = [(f.name, f.id) for f in query_result]
         return JsonResponse({"friends": result}, status=200)
     elif request.method == 'POST':
         ret = validate(json_body, utils.friend_post_schema)
