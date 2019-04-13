@@ -160,7 +160,6 @@ def interaction(request):
         ret = json.dumps(dict(logger_id=entry.logger_id, loggee_id = entry.loggee_id))
         return HttpResponse(json.dumps(ret), content_type='application/json', status=200)
 
-
 @csrf_exempt
 @restrict_function(allowed=['GET', 'POST'])
 def friends(request):
@@ -215,7 +214,6 @@ def friends(request):
         )
         m.save()
         return HttpResponse(status=200)
-
 
 @csrf_exempt
 @restrict_function(allowed=['GET'])
