@@ -36,8 +36,12 @@ def login(request):
 
     """
 
-    json_body = json.loads(request.body)
-    ret = validate(json_body, utils.login_posts_schema)
+    try:
+        json_body = json.loads(request.body)
+    except json.decoder.JSONDecodeError as e:
+        return HttpResponseBadRequest(str(e))
+
+    ret = validate(json_body, utils.login_post_schema)
     if ret is not None:
         return ret
 
@@ -121,7 +125,11 @@ def interaction(request):
     }
     """
 
-    json_body = json.loads(request.body)
+    try:
+        json_body = json.loads(request.body)
+    except json.decoder.JSONDecodeError as e:
+        return HttpResponseBadRequest(str(e))
+
     if request.method == 'GET':
         ret = validate(json_body, interaction_get_schema)
         if ret is not None:
@@ -182,7 +190,11 @@ def friends(request):
 
     """
 
-    json_body = json.loads(request.body)
+    try:
+        json_body = json.loads(request.body)
+    except json.decoder.JSONDecodeError as e:
+        return HttpResponseBadRequest(str(e))
+
     if request.method == 'GET':
         return HttpResponse(status=501)
     elif request.method == 'POST':
@@ -212,7 +224,11 @@ def summary(request):
 
     """
 
-    json_body = json.loads(request.body)
+    try:
+        json_body = json.loads(request.body)
+    except json.decoder.JSONDecodeError as e:
+        return HttpResponseBadRequest(str(e))
+
     ret = validate(json_body, summary_get_schema)
     if ret is not None:
         return ret
@@ -252,7 +268,11 @@ def recommendation(request):
     Updates a piece of feedback for piece of recommendation
     """
 
-    json_body = json.loads(request.body)
+    try:
+        json_body = json.loads(request.body)
+    except json.decoder.JSONDecodeError as e:
+        return HttpResponseBadRequest(str(e))
+
     if request.method == 'GET':
         ret = validate(json_body, recommendation_get_schema)
         if ret is not None:
