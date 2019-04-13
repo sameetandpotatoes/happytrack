@@ -19,11 +19,11 @@ class Friend(models.Model):
 
 class LogEntry(models.Model):
     REACTION_CHOICES = (
-        ('ha', 'Happy'),
-        ('ne', 'Neutral'),
-        ('ti', 'Tired'),
-        ('an', 'Angry'),
-        ('sa', 'Sad'),
+        ('HA', 'Happy'),
+        ('NE', 'Neutral'),
+        ('TI', 'Tired'),
+        ('AN', 'Angry'),
+        ('SA', 'Sad'),
     )
 
     TIME_CHOICES = (
