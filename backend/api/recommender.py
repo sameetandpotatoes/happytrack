@@ -20,6 +20,7 @@ def recommendations_from_logs(logs, user_id):
     r = {
         "recommend_person": user_id
     }
+    # TODO: do we always want to deliver generic recommendations?
     if len(logs) == 0:
         r['rec_type'] = "GE"
 
