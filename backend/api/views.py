@@ -92,7 +92,7 @@ def logout(request):
 def interaction(request):
     """
     Get:
-    Logs an interaction
+    Gets an interaction
 
     Input:
     {
@@ -222,7 +222,7 @@ def friends(request):
 def summary(request):
     """
     Get:
-    Returns a list of recommendations
+    Returns weekly summary
 
     Input:
     {
