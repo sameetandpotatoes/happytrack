@@ -13,31 +13,35 @@ function handleError(err) {
 function getAxiosInstance() {
     return axios.create({
         baseURL: API_URL,
+        headers: {
+            'Content-Type': 'application/json'
+        }
     });
 }
 
 function loginBackend(tok, callback) {
     getAxiosInstance().post('/api/login/', {token: tok })
-        .catch(handleError)
-        .then(callback);
+        .then(callback)
+        .catch(handleError);
 }
 
 function logoutBackend(callback) {
     getAxiosInstance().post('/api/logout/')
-        .catch(handleError)
-        .then(callback);
+        .then(callback)
+        .catch(handleError);
+        
 }
 
 function getFriends(callback) {
     getAxiosInstance().get('/api/friends/')
-        .catch(handleError)
-        .then(callback);
+        .then(callback)
+        .catch(handleError);
 }
 
 function postFriend(friend, callback) {
     getAxiosInstance().post('/api/friends/', { name: friend })
-        .catch(handleError)
-        .then(callback);
+        .then(callback)
+        .catch(handleError);
 }
 
 function postInteraction(data, callback) {
@@ -49,14 +53,14 @@ function postInteraction(data, callback) {
             medium: data.medium,
             description: data.description
         })
-        .catch(handleError)
-        .then(callback);
+        .then(callback)
+        .catch(handleError);
 }
 
 function getRecommendations(callback) {
     getAxiosInstance().get('/api/recommendation/')
-        .catch(handleError)
-        .then(callback);
+        .then(callback)
+        .catch(handleError);
 }
 
 function postRecommendation(data, callback) {
@@ -65,8 +69,8 @@ function postRecommendation(data, callback) {
             feedback_id: 0,
             feedback: ''
         })
-        .catch(handleError)
-        .then(callback);
+        .then(callback)
+        .catch(handleError);
 }
 
 export {

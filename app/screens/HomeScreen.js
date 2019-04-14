@@ -43,9 +43,9 @@ export default class HomeScreen extends React.Component {
   checkForAccessToken() {
     AccessToken.getCurrentAccessToken()
       .then((data) => {
-        this.setState({isLoading: false})
         if (data && data.accessToken) {
           const { navigate } = this.props.navigation
+          console.log(data.accessToken);
           loginBackend(data.accessToken, function(response) {
             navigate('AppScreen')
           });

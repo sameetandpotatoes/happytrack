@@ -1,8 +1,9 @@
 import React from 'react';
-import { Platform, StyleSheet, ScrollView, View } from 'react-native';
+import { Avatar, Button, Icon, ListItem, Text } from 'react-native-elements';
+import { Platform, StyleSheet, RefreshControl, ScrollView, View } from 'react-native';
 import { getRecommendations } from '../utils/api';
 
-export default class RecommendationsScreen extends React.Component {
+export default class RecommendationScreen extends React.Component {
     static navigationOptions = ({ navigation }) => ({    
       headerLeft: (
         <Button
@@ -33,22 +34,22 @@ export default class RecommendationsScreen extends React.Component {
 
 
   componentDidMount() {
-    getRecommendations(function(recs) {
-       this.setState({recommendations: recs}); 
-    });
+    this._onRefresh()
   }
 
   _onRefresh = () => {
     this.setState({refreshing: true});
+
     getRecommendations(function(recs) {
-        this.setState({
-            recommendations: recs,
-            refreshing: false
-          });
-    });
+      this.setState({
+        recommendations: recs.data.data,
+        refreshing: false
+      });
+    }.bind(this));
   }
 
   render() {
+    console.log(this.state.recommendations);
     return (
         <View style={styles.container}>
             <View style={{flex: 1}}>
@@ -58,20 +59,21 @@ export default class RecommendationsScreen extends React.Component {
                         refreshing={this.state.refreshing}
                         onRefresh={this._onRefresh.bind(this)}
                     />
-            }>
-            {
-                this.state.recommendations.map((l, i) => (
-                    <ListItem
-                        key={i}
-                        leftAvatar={<Avatar rounded title={"JS"} />}
-                        title={"name"}
-                        subtitle={
-                            <View style={styles.subtitleView}>
-                            </View>
-                        }
-                    />
-                ))
-            }                 
+                }>
+              {
+	              this.state.recommendations.map((l, i) => (
+	                <ListItem
+	                  key={i}
+	                  leftAvatar={<Avatar rounded title={l.rec_type} />}
+	                  title={l.recommendation}
+	                  subtitle={
+	                    <View style={styles.subtitleView}>
+                        <Text>{l.rec_description}</Text>
+	                    </View>
+	                  }
+	                />
+	              ))
+	            }    
             </ScrollView>
             </View>
         </View>

@@ -54,9 +54,9 @@ const AppStack = createBottomTabNavigator(
         if (routeName === 'Interactions') {
           iconName = `ios-information-circle${focused ? '' : '-outline'}`;
         } else if (routeName === 'Summary') {
-          iconName = `ios-options${focused ? '' : '-outline'}`;
-        } else if (routeName == 'Recomendations') {
-          iconName = `ios-trending-up${focused ? '' : '-outline'}`;
+          iconName = `ios-options`;
+        } else if (routeName == 'Recommendations') {
+          iconName = `ios-trending-up`;
         }
         return <IconComponent name={iconName} size={30} color={tintColor} />;
       },

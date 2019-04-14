@@ -197,7 +197,7 @@ def friends(request):
     """
 
     try:
-        json_body = json.loads(request.body)
+        json_body = json.loads(request.body or '{}')
     except json.decoder.JSONDecodeError as e:
         return HttpResponseBadRequest(str(e))
 
@@ -304,7 +304,7 @@ def recommendation(request):
     """
 
     try:
-        json_body = json.loads(request.body)
+        json_body = json.loads(request.body or '{}')
     except json.decoder.JSONDecodeError as e:
         return HttpResponseBadRequest(str(e))
 
