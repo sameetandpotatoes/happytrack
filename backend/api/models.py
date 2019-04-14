@@ -4,6 +4,7 @@ class User(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=64)
     email = models.CharField(max_length=512)
+    has_generic_recs = models.BooleanField(default=False)
 
     def __str__(self):
         return 'Person("{}")'.format(self.name)
@@ -19,11 +20,11 @@ class Friend(models.Model):
 
 class LogEntry(models.Model):
     REACTION_CHOICES = (
-        ('ha', 'Happy'),
-        ('ne', 'Neutral'),
-        ('ti', 'Tired'),
-        ('an', 'Angry'),
-        ('sa', 'Sad'),
+        ('HA', 'Happy'),
+        ('NE', 'Neutral'),
+        ('TI', 'Tired'),
+        ('AN', 'Angry'),
+        ('SA', 'Sad'),
     )
 
     TIME_CHOICES = (
@@ -48,6 +49,12 @@ class LogEntry(models.Model):
         ('PH', 'Over The Phone'),
     )
 
+    CONTENT_CHOICES = (
+        ('SM', 'Small Talk'),
+        ('OP', 'One Personal'),
+        ('BP', 'Both Personal'),
+    )
+
     id = models.AutoField(primary_key=True)
     reaction = models.CharField(max_length=2, choices=REACTION_CHOICES)
     # Who is logged about
@@ -56,6 +63,7 @@ class LogEntry(models.Model):
     time_of_day = models.CharField(max_length=2, choices=TIME_CHOICES)
     social_context = models.CharField(max_length=2, choices=SOCIAL_CHOICES)
     interaction_medium = models.CharField(max_length=2, choices=MEDIUM_CHOICES)
+    content_class = models.CharField(max_length=2, choices=CONTENT_CHOICES)
     other_loggable_text = models.CharField(max_length=512)
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -67,9 +75,11 @@ class Recommendation(models.Model):
         ('PO', 'Positive'),
         ('NE', 'Negative'),
         ('AV', 'Avoidance'),
+        ('GE', 'Generic'),
     )
     rec_typ = models.CharField(max_length=2, choices=RECOMMENDATION_CHOICES)
     recommendation = models.CharField(max_length=128)
+    rec_description = models.CharField(max_length=512, default='')
     recommend_person = models.ForeignKey('User', models.CASCADE, related_name='recommend_person')
     about_person = models.ForeignKey('Friend', models.SET_NULL, related_name='about_person', null=True)
 

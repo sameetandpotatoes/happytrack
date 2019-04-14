@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 import json
 from .utils import restrict_function, interaction_get_schema, interaction_post_schema, summary_get_schema
 from . import utils
 from . import models
+from . import recommender
 import jsonschema
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import SuspiciousOperation
@@ -24,7 +25,7 @@ SESSION_USER_KEY = 'user-id'
 @restrict_function(allowed=['POST'])
 def login(request):
     """
-    Logs into the backend of the appe
+    Logs into the backend of the app
 
     Input
     {
@@ -36,8 +37,12 @@ def login(request):
 
     """
 
-    json_body = json.loads(request.body)
-    ret = validate(json_body, utils.login_posts_schema)
+    try:
+        json_body = json.loads(request.body)
+    except json.decoder.JSONDecodeError as e:
+        return HttpResponseBadRequest(str(e))
+
+    ret = validate(json_body, utils.login_post_schema)
     if ret is not None:
         return ret
 
@@ -62,14 +67,14 @@ def login(request):
 
     # Store in session
     request.session[SESSION_USER_KEY] = str(m.id)
-    return HttpResponse("", status=200)
+    return HttpResponse(status=200)
 
 @csrf_exempt
 @restrict_function(allowed=['POST'])
 def logout(request):
     """
     Get:
-    Logs into the backend of the appe
+    Logs out of the backend of the app
 
     Input:
     Ignored
@@ -81,13 +86,14 @@ def logout(request):
 
     request.session[SESSION_TOKEN_KEY] = ''
     request.session[SESSION_USER_KEY] = ''
+    return HttpResponse(status=200)
 
 @csrf_exempt
 @restrict_function(allowed=['GET', 'POST'])
 def interaction(request):
     """
     Get:
-    Logs an interaction
+    Gets an interaction
 
     Input:
     {
@@ -121,7 +127,11 @@ def interaction(request):
     }
     """
 
-    json_body = json.loads(request.body)
+    try:
+        json_body = json.loads(request.body)
+    except json.decoder.JSONDecodeError as e:
+        return HttpResponseBadRequest(str(e))
+
     if request.method == 'GET':
         ret = validate(json_body, interaction_get_schema)
         if ret is not None:
@@ -151,7 +161,6 @@ def interaction(request):
         ret = json.dumps(dict(logger_id=entry.logger_id, loggee_id = entry.loggee_id))
         return HttpResponse(json.dumps(ret), content_type='application/json', status=200)
 
-
 @csrf_exempt
 @restrict_function(allowed=['GET', 'POST'])
 def friends(request):
@@ -163,9 +172,12 @@ def friends(request):
     Empty Body
 
     Output:
-    [
-        Friends
-    ]
+    {
+        friends:
+        [
+            Friends
+        ]
+    }
 
     ====
 
@@ -182,22 +194,34 @@ def friends(request):
 
     """
 
-    json_body = json.loads(request.body)
+    try:
+        json_body = json.loads(request.body)
+    except json.decoder.JSONDecodeError as e:
+        return HttpResponseBadRequest(str(e))
+
     if request.method == 'GET':
-        return HttpResponse(status=501)
+        user = models.User.objects.get(id=request.session[SESSION_USER_KEY])
+        query_result = models.Friend.objects.filter(user=user)
+        result = [(f.name, f.id) for f in query_result]
+        return JsonResponse({"friends": result}, status=200)
     elif request.method == 'POST':
-        ret = validate(json_body, summary_get_schema)
+        ret = validate(json_body, utils.friend_post_schema)
         if ret is not None:
             return ret
-        return HttpResponse(status=501)
-
+        user = models.User.objects.get(id=request.session[SESSION_USER_KEY])
+        m, created = models.Friend.objects.get_or_create(
+            user=user,
+            name=json_body['name'],
+        )
+        m.save()
+        return HttpResponse(status=200)
 
 @csrf_exempt
 @restrict_function(allowed=['GET'])
 def summary(request):
     """
     Get:
-    Returns a list of recommendations
+    Returns weekly summary
 
     Input:
     {
@@ -212,12 +236,37 @@ def summary(request):
 
     """
 
-    json_body = json.loads(request.body)
+    try:
+        json_body = json.loads(request.body)
+    except json.decoder.JSONDecodeError as e:
+        return HttpResponseBadRequest(str(e))
+
     ret = validate(json_body, summary_get_schema)
     if ret is not None:
         return ret
-    # TODO: What should this look like?
-    return HttpResponse(status=501)
+    response = {
+        "interactions": [],
+        "recommendations": []
+    }
+    user_id = request.session[SESSION_USER_KEY]
+    base = models.LogEntry.objects.filter(logger_id=user_id)
+    if 'from' in json_body:
+        base = base.filter(created_at__ge=json_body['from'])
+    if 'to' in json_body:
+        base = base.filter(created_at__lt=json_body['to'])
+    for interaction in base:
+        interaction_json = {
+            "reaction": interaction.reaction,
+            "loggee": interaction.loggee.name,
+            "time_of_day": interaction.time_of_day,
+            "social_context": interaction.social_context,
+            "interaction_medium": interaction.interaction_medium,
+            "other_loggable_text": interaction.other_loggable_text,
+            "created_at": interaction.created_at,
+            "updated_at": interaction.updated_at,
+        }
+        response['interactions'].append(interaction_json)
+    return JsonResponse(response, status=200)
 
 @csrf_exempt
 @restrict_function(allowed=['GET', 'POST'])
@@ -234,7 +283,7 @@ def recommendation(request):
 
     Output:
     [
-        Recommendation
+        Recommendations
     ]
 
     ===
@@ -252,17 +301,45 @@ def recommendation(request):
     Updates a piece of feedback for piece of recommendation
     """
 
-    json_body = json.loads(request.body)
+    try:
+        json_body = json.loads(request.body)
+    except json.decoder.JSONDecodeError as e:
+        return HttpResponseBadRequest(str(e))
+
     if request.method == 'GET':
-        ret = validate(json_body, recommendation_get_schema)
+        ret = validate(json_body, utils.recommendation_get_schema)
         if ret is not None:
             return ret
-
-        return HttpResponse(status=501)
+        user_id = request.session[SESSION_USER_KEY]
+        base = models.LogEntry.objects.filter(logger_id=user_id)
+        if 'from' in json_body:
+            base = base.filter(created_at__ge=json_body['from'])
+        if 'to' in json_body:
+            base = base.filter(created_at__lt=json_body['to'])
+        recs = recommender.recommendations_from_logs(list(base), user_id)
+        # TODO: also include ML'd recs
+        return JsonResponse(recs, status=200)
 
     elif request.method == 'POST':
-        ret = validate(json_body, recommendation_post_schema)
+        ret = validate(json_body, utils.recommendation_post_schema)
         if ret is not None:
             return ret
+        try:
+            recommendation = models.Recommendation.objects.get(id=json_body['feedback_id'])
+        except models.Recommendation.DoesNotExist as e:
+            return HttpResponseBadRequest("Recommendation with ID {} does not exist.".format(json_body['feedback_id']))
+        feedback = models.RecommendationFeedback()
+        feedback.rec = recommendation
+        feedback.feedback_typ = json_body['feedback']
+        feedback.save()
+        return HttpResponse(status=200)
 
-        return HttpResponse(status=501)
+
+# Sources:
+# https://www.psychologytoday.com/us/blog/ulterior-motives/201810/does-the-quantity-social-interactions-affect-happiness
+# https://journals.sagepub.com/doi/full/10.1177/0956797610362675
+# https://www.ncbi.nlm.nih.gov/pubmed/22001229
+# https://www.ncbi.nlm.nih.gov/pubmed/29704967
+# https://www.sciencedirect.com/science/article/abs/pii/S0277953611005636
+# http://www.dr-mueck.de/HM_Angst/Ways-to-improve-social-interaction.htm
+# https://www.sciencedirect.com/science/article/pii/S0191886902002428

@@ -25,8 +25,6 @@ def any_of_enum(enum):
     vals = valid_values_for_enum(enum)
     return [{'type': 'string', 'pattern': x} for x in vals]
 
-
-
 interaction_get_schema = {
     "type": "object",
     "properties": {
@@ -39,7 +37,6 @@ interaction_get_schema = {
             'format': 'date-time',
         }
     },
-    'required': [],
 }
 
 interaction_post_schema = {
@@ -56,6 +53,9 @@ interaction_post_schema = {
         },
         'medium': {
             'anyOf': any_of_enum(models.LogEntry.MEDIUM_CHOICES),
+        },
+        'content': {
+            'anyOf': any_of_enum(models.LogEntry.CONTENT_CHOICES),
         },
         'loggee_id': {
             'anyOf': [
@@ -127,8 +127,8 @@ login_post_schema = {
 friend_post_schema = {
     "type": "object",
     "properties": {
-        "token": {
-            'name': 'string',
+        "name": {
+            'type': 'string',
         },
     },
     'required': ['name'],
