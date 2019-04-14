@@ -3,6 +3,7 @@ import { Button, ButtonGroup, Text } from 'react-native-elements';
 import { StyleSheet, ScrollView, TextInput, View } from 'react-native';
 import TextField from '../components/TextField'
 import { emojiButtons, timeOfDay, socialContexts, interactionMedium } from '../config/constants'
+import { postFriend, postInteraction } from '../utils/api';
 
 const RobText = props => <Text style={styles.text} {...props} />
 
@@ -20,14 +21,16 @@ export default class NewInteractionScreen extends React.Component {
       selContext: -1,
       selMedium: -1,
       nameError: null,
-      emojiError: null
+      emojiError: null,
+      description: null
     }
     this.updateName = this.updateName.bind(this)
     this.updateEmojiIndex = this.updateEmojiIndex.bind(this)
     this.updateTimeOfDayIndex = this.updateTimeOfDayIndex.bind(this)
     this.updateContextIndex = this.updateContextIndex.bind(this)
     this.updateMediumIndex = this.updateMediumIndex.bind(this)
-    this.postInteraction = this.postInteraction.bind(this)
+    this.handlePostInteraction = this.handlePostInteraction.bind(this)
+    this.handleDescriptionChange = this.handleDescriptionChange.bind(this)
   }
 
   updateName(name) {
@@ -56,8 +59,14 @@ export default class NewInteractionScreen extends React.Component {
     this.setState({selMedium})
   }
 
-  postInteraction(e) {
-    const { name, selEmoji, selTimeOfDay, selContext, selMedium } = this.state
+  handleInputChange(event = {}) {
+    const value = event.target && event.target.value;
+  
+    this.setState({description: value});
+  }
+
+  handlePostInteraction(e) {
+    const { name, selEmoji, selTimeOfDay, selContext, selMedium, description } = this.state
 
     // null if no error
     const emojiError = this.validate('emoji', selEmoji);
@@ -78,9 +87,19 @@ export default class NewInteractionScreen extends React.Component {
     let context = (selContext == -1) ? null : socialContexts[selContext];
     let medium = (selMedium == -1) ? null : interactionMedium[selMedium];
 
-    // TODO submit post request to backend with all info
-
-    // TODO go back to all interaction page
+    // Get or create friend
+    postFriend(name, function(friend) {
+      postInteraction({
+        loggee_id: friend["friend"][0][1],
+        time: timeOfDay,
+        social: context,
+        medium: medium,
+        description: description
+      }, function(response) {
+        // TODO redirect to home page
+        console.log(response);
+      });
+    });
   }
 
   validate(formKey, formValue) {
@@ -97,13 +116,6 @@ export default class NewInteractionScreen extends React.Component {
 
     return (
       <View style={styles.container}>
-        {/*<Header
-          containerStyle={{marginTop: Platform.OS === 'ios' ? 0 : - 30}}
-          leftComponent={
-            <IC name="chevron-left" type="font-awesome" color="#fff" onPress={() => this.props.navigation.goBack()} />
-          }
-          centerComponent={{ text: 'New Interaction', style: { fontSize: 22, color: '#fff' } }}
-        rightComponent={null} />*/}
         <ScrollView contentContainerStyle={styles.scrollView}>
           <RobText h4>Required Fields</RobText>
 
@@ -144,13 +156,16 @@ export default class NewInteractionScreen extends React.Component {
           <RobText>Any Last Thoughts?</RobText>
           <TextInput
             style={{height: 100, borderColor: 'gray', borderWidth: 1}}
+            name="description"
+            onChangeText={this.handleDescriptionChange}
+            value={this.state.descripton}
           />
 
           <Button
             buttonStyle={styles.button}
             title="Save Interaction"
             type="solid"
-            onPress={this.postInteraction}
+            onPress={this.handlePostInteraction}
           />
         </ScrollView>
       </View>

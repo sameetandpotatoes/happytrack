@@ -190,7 +190,9 @@ def friends(request):
     }
 
     Output:
-    Empty Body
+    {
+        friend: Friend
+    }
 
     """
 
@@ -214,7 +216,7 @@ def friends(request):
             name=json_body['name'],
         )
         m.save()
-        return HttpResponse(status=200)
+        return JsonResponse({"friend": (m.name, m.id)}, status=200)
 
 @csrf_exempt
 @restrict_function(allowed=['GET'])

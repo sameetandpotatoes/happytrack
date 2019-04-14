@@ -3,6 +3,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import InteractionNavigator from './navigators/InteractionNavigator';
 import SummaryNavigator from './navigators/SummaryNavigator';
+import RecommendationNavigator from './navigators/RecommendationNavigator';
 import HomeScreen from './screens/HomeScreen';
 import SideMenu from './components/SideMenu';
 
@@ -10,7 +11,8 @@ import {createSwitchNavigator, createDrawerNavigator, createBottomTabNavigator, 
 
 const DrawerStackInteraction = createDrawerNavigator({
     InteractionScreen: InteractionNavigator,
-    SummaryScreen: SummaryNavigator
+    SummaryScreen: SummaryNavigator,
+    RecommendationScreen: RecommendationNavigator
   }, {
     initialRouteName: 'InteractionScreen',
     contentComponent: SideMenu,
@@ -18,18 +20,30 @@ const DrawerStackInteraction = createDrawerNavigator({
 );
 
 const DrawerStackSummary = createDrawerNavigator({
-  InteractionScreen: InteractionNavigator,
-  SummaryScreen: SummaryNavigator
-}, {
-  initialRouteName: 'SummaryScreen',
-  contentComponent: SideMenu
-}
+    InteractionScreen: InteractionNavigator,
+    SummaryScreen: SummaryNavigator,
+    RecommendationScreen: RecommendationNavigator
+  }, {
+    initialRouteName: 'SummaryScreen',
+    contentComponent: SideMenu
+  }
+);
+
+const DrawerStackRecommendation = createDrawerNavigator({
+    InteractionScreen: InteractionNavigator,
+    SummaryScreen: SummaryNavigator,
+    RecommendationScreen: RecommendationNavigator
+  }, {
+    initialRouteName: 'RecommendationScreen',
+    contentComponent: SideMenu
+  }
 );
 
 const AppStack = createBottomTabNavigator(
   {
     Interactions: DrawerStackInteraction,
-    Summary: DrawerStackSummary
+    Summary: DrawerStackSummary,
+    Recommendations: DrawerStackRecommendation
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
@@ -40,7 +54,9 @@ const AppStack = createBottomTabNavigator(
         if (routeName === 'Interactions') {
           iconName = `ios-information-circle${focused ? '' : '-outline'}`;
         } else if (routeName === 'Summary') {
-          iconName = `ios-options`;
+          iconName = `ios-options${focused ? '' : '-outline'}`;
+        } else if (routeName == 'Recomendations') {
+          iconName = `ios-trending-up${focused ? '' : '-outline'}`;
         }
         return <IconComponent name={iconName} size={30} color={tintColor} />;
       },

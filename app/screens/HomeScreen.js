@@ -23,15 +23,13 @@ export default class HomeScreen extends React.Component {
 
     this.loginWithTwitter = this.loginWithTwitter.bind(this)
     this.loginWithFacebook = this.loginWithFacebook.bind(this)
-    this.checkForAccessToken = this.checkForAccessToken.bind(this)
   }
 
   loginWithFacebook() {
-    const checkForAccessToken = this.checkForAccessToken;
     LoginManager.logInWithReadPermissions(['email']).then(
       function(result) {
         if (!result.isCancelled) {
-          checkForAccessToken();
+          this.checkForAccessToken();
         }
       },
       function(error) {
