@@ -320,7 +320,19 @@ def recommendation(request):
             base = base.filter(created_at__lt=json_body['to'])
         recs = recommender.recommendations_from_logs(list(base), user_id)
         # TODO: also include ML'd recs
-        return JsonResponse(recs, status=200)
+
+        safe_recs = { "data": []}
+        safe_recs["data"] = [
+            {   
+                "id": rec.id,
+                "rec_typ": rec.rec_typ, 
+                "recommendation": rec.recommendation,
+                "rec_description": rec.rec_description,
+                "feedback": rec.feedback
+            }
+            for rec in recs
+        ]
+        return JsonResponse(safe_recs, status=200)
 
     elif request.method == 'POST':
         ret = validate(json_body, utils.recommendation_post_schema)
