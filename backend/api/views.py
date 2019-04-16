@@ -1,15 +1,19 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
-import json
-from .utils import restrict_function, interaction_get_schema, interaction_post_schema, summary_get_schema
-from . import utils
-from . import models
-from . import recommender
-import jsonschema
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import SuspiciousOperation
 from django.core import serializers
 from django.conf import settings
+
+import json
+import jsonschema
+
+from .utils import restrict_function, interaction_get_schema, interaction_post_schema, summary_get_schema, email_get_schema
+from . import utils
+from . import models
+from . import recommender
+
+from sklearn.ensemble import RandomForestClassifier
 
 def validate(instance, schema, *args, **kwargs):
     try:
@@ -20,6 +24,8 @@ def validate(instance, schema, *args, **kwargs):
 
 SESSION_TOKEN_KEY = 'auth-token'
 SESSION_USER_KEY = 'user-id'
+
+ML_SPLIT_THRESHOLD = 20
 
 @csrf_exempt
 @restrict_function(allowed=['POST'])
@@ -316,7 +322,12 @@ def recommendation(request):
             base = base.filter(created_at__ge=json_body['from'])
         if 'to' in json_body:
             base = base.filter(created_at__lt=json_body['to'])
-        recs = recommender.recommendations_from_logs(list(base), user_id)
+        logs = list(base)
+        if len(logs) < ML_SPLIT_THRESHOLD:
+            recs = recommender.recommendations_from_logs(logs, user_id)
+        else:
+            recs = recommender.recommendations_from_ml(logs, user_id)
+            pass
         # TODO: also include ML'd recs
         return JsonResponse(recs, status=200)
 
@@ -335,11 +346,29 @@ def recommendation(request):
         return HttpResponse(status=200)
 
 
-# Sources:
-# https://www.psychologytoday.com/us/blog/ulterior-motives/201810/does-the-quantity-social-interactions-affect-happiness
-# https://journals.sagepub.com/doi/full/10.1177/0956797610362675
-# https://www.ncbi.nlm.nih.gov/pubmed/22001229
-# https://www.ncbi.nlm.nih.gov/pubmed/29704967
-# https://www.sciencedirect.com/science/article/abs/pii/S0277953611005636
-# http://www.dr-mueck.de/HM_Angst/Ways-to-improve-social-interaction.htm
-# https://www.sciencedirect.com/science/article/pii/S0191886902002428
+@csrf_exempt
+@restrict_function(allowed=['GET'])
+def email(request):
+    """
+    Get:
+    Debug Endpoint: Sends an email
+    """
+
+    try:
+        json_body = json.loads(request.body)
+    except json.decoder.JSONDecodeError as e:
+        return HttpResponseBadRequest(str(e))
+
+    ret = validate(json_body, email_get_schema)
+    if ret is not None:
+        return ret
+
+    logger_id = request.session[SESSION_USER_KEY]
+    base = models.LogEntry.objects.filter(logger_id=logger_id)
+    if 'from' in json_body:
+        base = base.filter(created_at__ge=json_body['from'])
+    if 'to' in json_body:
+        base = base.filter(created_at__lt=json_body['to'])
+    string = serializers.serialize('json', base.all())
+    return HttpResponse(string, content_type='application/json', status=200)
+
