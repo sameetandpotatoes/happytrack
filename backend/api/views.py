@@ -128,7 +128,7 @@ def interaction(request):
     """
 
     try:
-        json_body = json.loads(request.body)
+        json_body = json.loads(request.body or '{}')
     except json.decoder.JSONDecodeError as e:
         return HttpResponseBadRequest(str(e))
 
@@ -145,6 +145,7 @@ def interaction(request):
         string = serializers.serialize('json', base.all())
         return HttpResponse(string, content_type='application/json', status=200)
     elif request.method == 'POST':
+        print(json_body)
         ret = validate(json_body, interaction_post_schema)
         if ret is not None:
             return ret
@@ -190,12 +191,14 @@ def friends(request):
     }
 
     Output:
-    Empty Body
+    {
+        friend: Friend
+    }
 
     """
 
     try:
-        json_body = json.loads(request.body)
+        json_body = json.loads(request.body or '{}')
     except json.decoder.JSONDecodeError as e:
         return HttpResponseBadRequest(str(e))
 
@@ -214,7 +217,7 @@ def friends(request):
             name=json_body['name'],
         )
         m.save()
-        return HttpResponse(status=200)
+        return JsonResponse({"friend": (m.name, m.id)}, status=200)
 
 @csrf_exempt
 @restrict_function(allowed=['GET'])
@@ -302,7 +305,7 @@ def recommendation(request):
     """
 
     try:
-        json_body = json.loads(request.body)
+        json_body = json.loads(request.body or '{}')
     except json.decoder.JSONDecodeError as e:
         return HttpResponseBadRequest(str(e))
 
@@ -318,7 +321,19 @@ def recommendation(request):
             base = base.filter(created_at__lt=json_body['to'])
         recs = recommender.recommendations_from_logs(list(base), user_id)
         # TODO: also include ML'd recs
-        return JsonResponse(recs, status=200)
+
+        safe_recs = { "data": []}
+        safe_recs["data"] = [
+            {   
+                "id": rec.id,
+                "rec_typ": rec.rec_typ, 
+                "recommendation": rec.recommendation,
+                "rec_description": rec.rec_description,
+                "feedback": rec.feedback
+            }
+            for rec in recs
+        ]
+        return JsonResponse(safe_recs, status=200)
 
     elif request.method == 'POST':
         ret = validate(json_body, utils.recommendation_post_schema)

@@ -12,14 +12,13 @@ def _create_and_save_recommendation(rec, friend_id=None):
     if friend_id:
         r.about_person = Friend.objects.get(id=friend_id)
     r.save()
+    return r
 
 def recommendations_from_logs(logs, user_id):
-    recommendations = {
-        "data": []
-    }
     r = {
         "recommend_person": user_id
     }
+    recommendations = []
 
     user = User.objects.get(id=user_id)
 
@@ -69,7 +68,7 @@ def recommendations_from_logs(logs, user_id):
         elif log.time_of_day == 'EV':
             evening += 1
 
-    in_person_frac = in_person / total_logs * 100
+    in_person_frac = 0 if total_logs is 0 else in_person / total_logs * 100
     if in_person_frac < 50:
         r['rec_type'] = 'PA'
         r["recommendation"] = "Try to have more in-person interactions."
@@ -80,8 +79,8 @@ def recommendations_from_logs(logs, user_id):
             "interactions should be used once a good relationship "
             "is already built."
         )
-        _create_and_save_recommendation(r)
-        recommendations['data'].append(copy.deepcopy(r))
+        rec = _create_and_save_recommendation(r)
+        recommendations.append(rec)
     for friend in reactions:
         name = friend.name
         total = reactions[friend]['total']
@@ -93,8 +92,8 @@ def recommendations_from_logs(logs, user_id):
                 "this friend are typically positive - "
                 "try to have more of them!"
             )
-            _create_and_save_recommendation(r)
-            recommendations['data'].append(copy.deepcopy(r))
+            rec = _create_and_save_recommendation(r)
+            recommendations.append(rec)
         elif (reactions[friend]['Tired']/total * 100) > 10:
             r['rec_type'] = 'PO'
             r["recommendation"] = "Talk to {} different times.".format(name)
@@ -103,8 +102,8 @@ def recommendations_from_logs(logs, user_id):
                 "Talk to this friend when you feel more awake, "
                 "like after your morning coffee."
             )
-            _create_and_save_recommendation(r)
-            recommendations['data'].append(copy.deepcopy(r))
+            rec = _create_and_save_recommendation(r)
+            recommendations.append(rec)
         elif (reactions[friend]['Angry']/total * 100) > 10:
             r['rec_type'] = 'NE'
             r["recommendation"] = "Talk to {} less.".format(name)
@@ -114,8 +113,9 @@ def recommendations_from_logs(logs, user_id):
                 "relationship or the context around "
                 "interactions that make you angry."
             )
-            _create_and_save_recommendation(r)
-            recommendations['data'].append(copy.deepcopy(r))
+            rec = _create_and_save_recommendation(r)
+
+            recommendations.append(rec)
         elif (reactions[friend]['Sad']/total * 100) > 10:
             r['rec_type'] = 'AV'
             r["recommendation"] = "Avoid talking to {}.".format(name)
@@ -124,8 +124,8 @@ def recommendations_from_logs(logs, user_id):
                 "shouldn't be in your life, "
                 "it's that simple!"
             )
-            _create_and_save_recommendation(r)
-            recommendations['data'].append(copy.deepcopy(r))
+            rec = _create_and_save_recommendation(r)
+            recommendations.append(rec)
     for friend in small_talk:
         name = friend.name
         small_frac = small_talk[friend]['small']/(small_talk[friend]['small'] + small_talk[friend]['long']) * 100
@@ -139,11 +139,11 @@ def recommendations_from_logs(logs, user_id):
                 "substantive conversations, especially with this "
                 "friend."
             )
-            _create_and_save_recommendation(r)
-            recommendations['data'].append(copy.deepcopy(r))
-    morning_frac = morning / total_logs * 100
-    afternoon_frac = afternoon / total_logs * 100
-    evening_frac = evening / total_logs *  100
+            rec = _create_and_save_recommendation(r)
+            recommendations.append(rec)
+    morning_frac = 0 if total_logs is 0 else morning / total_logs * 100
+    afternoon_frac = 0 if total_logs is 0 else afternoon / total_logs * 100
+    evening_frac = 0 if total_logs is 0 else evening / total_logs *  100
     if morning_frac > 50 or afternoon_frac > 50 or evening_frac > 50:
         r['rec_type'] = 'PO'
         r["recommendation"] = "Spread your interactions throughout the day."
@@ -155,8 +155,8 @@ def recommendations_from_logs(logs, user_id):
             "day. Remember: some people need their "
             "coffee in the morning!"
         )
-        _create_and_save_recommendation(r)
-        recommendations['data'].append(copy.deepcopy(r))
+        rec = _create_and_save_recommendation(r)
+        recommendations.append(rec)
     if not user.has_generic_recs:
         user.has_generic_recs = True
         user.save()
@@ -169,8 +169,8 @@ def recommendations_from_logs(logs, user_id):
             "contact. If the other person smiles back, "
             "then you've already started a form of contact!"
         )
-        _create_and_save_recommendation(r)
-        recommendations['data'].append(copy.deepcopy(r))
+        rec = _create_and_save_recommendation(r)
+        recommendations.append(rec)
 
         r["recommendation"] = "Start with a compliment."
         r["rec_description"] = (
@@ -182,8 +182,8 @@ def recommendations_from_logs(logs, user_id):
             "Feel free to continue on the topic if they show "
             "interest!"
         )
-        _create_and_save_recommendation(r)
-        recommendations['data'].append(copy.deepcopy(r))
+        rec = _create_and_save_recommendation(r)
+        recommendations.append(rec)
 
         r["recommendation"] = "Use body language."
         r["rec_description"] = (
@@ -193,8 +193,8 @@ def recommendations_from_logs(logs, user_id):
             "This typically makes relating much "
             "easier."
         )
-        _create_and_save_recommendation(r)
-        recommendations['data'].append(copy.deepcopy(r))
+        rec = _create_and_save_recommendation(r)
+        recommendations.append(rec)
 
         r["recommendation"] = "Evaluate and understand."
         r["rec_description"] = (
@@ -204,8 +204,8 @@ def recommendations_from_logs(logs, user_id):
             "You should also express what "
             "you have understood from their behavior."
         )
-        _create_and_save_recommendation(r)
-        recommendations['data'].append(copy.deepcopy(r))
+        rec = _create_and_save_recommendation(r)
+        recommendations.append(rec)
 
         r["recommendation"] = "Use humor!"
         r["rec_description"] = (
@@ -214,8 +214,8 @@ def recommendations_from_logs(logs, user_id):
             "the expense of other people and respect "
             "any other sentiments. "
         )
-        _create_and_save_recommendation(r)
-        recommendations['data'].append(copy.deepcopy(r))
+        rec = _create_and_save_recommendation(r)
+        recommendations.append(rec)
 
         r["recommendation"] = "Open up."
         r["rec_description"] = (
@@ -226,7 +226,7 @@ def recommendations_from_logs(logs, user_id):
             "Opening up makes it easier for others to "
             "relate to you, but make sure you're authentic."
         )
-        _create_and_save_recommendation(r)
-        recommendations['data'].append(copy.deepcopy(r))
+        rec = _create_and_save_recommendation(r)
+        recommendations.append(rec)
 
     return recommendations

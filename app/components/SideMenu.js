@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import { Avatar, Button, Text } from 'react-native-elements';
 import { GraphRequest, GraphRequestManager, LoginManager } from 'react-native-fbsdk';
 import {ScrollView, StyleSheet, View} from 'react-native';
+import { logoutBackend } from '../utils/api';
 
 class SideMenu extends Component {
   constructor() {
@@ -34,7 +35,7 @@ class SideMenu extends Component {
     }
   }
 
-  handleLogout() {
+  handleLogout(response) {
     LoginManager.logOut()
     const { navigate } = this.props.navigation
     navigate('HomeScreen')
@@ -74,7 +75,7 @@ class SideMenu extends Component {
         </ScrollView>
         <Button 
           style={styles.footerContainer} 
-          onPress={this.handleLogout.bind(this)}
+          onPress={logoutBackend.bind(this, this.handleLogout.bind(this))}
           title="Log out">
         </Button>
       </View>
