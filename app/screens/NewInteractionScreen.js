@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, ButtonGroup, Text } from 'react-native-elements';
-import { StyleSheet, ScrollView, TextInput, View } from 'react-native';
+import { ActivityIndicator, InteractionManager, StyleSheet, ScrollView, TextInput, View } from 'react-native';
 import TextField from '../components/TextField'
 import { emojiButtons, timeOfDays, socialContexts, interactionMedium } from '../config/constants'
 import { postFriend, postInteraction } from '../utils/api';
@@ -31,6 +31,14 @@ export default class NewInteractionScreen extends React.Component {
     this.updateMediumIndex = this.updateMediumIndex.bind(this)
     this.handlePostInteraction = this.handlePostInteraction.bind(this)
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this)
+  }
+
+  componentDidMount() {
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({
+        isReady: true
+      })
+    });
   }
 
   updateName(name) {
@@ -101,10 +109,9 @@ export default class NewInteractionScreen extends React.Component {
         reaction: emoji,
         description: description
       }, function(response) {
-        // TODO redirect to home page
-        console.log(response);
-      });
-    });
+        this.props.navigation.navigate('InteractionScreen');
+      }.bind(this));
+    }.bind(this));
   }
 
   validate(formKey, formValue) {
@@ -117,6 +124,10 @@ export default class NewInteractionScreen extends React.Component {
   }
 
   render() {
+    if (!this.state.isReady){
+      return <ActivityIndicator />
+    }
+
     const { selEmoji, selTimeOfDay, selContext, selMedium } = this.state
 
     return (

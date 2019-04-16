@@ -1,10 +1,11 @@
 import React from 'react';
 import Emoji from 'react-native-emoji';
 import { Avatar, Button, Icon, ListItem, Overlay, Text } from 'react-native-elements';
-import { Platform, SectionList, StyleSheet, RefreshControl, ScrollView, TouchableWithoutFeedback, View } from 'react-native';
+import { InteractionManager, Platform, SectionList, StyleSheet, RefreshControl, ScrollView, TouchableWithoutFeedback, View } from 'react-native';
 import moment from 'moment';
 import Faker from 'faker';
 import { timeOfDay, timeOfDayEmojis, socialContexts, socialContextsEmojis, interactionMedium, interactionMediumEmojis } from '../config/constants';
+import { getInteractions } from '../utils/api';
 const _ = require('lodash');
 
 Date.prototype.getUnixTime = function() { return this.getTime()/1000|0 };
@@ -44,33 +45,7 @@ export default class InteractionScreen extends React.Component {
 
   _onRefresh = () => {
     this.setState({refreshing: true});
-    // TODO actually get data again
-    this.fetchData().then((data) => {
-      this.setState({
-        interactions: data,
-        refreshing: false
-      });
-    });
-
-    // TODO FAKE DATA LOOKS LIKE:
-    /*
-      {
-        "model": "api.logentry",
-        "pk": 2,
-        "fields": {
-            "reaction": "Happy",
-            "loggee": 7,
-            "logger": 1,
-            "time_of_day": "Morning",
-            "social_context": "Academic",
-            "interaction_medium": "In Person",
-            "content_class": "",
-            "other_loggable_text": "Ok",
-            "created_at": "2019-04-16T01:42:10.057Z",
-            "updated_at": "2019-04-16T01:42:10.057Z"
-        }
-      }
-    */
+    this.fetchData()
   }
 
   navToNewInteractionScreen() {
@@ -78,38 +53,26 @@ export default class InteractionScreen extends React.Component {
   }
 
   fetchData() {
-    return new Promise(
-      function (resolve, reject) {
-        // TODO fetch from API
-        let fakeData = [];
-
-        for (let i = 0; i < 50; i++) {
-          fakeData.push({
-            name: Faker.name.findName(),
-            emoji: _.sample(['grinning', 'blush', 'neutral_face', 'sweat', 'confounded']),
-            timeOfDay: _.sample(timeOfDay),
-            context: _.sample(socialContexts),
-            medium: _.sample(interactionMedium),
-            timestamp: new Date(Faker.date.between('2019-03-03', '2019-03-15')).getUnixTime(),
-            other_loggable_text: Faker.lorem.sentences(3, 3)
-          });
-        }
-  
-        resolve(fakeData);
-      }
-    );
+    getInteractions(function(data) {
+      this.setState({
+        interactions: data.data.interactions,
+        refreshing: false
+      });
+    }.bind(this));
   }
 
   componentDidMount() {
-    this._onRefresh();
+    InteractionManager.runAfterInteractions(() => {
+      this._onRefresh();
+    });
   }
 
   getDate(epoch) {
-    return moment.unix(epoch).format('dddd, MM/DD')
+    return moment(epoch).format('dddd, MM/DD')
   }
 
   getTime(epoch) {
-    return moment.unix(epoch).format('h:mm a')
+    return moment(epoch).format('h:mm a')
   }
 
   /**
@@ -175,15 +138,16 @@ export default class InteractionScreen extends React.Component {
   render() {
     const emojiFS = 22;
 
+    console.log(this.state.interactions);
     const sortedInteractions = 
         _(this.state.interactions)
-        .sortBy(event => event.timestamp)
+        .sortBy(event => event.created_at)
         .reverse()
-        .groupBy(event => moment.unix(event.timestamp).format('MM/DD/YYYY'))
+        .groupBy(event => moment(event.created_at).format('MM/DD/YYYY'))
         .toPairs()
         .map((value, key) => ({title: moment(value[0], 'MM/DD/YYYY').format('ddd MMMM DD'), data: value[1]}))
         .value();
-
+    console.log(sortedInteractions);
     return (
       <View style={styles.container}>
         { this.state.overlayInfo &&
@@ -212,21 +176,21 @@ export default class InteractionScreen extends React.Component {
               renderItem={({item, index, section}) => (
                 <TouchableWithoutFeedback onPress={ () => this.viewDetail(item)}>
                   <View style={styles.SectionListItems} onPress={this.viewDetail}>
-                    <Avatar rounded size="medium" title={this.getInitials(item.name)} />
+                    {/* <Avatar rounded size="medium" title={this.getInitials(item.name)} /> */}
                     <View style={{flexDirection: 'column', marginLeft: 5}}>
-                      <Text style={{fontSize: 20}}>{item.name}</Text>
-                      <Text style={{fontSize: 16}}>{"at " + this.getTime(item.timestamp)}</Text>
+                      <Text style={{fontSize: 20}}>{item.loggee}</Text>
+                      <Text style={{fontSize: 16}}>{"at " + this.getTime(item.created_at)}</Text>
                     </View>
                     <View style={styles.subtitleView}>
-                      <Emoji name={item.emoji} style={{fontSize: emojiFS, position: 'absolute', right: 0, bottom: 10}} />
-                      { item.timeOfDay && item.timeOfDay != '' &&
-                        <Emoji name={timeOfDayEmojis[item.timeOfDay]} style={{fontSize: emojiFS, position: 'absolute', right: 40, bottom: 10}} />
+                      {/* <Emoji name={item.fields.reaction} style={{fontSize: emojiFS, position: 'absolute', right: 0, bottom: 10}} /> */}
+                      { item.time_of_day && item.time_of_day != '' &&
+                        <Emoji name={timeOfDayEmojis[item.time_of_day]} style={{fontSize: emojiFS, position: 'absolute', right: 40, bottom: 10}} />
                       }
-                      { item.context && item.context != '' &&
-                        <Emoji name={socialContextsEmojis[item.context]} style={{fontSize: emojiFS, position: 'absolute', right: 80, bottom: 10}} />
+                      { item.social_context && item.social_context != '' &&
+                        <Emoji name={socialContextsEmojis[item.social_context]} style={{fontSize: emojiFS, position: 'absolute', right: 80, bottom: 10}} />
                       }
-                      { item.medium && item.medium != '' &&
-                        <Emoji name={interactionMediumEmojis[item.medium]} style={{fontSize: emojiFS, position: 'absolute', right: 120, bottom: 10}} />
+                      { item.interaction_medium && item.interaction_medium != '' &&
+                        <Emoji name={interactionMediumEmojis[item.interaction_medium]} style={{fontSize: emojiFS, position: 'absolute', right: 120, bottom: 10}} />
                       }
                     </View>
                   </View>

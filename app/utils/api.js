@@ -20,6 +20,7 @@ function getAxiosInstance() {
 }
 
 function loginBackend(tok, callback) {
+    console.info("Calling API")
     getAxiosInstance().post('/api/login/', {token: tok })
         .then(callback)
         .catch(handleError);
@@ -30,6 +31,12 @@ function logoutBackend(callback) {
         .then(callback)
         .catch(handleError);
         
+}
+
+function getInteractions(callback) {
+    getAxiosInstance().get('/api/interaction/')
+        .then(callback)
+        .catch(handleError);
 }
 
 function getFriends(callback) {
@@ -64,11 +71,11 @@ function getRecommendations(callback) {
         .catch(handleError);
 }
 
-function postRecommendation(data, callback) {
+function postFeedback(rec_id, feedback_typ, callback) {
     getAxiosInstance().post('/api/recommendation/', 
         {
-            feedback_id: 0,
-            feedback: ''
+            feedback_id: rec_id,
+            feedback: feedback_typ
         })
         .then(callback)
         .catch(handleError);
@@ -77,9 +84,10 @@ function postRecommendation(data, callback) {
 export {
     loginBackend,
     logoutBackend,
+    getInteractions,
     postInteraction,
     getFriends,
     postFriend,
     getRecommendations,
-    postRecommendation
+    postFeedback
 }

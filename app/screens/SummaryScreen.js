@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Divider, Icon, Text } from 'react-native-elements';
-import { Platform, StyleSheet, ScrollView, View } from 'react-native';
+import { ActivityIndicator, InteractionManager, Platform, StyleSheet, ScrollView, View } from 'react-native';
 import BarChartVerticalWithLabels from '../components/BarChartVerticalWithLabels';
 import PieChartWithCenteredLabels from '../components/PieChartWithCenteredLabels';
 
@@ -28,27 +28,34 @@ export default class SummaryScreen extends React.Component {
     super()
 
     this.state = {
-      summaries: []
+      summaries: [],
+      isReady: false
     }
   }
 
   componentDidMount() {
-    // TODO what fake data looks like, should be sorted by timestamp in descending order probably, and then labeled by week in the app?
-    this.setState({
-      summaries: [
-        {
-          week: 'Week of 03/18 - 03/24',
-
-        },
-        {
-          week: 'Week of 03/11 - 03/16',
-
-        },
-      ]
-    })
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({
+        summaries: [
+          {
+            week: 'Week of 03/18 - 03/24',
+  
+          },
+          {
+            week: 'Week of 03/11 - 03/16',
+  
+          },
+        ],
+        isReady: true
+      })
+    });
   }
 
   render() {
+    if (!this.state.isReady){
+      return <ActivityIndicator />
+    }
+
     const WeeklySummaries = (
       this.state.summaries.map((value, index) => {
         const { week } = value;

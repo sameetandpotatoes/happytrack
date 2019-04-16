@@ -137,13 +137,30 @@ def interaction(request):
         if ret is not None:
             return ret
         logger_id = request.session[SESSION_USER_KEY]
-        base = models.LogEntry.objects.filter(logger_id=logger_id)
+        base = models.LogEntry.objects.filter(logger_id=logger_id).prefetch_related()
         if 'from' in json_body:
             base = base.filter(created_at__ge=json_body['from'])
         if 'to' in json_body:
             base = base.filter(created_at__lt=json_body['to'])
         string = serializers.serialize('json', base.all())
-        return HttpResponse(string, content_type='application/json', status=200)
+
+        interaction_json = {
+            "interactions": []
+        }
+        for it in base:
+            interaction_json['interactions'].append({
+                "id": it.id,
+                "reaction": it.reaction,
+                "loggee": it.loggee.name,
+                "logger": it.logger.name,
+                "time_of_day": it.time_of_day,
+                "social_context": it.social_context,
+                "interaction_medium": it.interaction_medium,
+                "content_class": it.content_class,
+                "other_loggable_text": it.other_loggable_text,
+                "created_at": it.created_at
+            })
+        return JsonResponse(interaction_json, status=200)
     elif request.method == 'POST':
         print(json_body)
         ret = validate(json_body, interaction_post_schema)

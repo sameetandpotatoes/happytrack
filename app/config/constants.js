@@ -38,6 +38,12 @@ const interactionMediumEmojis = {
   'Online': "computer",
 }
 
+const feedbacks = {
+  'WO': 'Worked',
+  'DW': 'Doesn\'t Work',
+  'NE': 'Neutral'
+};
+
 export {
   emojiButtons,
   timeOfDays,
@@ -45,5 +51,6 @@ export {
   socialContexts,
   socialContextsEmojis,
   interactionMedium,
-  interactionMediumEmojis
+  interactionMediumEmojis,
+  feedbacks
 }
