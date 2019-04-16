@@ -51,6 +51,7 @@ function postInteraction(data, callback) {
             time: data.time,
             social: data.social,
             medium: data.medium,
+            reaction: data.reaction,
             description: data.description
         })
         .then(callback)

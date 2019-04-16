@@ -128,7 +128,7 @@ def interaction(request):
     """
 
     try:
-        json_body = json.loads(request.body)
+        json_body = json.loads(request.body or '{}')
     except json.decoder.JSONDecodeError as e:
         return HttpResponseBadRequest(str(e))
 
@@ -145,6 +145,7 @@ def interaction(request):
         string = serializers.serialize('json', base.all())
         return HttpResponse(string, content_type='application/json', status=200)
     elif request.method == 'POST':
+        print(json_body)
         ret = validate(json_body, interaction_post_schema)
         if ret is not None:
             return ret

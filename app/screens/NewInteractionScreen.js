@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, ButtonGroup, Text } from 'react-native-elements';
 import { StyleSheet, ScrollView, TextInput, View } from 'react-native';
 import TextField from '../components/TextField'
-import { emojiButtons, timeOfDay, socialContexts, interactionMedium } from '../config/constants'
+import { emojiButtons, timeOfDays, socialContexts, interactionMedium } from '../config/constants'
 import { postFriend, postInteraction } from '../utils/api';
 
 const RobText = props => <Text style={styles.text} {...props} />
@@ -59,6 +59,10 @@ export default class NewInteractionScreen extends React.Component {
     this.setState({selMedium})
   }
 
+  handleDescriptionChange(text) {
+    this.setState({description: text});
+  }
+
   handleInputChange(event = {}) {
     const value = event.target && event.target.value;
   
@@ -83,17 +87,18 @@ export default class NewInteractionScreen extends React.Component {
     }
 
     let emoji = emojiButtons[selEmoji].text;
-    let timeOfDay = (selTimeOfDay == -1) ? null : timeOfDay[selTimeOfDay];
+    let timeOfDay = (selTimeOfDay == -1) ? null : timeOfDays[selTimeOfDay];
     let context = (selContext == -1) ? null : socialContexts[selContext];
     let medium = (selMedium == -1) ? null : interactionMedium[selMedium];
 
     // Get or create friend
     postFriend(name, function(friend) {
       postInteraction({
-        loggee_id: friend["friend"][0][1],
+        loggee_id: friend["data"]["friend"][1], // Get the loggee id
         time: timeOfDay,
         social: context,
         medium: medium,
+        reaction: emoji,
         description: description
       }, function(response) {
         // TODO redirect to home page
@@ -139,7 +144,7 @@ export default class NewInteractionScreen extends React.Component {
           <ButtonGroup
             onPress={this.updateTimeOfDayIndex}
             selectedIndex={selTimeOfDay}
-            buttons={timeOfDay} />
+            buttons={timeOfDays} />
 
           <RobText>Social Context</RobText>
           <ButtonGroup
