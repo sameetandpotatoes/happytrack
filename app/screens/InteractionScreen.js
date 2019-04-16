@@ -51,6 +51,26 @@ export default class InteractionScreen extends React.Component {
         refreshing: false
       });
     });
+
+    // TODO FAKE DATA LOOKS LIKE:
+    /*
+      {
+        "model": "api.logentry",
+        "pk": 2,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 7,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Academic",
+            "interaction_medium": "In Person",
+            "content_class": "",
+            "other_loggable_text": "Ok",
+            "created_at": "2019-04-16T01:42:10.057Z",
+            "updated_at": "2019-04-16T01:42:10.057Z"
+        }
+      }
+    */
   }
 
   navToNewInteractionScreen() {

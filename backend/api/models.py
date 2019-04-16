@@ -83,6 +83,15 @@ class Recommendation(models.Model):
     recommend_person = models.ForeignKey('User', models.CASCADE, related_name='recommend_person')
     about_person = models.ForeignKey('Friend', models.SET_NULL, related_name='about_person', null=True)
 
+    @property
+    def feedback(self):
+        feedback = None
+        try:
+            feedback = RecommendationFeedback.objects.get(rec=self)
+            return { "id": feedback.id, "feedback_typ": feedback.feedback_typ }
+        except RecommendationFeedback.DoesNotExist as e:
+            return feedback
+
 class RecommendationFeedback(models.Model):
     FEEDBACK_CHOICES = (
         ('WO', 'Worked'),

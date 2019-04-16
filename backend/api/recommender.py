@@ -111,12 +111,16 @@ def _create_and_save_recommendation(rec, friend_id=None):
     if friend_id:
         r.about_person = Friend.objects.get(id=friend_id)
     r.save()
+    return r
 
 def _check_in_person_recommendations(logs, user_id):
     in_person = len([None for log in logs if log.interaction_medium == 'IP'])
-    in_person_frac = in_person / len(logs) * 100
-    if in_person_frac < 50:
+    if len(logs) != 0:
+        in_person_frac = in_person / len(logs) * 100
+    else:
+        in_person_frac = 0
 
+    if in_person_frac < 50:
         rec = dict(
             rec_type = 'PA',
             recommendation = "Try to have more in-person interactions.",
@@ -141,9 +145,14 @@ def _check_time_fairness(logs, user_id):
         elif log.time_of_day == 'EV':
             evening += 1
 
-    morning_frac = morning / len(logs) * 100
-    afternoon_frac = afternoon / len(logs) * 100
-    evening_frac = evening / len(logs) *  100
+    if len(logs) != 0:
+        morning_frac = morning / len(logs) * 100
+        afternoon_frac = afternoon / len(logs) * 100
+        evening_frac = evening / len(logs) *  100
+    else:
+        morning_frac = 0
+        afternoon_frac = 0
+        evening_frac = 0
 
     if morning_frac > 50 or afternoon_frac > 50 or evening_frac > 50:
         rec = dict(
@@ -297,5 +306,4 @@ def recommendations_from_logs(logs, user_id):
 
 def recommendations_from_ml(logs, user_id):
     # All the setup recommendations should be good
-
     pass

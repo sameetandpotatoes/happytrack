@@ -25,7 +25,7 @@ SECRET_KEY = '3#-k)micv8@(vz9ljwh(x5did1e(6df%-846$mi3gk7=t@tqab'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 CSRF_USE_SESSIONS = True
 
