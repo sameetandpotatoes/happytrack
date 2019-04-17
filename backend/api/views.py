@@ -122,8 +122,7 @@ def interaction(request):
 
     Output:
     {
-        logger_id: int, # Who was logging
-        loggee_id: int, # Who was logged
+        success: bool
     }
     """
 
