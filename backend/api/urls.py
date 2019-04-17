@@ -25,4 +25,5 @@ urlpatterns = [
     path('friends/', views.friends),
     path('summary/', views.summary),
     path('recommendation/', views.recommendation),
+    path('email/', views.email),
 ]

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Happytrack Report {{ week_start }} - {{ week_end }} </title>
+    <style>
+     body {
+         font-family: "DejaVu Sans",sans-serif;
+     }
+
+     p {
+         font-family: "Cambria", sans-serif;
+     }
+
+     .container {
+         width: 100%;
+         min-height: 70vh;
+         position: relative;
+     }
+
+     .center {
+         position: absolute;
+         margin: 0;
+         top: 0;
+         left: 50%;
+         transform: translate(-50%, 0%)
+     }
+
+     .title {
+         padding: 1px 5px;
+     }
+
+     #count-container {
+         display: flex;
+     }
+
+     #count-container p {
+         flex: 0 0 30%;
+     }
+
+     #time-container {
+         display: flex;
+     }
+
+     #time-container p {
+         flex: 0 0 30%;
+     }
+
+     #social-context-container {
+         display: flex;
+     }
+
+     #context-img {
+         flex: 0 0 70%;
+     }
+
+     #person-container {
+         display: flex;
+     }
+
+     #person-container img {
+         flex: 0 0 70%
+     }
+
+     img {
+         width: 100%;
+     }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="center">
+    <div class="title">
+    <h1>Happytrack Report {{ week_start }} - {{ week_end }} </h1>
+    </div>
+
+    <div class="sub-title">
+    <h2>Social Summaries</h2>
+    <p>These are meant to give you a better picture of your interactions throughout the week</p>
+    </div>
+
+    <!-- Interactions by total social count -->
+    <div id="count-container">
+        <p>
+            Vitae rerum a et quia incidunt voluptatem aut voluptate. Et non officia occaecati qui aut quod fuga consectetur. Perspiciatis impedit blanditiis nesciunt omnis. Quo exercitationem culpa omnis asperiores itaque occaecati. At natus tempora incidunt nihil.…
+        </p>
+
+        <div id="count-img">
+        <img src="data:image/png;base64,{{ frequency_embed | safe }}"\>
+        </div>
+    </div>
+
+    <!-- Interactions by social context with pie chart -->
+    <div id="social-context-container">
+
+        <div id="context-img">
+        <img src="data:image/png;base64,{{ social_embed | safe }}"\>
+        </div>
+
+        <p>
+            Vitae rerum a et quia incidunt voluptatem aut voluptate. Et non officia occaecati qui aut quod fuga consectetur. Perspiciatis impedit blanditiis nesciunt omnis. Quo exercitationem culpa omnis asperiores itaque occaecati. At natus tempora incidunt nihil.…
+        </p>
+
+    </div>
+
+    <!-- Interactions by time of day with pie chart -->
+    <div id="time-container">
+        <p>
+            Vitae rerum a et quia incidunt voluptatem aut voluptate. Et non officia occaecati qui aut quod fuga consectetur. Perspiciatis impedit blanditiis nesciunt omnis. Quo exercitationem culpa omnis asperiores itaque occaecati. At natus tempora incidunt nihil.…
+        </p>
+        <div id="time-img">
+        <img src="data:image/png;base64,{{ time_embed | safe}}" />
+        </div>
+    </div>
+
+    <!-- Interactions by each person bar chart -->
+    <div id="person-container">
+        <img src="data:image/png;base64,{{ person_embed | safe}}" />
+        <p>
+            Vitae rerum a et quia incidunt voluptatem aut voluptate. Et non officia occaecati qui aut quod fuga consectetur. Perspiciatis impedit blanditiis nesciunt omnis. Quo exercitationem culpa omnis asperiores itaque occaecati. At natus tempora incidunt nihil.…
+        </p>
+    </div>
+
+    <h2>Word Cloud</h2>
+
+    <p>This word cloud is hopefully to pique your interests</p>
+
+    <!-- Interactions by Word cloud by each week/time -->
+    <div id="word-cloud-container">
+        <img src="data:image/png;base64,{{ word_embed | safe}}" />
+    </div>
+    </div>
+</div>
+</body>
+</html>

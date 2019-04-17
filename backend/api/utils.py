@@ -133,3 +133,10 @@ friend_post_schema = {
     },
     'required': ['name'],
 }
+
+email_get_schema = {
+    "type": "object",
+    "properties": {
+
+    }
+}
