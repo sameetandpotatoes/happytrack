@@ -187,43 +187,72 @@ def _count_reactions(logs):
 
 
 def _save_generic_recommendations(logs, user_id):
-    r = {
-        "recommend_person": user_id
-    }
+    rec_type = 'GE'
 
     user = User.objects.get(id=user_id)
-    r['rec_type'] = "GE"
     generic_recs = []
 
-    r["recommendation"] = "Laugh and smile when starting an interaction."
-    r["rec_description"] = LAUGH_REC_DESC
-    _create_and_save_recommendation(r)
-    generic_recs.append(copy.deepcopy(r))
+    laugh_rec = dict(
+        recommendation = "Laugh and smile when starting an interaction.",
+        rec_description = LAUGH_REC_DESC,
+        recommend_person = user_id,
+        rec_type = rec_type
+        )
 
-    r["recommendation"] = "Start with a compliment."
-    r["rec_description"] = COMPL_REC_DESC
-    _create_and_save_recommendation(r)
-    generic_recs.append(copy.deepcopy(r))
+    _create_and_save_recommendation(laugh_rec)
+    generic_recs.append(laugh_rec)
 
-    r["recommendation"] = "Use body language."
-    r["rec_description"] = BODY_LANGUAGE_REC_DESC
-    _create_and_save_recommendation(r)
-    generic_recs.append(copy.deepcopy(r))
 
-    r["recommendation"] = "Evaluate and understand."
-    r["rec_description"] = EVALUATE_REC_DESC
-    _create_and_save_recommendation(r)
-    generic_recs.append(copy.deepcopy(r))
+    compl_rec = dict(
+        recommendation = "Start with a compliment",
+        rec_description = COMPL_REC_DESC,
+        recommend_person = user_id,
+        rec_type = rec_type
+        )
 
-    r["recommendation"] = "Use humor!"
-    r["rec_description"] = HUMOR_REC_DESC
-    _create_and_save_recommendation(r)
-    generic_recs.append(copy.deepcopy(r))
+    _create_and_save_recommendation(compl_rec)
+    generic_recs.append(compl_rec)
 
-    r["recommendation"] = "Open up."
-    r["rec_description"] = OPEN_UP_REC_DESC
-    _create_and_save_recommendation(r)
-    generic_recs.append(copy.deepcopy(r))
+    body_rec = dict(
+        recommendation = "Use body language.",
+        rec_description = BODY_LANGUAGE_REC_DESC,
+        recommend_person = user_id,
+        rec_type = rec_type
+        )
+
+
+    _create_and_save_recommendation(body_rec)
+    generic_recs.append(body_rec)
+
+    eval_rec = dict(
+        recommendation = "Evaluate and Understand",
+        rec_description = EVALUATE_REC_DESC,
+        recommend_person = user_id,
+        rec_type = rec_type
+        )
+
+    _create_and_save_recommendation(eval_rec)
+    generic_recs.append(eval_rec)
+
+    humor_rec = dict(
+        recommendation = "Use humor!",
+        rec_description = HUMOR_REC_DESC,
+        recommend_person = user_id,
+        rec_type = rec_type
+        )
+
+    _create_and_save_recommendation(humor_rec)
+    generic_recs.append(humor_rec)
+
+    open_rec = dict(
+        recommendation = "Open up.",
+        rec_description = OPEN_UP_REC_DESC,
+        recommend_person = user_id,
+        rec_type = rec_type
+        )
+
+    _create_and_save_recommendation(open_rec)
+    generic_recs.append(open_rec)
 
     user.has_generic_recs = True
     user.save()
