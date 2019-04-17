@@ -29,12 +29,15 @@ def generate_person(name, email, num_friends, num_logs):
         friend.user = person
         friend.save()
         friends.append(friend)
-
+    today = datetime.date.today()
+    day_idx = (today.weekday() + 1) % 7 # MON = 0, SUN = 6 -> SUN = 0 .. SAT = 6
+    prev_sun = today - datetime.timedelta(7+day_idx)
+    day_choices = list(range(7))
     # Generate the logs
     logs = []
     for _ in range(num_logs):
         friend_obj = random.choice(friends)
-        bout_a_week = datetime.date.today() - datetime.timedelta(days=7)
+        bout_a_week = prev_sun + datetime.timedelta(days=random.choice(day_choices))
         le = models.LogEntry()
         le.reaction = chooser_factory(models.LogEntry.REACTION_CHOICES)
         le.logger = person

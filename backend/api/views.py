@@ -426,7 +426,9 @@ def email(request):
         return ret
 
     #logger_id = request.session[SESSION_USER_KEY]
-    logger_id = 2
+
+    # TODO: REMOVE THIS
+    logger_id = 71
     base = models.LogEntry.objects.filter(logger_id=logger_id)
     if 'from' in json_body or 'to' in json_body:
         if 'from' in json_body:
@@ -443,12 +445,12 @@ def email(request):
         from_datetime = prev_sun.strftime("%m/%d/%y")
         to_datetime = sun.strftime("%m/%d/%y")
 
-    log_objs = base.all()
+    log_objs = list(base.all())
     template = loader.get_template('email.html')
 
     freq_png = charts.interaction_day_data_string(log_objs, 'Interaction Frequency {} - {}'.format(from_datetime, to_datetime))
     context_png = charts.interaction_context_data_string(log_objs, 'Social Frequency {} - {}'.format(from_datetime, to_datetime))
-    time_png = charts.interaction_context_data_string(log_objs, 'Time Frequency {} - {}'.format(from_datetime, to_datetime))
+    time_png = charts.interaction_time_data_string(log_objs, 'Time Frequency {} - {}'.format(from_datetime, to_datetime))
     person_png = charts.interaction_person_data_string(log_objs, 'Person Frequency {} - {}'.format(from_datetime, to_datetime))
     word_png = charts.interaction_word_data_string(log_objs, 'Word Frequency {} - {}'.format(from_datetime, to_datetime))
 
