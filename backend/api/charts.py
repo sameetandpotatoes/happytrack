@@ -3,7 +3,6 @@ from io import BytesIO
 import base64
 from . import utils
 from . import models
-import pygal
 plt.style.use('ggplot')
 import logging
 from collections import defaultdict

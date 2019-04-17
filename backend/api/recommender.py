@@ -257,7 +257,7 @@ def recommendations_from_logs(logs, user_id):
         return dict(data=[
             dict(
                 rec_type=rec.rec_typ,
-                recommendation=recrecommendation,
+                recommendation=rec.recommendation,
                 rec_description=rec.rec_description,
                 recommend_person=user_id
             )

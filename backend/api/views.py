@@ -16,7 +16,6 @@ import logging
 import json
 import jsonschema
 import datetime
-import pygal
 
 from .utils import restrict_function, interaction_get_schema, interaction_post_schema, summary_get_schema, email_get_schema
 from . import utils
