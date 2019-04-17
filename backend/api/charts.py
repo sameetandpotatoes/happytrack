@@ -7,11 +7,40 @@ plt.style.use('ggplot')
 import logging
 from collections import defaultdict
 import calendar
+from os import path
+from PIL import Image
+import numpy as np
+import matplotlib.pyplot as plt
+import os
+
+from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 
 logger = logging.getLogger(__name__)
 
 # if this changes, i'm losing it
 DAYS_OF_THE_WEEK = ['Sunday', 'Monday', 'Tuesday', "Wednesday", 'Thursday', 'Friday', 'Saturday']
+
+def wordcloud(text):
+    alice_coloring=None
+    stopwords = set(STOPWORDS)
+    stopwords.add("said")
+
+    wc = WordCloud(
+        background_color="white",
+        max_words=2000,
+        mask=alice_coloring,
+        stopwords=stopwords,
+        max_font_size=40,
+        random_state=42)
+    # generate word cloud
+    wc.generate(text)
+
+    # show
+    fig, ax = plt.subplots(1, 1)
+    ax.imshow(wc, interpolation="bilinear")
+    ax.grid(False)
+    ax.set_xticks([])
+    ax.set_yticks([])
 
 def _counts_by_getter(logs, key_getter):
     ret = defaultdict(lambda: 0)
@@ -94,13 +123,9 @@ def interaction_person_data_string(logs, title):
 
 def interaction_word_data_string(logs, title):
     plt.clf()
-    contexts = ['bob']
-
-    xs = list(range(len(contexts)))
-    plt.bar(xs, [101 for _ in contexts])
-    plt.xticks(xs, contexts)
-    plt.title(title)
-    plt.xlabel("Social Context")
-    plt.ylabel('Num Interactions')
-    plt.tight_layout()
+    texts = []
+    for log in logs:
+        texts.append(log.other_loggable_text or "")
+    text = ' '.join(texts) + 'happy'
+    wordcloud(text)
     return pyplot_to_base64()

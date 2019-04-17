@@ -427,7 +427,7 @@ def email(request):
     #logger_id = request.session[SESSION_USER_KEY]
 
     # TODO: REMOVE THIS
-    logger_id = 71
+    logger_id = 73
     base = models.LogEntry.objects.filter(logger_id=logger_id)
     if 'from' in json_body or 'to' in json_body:
         if 'from' in json_body:

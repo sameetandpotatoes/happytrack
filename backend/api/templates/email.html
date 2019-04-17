@@ -3,12 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Happytrack Report {{ week_start }} - {{ week_end }} </title>
+    <style>
+     body {
+         font-family: "DejaVu Sans",sans-serif;
+     }
+
+     .container {
+         width: 100%;
+         min-height: 70vh;
+         position: relative;
+     }
+
+     .center {
+         position: absolute;
+         margin: 0;
+         top: 0;
+         left: 50%;
+         margin-right: -50%;
+         transform: translate(-50%, 0%)
+     }
+
+     .title {
+         background-color: #3299CC;
+         padding: 1px 5px;
+     }
+
+    </style>
 </head>
 <body>
-<div>
+<div class="container">
+    <div class="center">
+    <div class="title">
     <h1>Happytrack Report {{ week_start }} - {{ week_end }} </h1>
+    </div>
 
+    <div class="sub-title">
     <h2>Social Summaries</h2>
+    <p>These are meant to give you a better picture of your interactions throughout the week</p>
+    </div>
+
     <!-- Interactions by total social count -->
     <div id="count-container">
         <img src="data:image/png;base64,{{ frequency_embed | safe }}"\>
@@ -33,7 +66,7 @@
     <div id="word-cloud-container">
         <img src="data:image/png;base64,{{ word_embed | safe}}" />
     </div>
-
+    </div>
 </div>
 </body>
 </html>

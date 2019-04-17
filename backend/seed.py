@@ -40,6 +40,7 @@ def generate_person(name, email, num_friends, num_logs):
         bout_a_week = prev_sun + datetime.timedelta(days=random.choice(day_choices))
         le = models.LogEntry()
         le.reaction = chooser_factory(models.LogEntry.REACTION_CHOICES)
+        le.other_loggable_text = fake.paragraph()
         le.logger = person
         le.loggee = friend_obj
         le.time_of_day = chooser_factory(models.LogEntry.TIME_CHOICES)
