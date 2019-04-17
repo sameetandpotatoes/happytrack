@@ -82,6 +82,7 @@ class Recommendation(models.Model):
     rec_description = models.CharField(max_length=512, default='')
     recommend_person = models.ForeignKey('User', models.CASCADE, related_name='recommend_person')
     about_person = models.ForeignKey('Friend', models.SET_NULL, related_name='about_person', null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     @property
     def feedback(self):
@@ -102,3 +103,4 @@ class RecommendationFeedback(models.Model):
     id = models.AutoField(primary_key=True)
     rec = models.ForeignKey('Recommendation', models.CASCADE, related_name='tied_recommendation')
     feedback_typ = models.CharField(max_length=2, choices=FEEDBACK_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)

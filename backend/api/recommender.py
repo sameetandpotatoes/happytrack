@@ -2,6 +2,7 @@ import copy
 
 from .models import User, Friend, Recommendation
 from collections import defaultdict
+from sklearn.ensemble import RandomForestClassifier
 
 IN_PERSON_REC_DESC = (
     "In-person interactions allow for more control "
@@ -236,8 +237,27 @@ def _count_small_talk(logs):
         else:
             small_talk[log.loggee]['long'] += 1
 
+def _recommended_this_week(user_id):
+    base = Recommendation.objects.filter(user_id=user_id)
+    today = datetime.date.today()
+    day_idx = (today.weekday() + 1) % 7 # MON = 0, SUN = 6 -> SUN = 0 .. SAT = 6
+    sun = today - datetime.timedelta(7+day_idx)
+    base = base.filter(created_at__ge=sun)
+    return base.all()
 
 def recommendations_from_logs(logs, user_id):
+    has_generated = _recommended_this_week(user_id)
+    if len(has_generated) != 0:
+        return dict(data=[
+            dict(
+                rec_type=rec.rec_typ,
+                recommendation=recrecommendation,
+                rec_description=rec.rec_description,
+                recommend_person=user_id
+            )
+            for rec in has_generated
+        ])
+
     rec_list = list()
 
     r = {
@@ -306,4 +326,6 @@ def recommendations_from_logs(logs, user_id):
 
 def recommendations_from_ml(logs, user_id):
     # All the setup recommendations should be good
+    person_classifier = RandomForestClassifier(n_estimators=3)
+    reacts = _count_reactions(logs)
     pass

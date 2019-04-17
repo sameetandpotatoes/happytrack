@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Happytrack Report {{ week_start }} - {{ week_end }} </title>
+</head>
+<body>
+<div>
+    <h1>Happytrack Report {{ week_start }} - {{ week_end }} </h1>
+
+    <h2>Social Summaries</h2>
+    <!-- Interactions by total social count -->
+    <div id="count-container">
+        <img src="data:image/png;base64,{{ frequency_embed | safe }}"\>
+    </div>
+
+    <!-- Interactions by social context with pie chart -->
+    <div id="social-context-container">
+        <img src="data:image/png;base64,{{ social_embed | safe }}"\>
+    </div>
+
+    <!-- Interactions by time of day with pie chart -->
+    <div id="time-container">
+        <img src="data:image/png;base64,{{ time_embed | safe}}" />
+    </div>
+
+    <!-- Interactions by each person bar chart -->
+    <div id="person-container">
+        <img src="data:image/png;base64,{{ person_embed | safe}}" />
+    </div>
+
+    <!-- Interactions by Word cloud by each week/time -->
+    <div id="word-cloud-container">
+        <img src="data:image/png;base64,{{ word_embed | safe}}" />
+    </div>
+
+</div>
+</body>
+</html>
