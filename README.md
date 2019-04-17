@@ -29,3 +29,4 @@ npm start
 1. do django things
 2. `python3 manage.py loaddata fixtures/random_seed.json` for random data
 3. `python3 manage.py loaddata fixtures/demo_seed.json` for demo data
+**Note:** calling `loaddata` with a valid fixture _will_ overwrite the existing db.sqlite3!
