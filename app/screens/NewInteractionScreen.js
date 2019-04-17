@@ -26,9 +26,6 @@ export default class NewInteractionScreen extends React.Component {
     }
     this.updateName = this.updateName.bind(this)
     this.updateEmojiIndex = this.updateEmojiIndex.bind(this)
-    this.updateTimeOfDayIndex = this.updateTimeOfDayIndex.bind(this)
-    this.updateContextIndex = this.updateContextIndex.bind(this)
-    this.updateMediumIndex = this.updateMediumIndex.bind(this)
     this.handlePostInteraction = this.handlePostInteraction.bind(this)
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this)
   }
@@ -55,27 +52,11 @@ export default class NewInteractionScreen extends React.Component {
     })
   }
 
-  updateTimeOfDayIndex(selTimeOfDay) {
-    this.setState({selTimeOfDay})
-  }
-
-  updateContextIndex(selContext) {
-    this.setState({selContext})
-  }
-
-  updateMediumIndex(selMedium) {
-    this.setState({selMedium})
-  }
-
-  handleDescriptionChange(text) {
-    this.setState({description: text});
-  }
-
-  handleInputChange(event = {}) {
-    const value = event.target && event.target.value;
+  // handleInputChange(event = {}) {
+  //   const value = event.target && event.target.value;
   
-    this.setState({description: value});
-  }
+  //   this.setState({description: value});
+  // }
 
   handlePostInteraction(e) {
     const { name, selEmoji, selTimeOfDay, selContext, selMedium, description } = this.state
@@ -95,9 +76,9 @@ export default class NewInteractionScreen extends React.Component {
     }
 
     let emoji = emojiButtons[selEmoji].text;
-    let timeOfDay = (selTimeOfDay == -1) ? null : timeOfDays[selTimeOfDay];
-    let context = (selContext == -1) ? null : socialContexts[selContext];
-    let medium = (selMedium == -1) ? null : interactionMedium[selMedium];
+    let timeOfDay = (selTimeOfDay == -1) ? "Not Applicable" : timeOfDays[selTimeOfDay];
+    let context = (selContext == -1) ? "Not Applicable" : socialContexts[selContext];
+    let medium = (selMedium == -1) ? "Not Applicable" : interactionMedium[selMedium];
 
     // Get or create friend
     postFriend(name, function(friend) {
@@ -153,19 +134,19 @@ export default class NewInteractionScreen extends React.Component {
 
           <RobText>Time Of Day</RobText>
           <ButtonGroup
-            onPress={this.updateTimeOfDayIndex}
+            onPress={(selTimeOfDay) => this.setState({selTimeOfDay})}
             selectedIndex={selTimeOfDay}
             buttons={timeOfDays} />
 
           <RobText>Social Context</RobText>
           <ButtonGroup
-            onPress={this.updateContextIndex}
+            onPress={(selContext) => this.setState({selContext})}
             selectedIndex={selContext}
             buttons={socialContexts} />
 
           <RobText>Interaction Medium</RobText>
           <ButtonGroup
-            onPress={this.updateMediumIndex}
+            onPress={(selMedium) => this.setState({selMedium})}
             selectedIndex={selMedium}
             buttons={interactionMedium} />
 
@@ -173,7 +154,7 @@ export default class NewInteractionScreen extends React.Component {
           <TextInput
             style={{height: 100, borderColor: 'gray', borderWidth: 1}}
             name="description"
-            onChangeText={this.handleDescriptionChange}
+            onChangeText={(description) => this.setState({description})}
             value={this.state.descripton}
           />
 

@@ -89,40 +89,47 @@ export default class InteractionScreen extends React.Component {
 
   getDetailedInteraction(overlayInfo) {
     const {
-      timeOfDay, context, medium, timestamp,
-      emoji, name, other_loggable_text
+      time_of_day, social_context, content_class, interaction_medium, created_at,
+      reaction, name, other_loggable_text
     } = overlayInfo;
     return (
       <View style={styles.detailInteraction}>
-        <Text h4>Your interaction with {name}</Text>
-        <Text style={styles.text}>Recorded at: {this.getDate(timestamp) + " at " + this.getTime(timestamp)}</Text>
+        <Text h4>Your interaction with {loggee}</Text>
+        <Text style={styles.text}>Recorded at: {this.getDate(created_at) + " at " + this.getTime(created_at)}</Text>
 
-        { timeOfDay && timeOfDay != '' &&
+        { time_of_day && time_of_day != '' &&
           <Text style={styles.text}>
             Time Of Day:
-            <Text style={{fontWeight: "bold"}}> {timeOfDay}</Text>
+            <Text style={{fontWeight: "bold"}}> {timeOfDayEmojis[time_of_day][1]}</Text>
           </Text>
         }
 
-        { medium && medium != '' &&
+        { interaction_medium && interaction_medium != '' &&
           <Text style={styles.text}>
             Social Interaction Medium:
-            <Text style={{fontWeight: "bold"}}> {medium}</Text>
+            <Text style={{fontWeight: "bold"}}> {interactionMediumEmojis[interaction_medium][1]}</Text>
           </Text>
         }
 
-        { context && context != '' &&
+        { content_class && content_class != '' &&
+          <Text style={styles.text}>
+            Content Class:
+            <Text style={{fontWeight: "bold"}}> {content_class}</Text>
+          </Text>
+        }
+
+        { social_context && social_context != '' &&
           <Text style={styles.text}>
             Social Context:
-            <Text style={{fontWeight: "bold"}}> {context}</Text>
+            <Text style={{fontWeight: "bold"}}> {socialContextsEmojis[social_context][1]}</Text>
           </Text>
         }
 
-        { other_loggable_text && other_loggable_text != '' &&
+        {/* { other_loggable_text && other_loggable_text != '' &&
           <Text style={styles.text}>
             Interaction Notes: {"\n\n" + other_loggable_text}
           </Text>
-        }
+        } */}
       </View>
     );
 
@@ -138,7 +145,6 @@ export default class InteractionScreen extends React.Component {
   render() {
     const emojiFS = 22;
 
-    console.log(this.state.interactions);
     const sortedInteractions = 
         _(this.state.interactions)
         .sortBy(event => event.created_at)
@@ -147,7 +153,6 @@ export default class InteractionScreen extends React.Component {
         .toPairs()
         .map((value, key) => ({title: moment(value[0], 'MM/DD/YYYY').format('ddd MMMM DD'), data: value[1]}))
         .value();
-    console.log(sortedInteractions);
     return (
       <View style={styles.container}>
         { this.state.overlayInfo &&
@@ -176,7 +181,7 @@ export default class InteractionScreen extends React.Component {
               renderItem={({item, index, section}) => (
                 <TouchableWithoutFeedback onPress={ () => this.viewDetail(item)}>
                   <View style={styles.SectionListItems} onPress={this.viewDetail}>
-                    {/* <Avatar rounded size="medium" title={this.getInitials(item.name)} /> */}
+                    <Avatar rounded size="medium" title={this.getInitials(item.loggee).substring(0, 1)} />
                     <View style={{flexDirection: 'column', marginLeft: 5}}>
                       <Text style={{fontSize: 20}}>{item.loggee}</Text>
                       <Text style={{fontSize: 16}}>{"at " + this.getTime(item.created_at)}</Text>
@@ -184,13 +189,13 @@ export default class InteractionScreen extends React.Component {
                     <View style={styles.subtitleView}>
                       {/* <Emoji name={item.fields.reaction} style={{fontSize: emojiFS, position: 'absolute', right: 0, bottom: 10}} /> */}
                       { item.time_of_day && item.time_of_day != '' &&
-                        <Emoji name={timeOfDayEmojis[item.time_of_day]} style={{fontSize: emojiFS, position: 'absolute', right: 40, bottom: 10}} />
+                        <Emoji name={timeOfDayEmojis[item.time_of_day][0]} style={{fontSize: emojiFS, position: 'absolute', right: 40, bottom: 10}} />
                       }
                       { item.social_context && item.social_context != '' &&
-                        <Emoji name={socialContextsEmojis[item.social_context]} style={{fontSize: emojiFS, position: 'absolute', right: 80, bottom: 10}} />
+                        <Emoji name={socialContextsEmojis[item.social_context][0]} style={{fontSize: emojiFS, position: 'absolute', right: 80, bottom: 10}} />
                       }
                       { item.interaction_medium && item.interaction_medium != '' &&
-                        <Emoji name={interactionMediumEmojis[item.interaction_medium]} style={{fontSize: emojiFS, position: 'absolute', right: 120, bottom: 10}} />
+                        <Emoji name={interactionMediumEmojis[item.interaction_medium][0]} style={{fontSize: emojiFS, position: 'absolute', right: 120, bottom: 10}} />
                       }
                     </View>
                   </View>
