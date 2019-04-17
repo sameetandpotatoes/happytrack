@@ -1,9 +1,9 @@
 import React from 'react';
 import { Avatar, Button, Icon, ListItem, Text } from 'react-native-elements';
-import { Platform, StyleSheet, FlatList, List, RefreshControl, ScrollView, View } from 'react-native';
-import { getRecommendations } from '../utils/api';
+import { Platform, StyleSheet, FlatList, InteractionManager, RefreshControl, ScrollView, View } from 'react-native';
+import { getRecommendations, postFeedback } from '../utils/api';
 
-const keyExtractor = item => item.id;
+const keyExtractor = item => item.id.toString();
 
 export default class RecommendationScreen extends React.Component {
     static navigationOptions = ({ navigation }) => ({    
@@ -36,7 +36,9 @@ export default class RecommendationScreen extends React.Component {
 
 
   componentDidMount() {
-    this._onRefresh()
+    InteractionManager.runAfterInteractions(() => {
+      this._onRefresh()
+    });
   }
 
   _onRefresh = () => {
@@ -50,6 +52,14 @@ export default class RecommendationScreen extends React.Component {
     }.bind(this));
   }
 
+  handleFeedback(item, feedback_typ) {
+    const reloadData = this._onRefresh;
+    postFeedback(item.id, feedback_typ, function(response) {
+        // TODO check status 200?
+        reloadData()
+    });
+  }
+
   renderRow = ({ item }) => (
     <ListItem
       leftAvatar={<Avatar rounded size="small" title={item.rec_typ} />}
@@ -60,12 +70,12 @@ export default class RecommendationScreen extends React.Component {
           <Icon
             name={'thumb-up'}
             color={item.feedback && item.feedback.feedback_typ == "WO" ? "green" : "gray"}
-            onPress={() => console.log(item)}
+            onPress={() => this.handleFeedback.bind(this, item, 'WO')}
           />
           <Icon
             name={'thumb-down'}
             color={item.feedback && item.feedback.feedback_typ == "DW" ? "red" : "gray"}
-            onPress={() => console.log(item)}
+            onPress={() => this.handleFeedback.bind(this, item, 'DW')}
           />  
         </View>
       }

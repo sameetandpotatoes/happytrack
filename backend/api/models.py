@@ -89,7 +89,7 @@ class Recommendation(models.Model):
         try:
             feedback = RecommendationFeedback.objects.get(rec=self)
             return { "id": feedback.id, "feedback_typ": feedback.feedback_typ }
-        except RecommendationFeedback.DoesNotExist as e:
+        except RecommendationFeedback.DoesNotExist:
             return feedback
 
 class RecommendationFeedback(models.Model):
