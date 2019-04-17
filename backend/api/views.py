@@ -356,24 +356,30 @@ def recommendation(request):
         if 'to' in json_body:
             base = base.filter(created_at__lt=json_body['to'])
         logs = list(base)
-        if len(logs) < ML_SPLIT_THRESHOLD:
+
+        feedback_count = Recommendations.objects.raw("""
+        SELECT COUNT(*) FROM api_recommendationfeedback WHERE
+        id IN (SELECT id FROM api_recommendation WHERE recommend_person_id = %d)
+        """, [user_id])
+
+        if feedback_count < ML_SPLIT_THRESHOLD:
             recs = recommender.recommendations_from_logs(logs, user_id)
         else:
-            recs = recommender.recommendations_from_ml(logs, user_id)
-            pass
-        # TODO: also include ML'd recs
+            recs = recommender.recommendations_from_ml(logs, user_id, from_dt=json_body['from'], to_dt=json_body['to'])
 
-        safe_recs = { "data": []}
-        safe_recs["data"] = [
-            {
-                "id": rec.id,
-                "rec_typ": rec.rec_typ,
-                "recommendation": rec.recommendation,
-                "rec_description": rec.rec_description,
-                "feedback": rec.feedback
-            }
-            for rec in recs
-        ]
+        safe_recs = dict(
+            data=[
+                {
+                    "id": rec.id,
+                    "rec_typ": rec.rec_typ,
+                    "recommendation": rec.recommendation,
+                    "rec_description": rec.rec_description,
+                    "feedback": rec.feedback
+                }
+                for rec in recs
+            ]
+        )
+
         return JsonResponse(safe_recs, status=200)
 
     elif request.method == 'POST':
@@ -390,17 +396,6 @@ def recommendation(request):
         feedback.save()
         return HttpResponse(status=200)
 
-"""
-INSTANCE_START = 20
-INSTANCE_MAPPING = {
-}
-
-@csrf_exempt
-@restrict_function(allowed=['GET'])
-def email_image(request):
-    pass
-"""
-
 @csrf_exempt
 @restrict_function(allowed=['GET'])
 def email(request):
@@ -413,8 +408,6 @@ def email(request):
         'to': optional(date),
     }
     """
-    #global INSTANCE_MAPPING
-
     try:
         json_body = json.loads(request.body or '{}')
     except json.decoder.JSONDecodeError as e:

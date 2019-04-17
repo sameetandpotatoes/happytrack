@@ -276,7 +276,7 @@ def _recommended_this_week(user_id):
     base = Recommendation.objects.filter(recommend_person_id=user_id)
     today = datetime.date.today()
     day_idx = (today.weekday() + 1) % 7 # MON = 0, SUN = 6 -> SUN = 0 .. SAT = 6
-    sun = today - datetime.timedelta(7+day_idx)
+    sun = today - datetime.timedelta(day_idx)
     base = base.filter(created_at__gte=sun)
     return base.all()
 
@@ -294,10 +294,6 @@ def recommendations_from_logs(logs, user_id):
         ])
 
     rec_list = list()
-
-    r = {
-        "recommend_person": user_id
-    }
 
     user = User.objects.get(id=user_id)
     # First store some generic recommendations
@@ -324,45 +320,57 @@ def recommendations_from_logs(logs, user_id):
     for friend in reactions:
         name = friend.name
         total = reactions[friend]['total']
+
+        r = dict(recommend_person= user_id,)
+
         if (reactions[friend]['Happy']/total * 100) > 50:
             r['rec_type'] = 'PO'
             r["recommendation"] = "Spend more time with {}.".format(name)
             r["rec_description"] = GENERALLY_POSITIVE_REC_DESC
             _create_and_save_recommendation(r, friend_id=friend.id)
-            rec_list.append(copy.deepcopy(r))
+            rec_list.append(r)
         elif (reactions[friend]['Tired']/total * 100) > 10:
             r['rec_type'] = 'PO'
             r["recommendation"] = "Talk to {} different times.".format(name)
             r["rec_description"] = DIFFERENT_TIME_REC_DESC
             _create_and_save_recommendation(r, friend_id=friend.id)
-            rec_list.append(copy.deepcopy(r))
+            rec_list.append(r)
         elif (reactions[friend]['Angry']/total * 100) > 10:
             r['rec_type'] = 'NE'
             r["recommendation"] = "Talk to {} less.".format(name)
             r["rec_description"] = GENERALLY_NEGATIVE_REC_DESC
             _create_and_save_recommendation(r, friend_id=friend.id)
-            rec_list.append(copy.deepcopy(r))
+            rec_list.append(r)
         elif (reactions[friend]['Sad']/total * 100) > 10:
             r['rec_type'] = 'AV'
             r["recommendation"] = "Avoid talking to {}.".format(name)
             r["rec_description"] = AVOID_REC_DESC
             _create_and_save_recommendation(r, friend_id=friend.id)
-            rec_list.append(copy.deepcopy(r))
+            rec_list.append(r)
 
     for friend in small_talk:
         name = friend.name
         small_frac = small_talk[friend]['small']/(small_talk[friend]['small'] + small_talk[friend]['long']) * 100
+
         if small_frac > 50:
-            r['rec_type'] = 'AV'
-            r["recommendation"] = "Avoid small talk with {}.".format(name)
-            r["rec_description"] = AVOID_SMALL_REC_DESC
-            _create_and_save_recommendation(r, friend_id=friend.id)
-            rec_list.append(copy.deepcopy(r))
+            small_talk_rec = dict(
+                recommend_person=user_id,
+                rec_type='AV',
+                recommendation="Avoid small talk with {}.".format(name),
+                rec_description=AVOID_SMALL_REC_DESC,
+                )
+
+            _create_and_save_recommendation(small_talk_rec, friend_id=friend.id)
+            rec_list.append(small_talk_rec)
 
     return dict(data=rec_list)
 
-def recommendations_from_ml(logs, user_id):
+def recommendations_from_ml(logs, user_id, from_dt=None, to_dt=None):
     # All the setup recommendations should be good
     person_classifier = RandomForestClassifier(n_estimators=3)
     reacts = _count_reactions(logs)
-    pass
+    # Data format is going to be by week
+    # [friend_id, happy_perc, neutral_perc, angry_perc, sad_perc, academic_perc, social_perc, work_perc, ip_perc, online_perc, phone_perc]
+    # y is going to be one-hot good recommendation dose
+
+
