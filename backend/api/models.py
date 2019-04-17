@@ -26,6 +26,7 @@ class LogEntry(models.Model):
         ('AN', 'Angry'),
         ('SA', 'Sad'),
     )
+    REACTION_DICT = dict(REACTION_CHOICES)
 
     TIME_CHOICES = (
         ('NA', 'Not Applicable'),

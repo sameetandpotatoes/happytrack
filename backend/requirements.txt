@@ -3,4 +3,4 @@ jsonschema==2.6.0
 facebook-py==0.2
 scikit-learn==0.20.3
 matplotlib==3.0.3
-django-seed==0.1.9
+Faker==1.0.5

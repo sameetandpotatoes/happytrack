@@ -1,8 +1,9 @@
 import copy
 
-from .models import User, Friend, Recommendation
+from .models import User, Friend, Recommendation, LogEntry
 from collections import defaultdict
 from sklearn.ensemble import RandomForestClassifier
+import datetime
 
 IN_PERSON_REC_DESC = (
     "In-person interactions allow for more control "
@@ -108,7 +109,8 @@ def _create_and_save_recommendation(rec, friend_id=None):
     r.rec_typ = rec['rec_type']
     r.recommendation = rec['recommendation']
     r.rec_description = rec['rec_description']
-    r.recommend_person = User.objects.get(id=rec['recommend_person'])
+    r.recommend_person_id = rec['recommend_person']
+
     if friend_id:
         r.about_person = Friend.objects.get(id=friend_id)
     r.save()
@@ -126,6 +128,7 @@ def _check_in_person_recommendations(logs, user_id):
             rec_type = 'PA',
             recommendation = "Try to have more in-person interactions.",
             rec_description = IN_PERSON_REC_DESC,
+            recommend_person = user_id,
         )
 
         _create_and_save_recommendation(rec)
@@ -177,7 +180,7 @@ def _count_reactions(logs):
     })
 
     for log in logs:
-        reactions[log.loggee][log.reaction] += 1
+        reactions[log.loggee][LogEntry.REACTION_DICT[log.reaction]] += 1
         reactions[log.loggee]['total'] += 1
 
     return dict(reactions)
@@ -190,39 +193,41 @@ def _save_generic_recommendations(logs, user_id):
 
     user = User.objects.get(id=user_id)
     r['rec_type'] = "GE"
+    generic_recs = []
 
     r["recommendation"] = "Laugh and smile when starting an interaction."
     r["rec_description"] = LAUGH_REC_DESC
     _create_and_save_recommendation(r)
-    recommendations['data'].append(copy.deepcopy(r))
+    generic_recs.append(copy.deepcopy(r))
 
     r["recommendation"] = "Start with a compliment."
     r["rec_description"] = COMPL_REC_DESC
     _create_and_save_recommendation(r)
-    recommendations['data'].append(copy.deepcopy(r))
+    generic_recs.append(copy.deepcopy(r))
 
     r["recommendation"] = "Use body language."
     r["rec_description"] = BODY_LANGUAGE_REC_DESC
     _create_and_save_recommendation(r)
-    recommendations['data'].append(copy.deepcopy(r))
+    generic_recs.append(copy.deepcopy(r))
 
     r["recommendation"] = "Evaluate and understand."
     r["rec_description"] = EVALUATE_REC_DESC
     _create_and_save_recommendation(r)
-    recommendations['data'].append(copy.deepcopy(r))
+    generic_recs.append(copy.deepcopy(r))
 
     r["recommendation"] = "Use humor!"
     r["rec_description"] = HUMOR_REC_DESC
     _create_and_save_recommendation(r)
-    recommendations['data'].append(copy.deepcopy(r))
+    generic_recs.append(copy.deepcopy(r))
 
     r["recommendation"] = "Open up."
     r["rec_description"] = OPEN_UP_REC_DESC
     _create_and_save_recommendation(r)
-    recommendations['data'].append(copy.deepcopy(r))
+    generic_recs.append(copy.deepcopy(r))
 
     user.has_generic_recs = True
     user.save()
+    return generic_recs
 
 
 def _count_small_talk(logs):
@@ -236,13 +241,14 @@ def _count_small_talk(logs):
             small_talk[log.loggee]['small'] += 1
         else:
             small_talk[log.loggee]['long'] += 1
+    return small_talk, count_small_talk
 
 def _recommended_this_week(user_id):
-    base = Recommendation.objects.filter(user_id=user_id)
+    base = Recommendation.objects.filter(recommend_person_id=user_id)
     today = datetime.date.today()
     day_idx = (today.weekday() + 1) % 7 # MON = 0, SUN = 6 -> SUN = 0 .. SAT = 6
     sun = today - datetime.timedelta(7+day_idx)
-    base = base.filter(created_at__ge=sun)
+    base = base.filter(created_at__gte=sun)
     return base.all()
 
 def recommendations_from_logs(logs, user_id):
@@ -264,9 +270,11 @@ def recommendations_from_logs(logs, user_id):
         "recommend_person": user_id
     }
 
+    user = User.objects.get(id=user_id)
     # First store some generic recommendations
     if not user.has_generic_recs:
-        _save_generic_recommendations(logs, user_id)
+        recs = _save_generic_recommendations(logs, user_id)
+        rec_list.extend(recs)
 
     # Check if they have the right amount of in person
     # interactions
