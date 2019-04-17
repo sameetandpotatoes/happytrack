@@ -89,6 +89,14 @@
     },
     {
         "model": "sessions.session",
+        "pk": "30wgz52vzkruqjj6l1l77j3aa8i163at",
+        "fields": {
+            "session_data": "ZGNkOWJlYjU4YTc1ODEyOTY5MDUwMTc0MjljZTRlMmI5NTU5MTc3ODp7ImF1dGgtdG9rZW4iOiJsZW5ueS10b2tlbiIsInVzZXItaWQiOiIxIn0=",
+            "expire_date": "2019-05-01T02:10:15.051Z"
+        }
+    },
+    {
+        "model": "sessions.session",
         "pk": "jysywfe2qk44pao8kmm7w5zckbufdjtc",
         "fields": {
             "session_data": "ZGNkOWJlYjU4YTc1ODEyOTY5MDUwMTc0MjljZTRlMmI5NTU5MTc3ODp7ImF1dGgtdG9rZW4iOiJsZW5ueS10b2tlbiIsInVzZXItaWQiOiIxIn0=",
@@ -295,13 +303,3341 @@
             "reaction": "Happy",
             "loggee": 1,
             "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Social",
+            "interaction_medium": "In Person",
+            "content_class": "Both Personal",
+            "other_loggable_text": "Asked advice from billy",
+            "created_at": "2019-04-17T02:10:15.059Z",
+            "updated_at": "2019-04-17T02:10:15.059Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 2,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 2,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Social",
+            "interaction_medium": "In Person",
+            "content_class": "Both Personal",
+            "other_loggable_text": "Asked advice from jessica",
+            "created_at": "2019-04-17T02:10:15.065Z",
+            "updated_at": "2019-04-17T02:10:15.065Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 3,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 3,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Social",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Both Personal",
+            "other_loggable_text": "Asked advice from catherine",
+            "created_at": "2019-04-17T02:10:15.070Z",
+            "updated_at": "2019-04-17T02:10:15.070Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 4,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 1,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Social",
+            "interaction_medium": "In Person",
+            "content_class": "Both Personal",
+            "other_loggable_text": "Had dinner with billy",
+            "created_at": "2019-04-17T02:10:15.076Z",
+            "updated_at": "2019-04-17T02:10:15.076Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 5,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 2,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Social",
+            "interaction_medium": "In Person",
+            "content_class": "One Personal",
+            "other_loggable_text": "Had dinner with jessica",
+            "created_at": "2019-04-17T02:10:15.083Z",
+            "updated_at": "2019-04-17T02:10:15.083Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 6,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 3,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Social",
+            "interaction_medium": "In Person",
+            "content_class": "One Personal",
+            "other_loggable_text": "Had dinner with catherine",
+            "created_at": "2019-04-17T02:10:15.091Z",
+            "updated_at": "2019-04-17T02:10:15.091Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 7,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 1,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Work",
+            "interaction_medium": "Online",
+            "content_class": "One Personal",
+            "other_loggable_text": "Chatted with billy",
+            "created_at": "2019-04-17T02:10:15.099Z",
+            "updated_at": "2019-04-17T02:10:15.099Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 8,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 2,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Work",
+            "interaction_medium": "Online",
+            "content_class": "Both Personal",
+            "other_loggable_text": "Chatted with jessica",
+            "created_at": "2019-04-17T02:10:15.107Z",
+            "updated_at": "2019-04-17T02:10:15.107Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 9,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 3,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Social",
+            "interaction_medium": "Online",
+            "content_class": "One Personal",
+            "other_loggable_text": "Chatted with catherine",
+            "created_at": "2019-04-17T02:10:15.115Z",
+            "updated_at": "2019-04-17T02:10:15.115Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 10,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 4,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Academic",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Briefly talked to destiny",
+            "created_at": "2019-04-17T02:10:15.129Z",
+            "updated_at": "2019-04-17T02:10:15.129Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 11,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 5,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Work",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Briefly talked to raquel",
+            "created_at": "2019-04-17T02:10:15.137Z",
+            "updated_at": "2019-04-17T02:10:15.137Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 12,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 4,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Academic",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Briefly talked to destiny",
+            "created_at": "2019-04-17T02:10:15.144Z",
+            "updated_at": "2019-04-17T02:10:15.144Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 13,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 5,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Work",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Briefly talked to raquel",
+            "created_at": "2019-04-17T02:10:15.151Z",
+            "updated_at": "2019-04-17T02:10:15.151Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 14,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 4,
+            "logger": 1,
             "time_of_day": "Morning",
             "social_context": "Academic",
             "interaction_medium": "In Person",
             "content_class": "Small Talk",
-            "other_loggable_text": "Saw Billy in class",
-            "created_at": "2019-04-17T01:33:18.380Z",
-            "updated_at": "2019-04-17T01:33:18.380Z"
+            "other_loggable_text": "Briefly talked to destiny",
+            "created_at": "2019-04-17T02:10:15.161Z",
+            "updated_at": "2019-04-17T02:10:15.161Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 15,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 5,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Academic",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Briefly talked to raquel",
+            "created_at": "2019-04-17T02:10:15.169Z",
+            "updated_at": "2019-04-17T02:10:15.169Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 16,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 4,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Work",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Briefly talked to destiny",
+            "created_at": "2019-04-17T02:10:15.178Z",
+            "updated_at": "2019-04-17T02:10:15.178Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 17,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 5,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Work",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Briefly talked to raquel",
+            "created_at": "2019-04-17T02:10:15.186Z",
+            "updated_at": "2019-04-17T02:10:15.186Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 18,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 4,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Academic",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Briefly talked to destiny",
+            "created_at": "2019-04-17T02:10:15.195Z",
+            "updated_at": "2019-04-17T02:10:15.195Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 19,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 5,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Work",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Briefly talked to raquel",
+            "created_at": "2019-04-17T02:10:15.205Z",
+            "updated_at": "2019-04-17T02:10:15.205Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 20,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 4,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Academic",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Briefly talked to destiny",
+            "created_at": "2019-04-17T02:10:15.214Z",
+            "updated_at": "2019-04-17T02:10:15.214Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 21,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 5,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Academic",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Briefly talked to raquel",
+            "created_at": "2019-04-17T02:10:15.224Z",
+            "updated_at": "2019-04-17T02:10:15.224Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 22,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 4,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Academic",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Briefly talked to destiny",
+            "created_at": "2019-04-17T02:10:15.233Z",
+            "updated_at": "2019-04-17T02:10:15.233Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 23,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 5,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Academic",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Briefly talked to raquel",
+            "created_at": "2019-04-17T02:10:15.244Z",
+            "updated_at": "2019-04-17T02:10:15.244Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 24,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 4,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Work",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Briefly talked to destiny",
+            "created_at": "2019-04-17T02:10:15.253Z",
+            "updated_at": "2019-04-17T02:10:15.253Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 25,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 5,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Academic",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Briefly talked to raquel",
+            "created_at": "2019-04-17T02:10:15.262Z",
+            "updated_at": "2019-04-17T02:10:15.262Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 26,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 4,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Work",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Briefly talked to destiny",
+            "created_at": "2019-04-17T02:10:15.270Z",
+            "updated_at": "2019-04-17T02:10:15.270Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 27,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 5,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Academic",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Briefly talked to raquel",
+            "created_at": "2019-04-17T02:10:15.279Z",
+            "updated_at": "2019-04-17T02:10:15.279Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 28,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 4,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Work",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Briefly talked to destiny",
+            "created_at": "2019-04-17T02:10:15.289Z",
+            "updated_at": "2019-04-17T02:10:15.289Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 29,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 5,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Academic",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Briefly talked to raquel",
+            "created_at": "2019-04-17T02:10:15.297Z",
+            "updated_at": "2019-04-17T02:10:15.297Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 30,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 6,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Other",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with sarai",
+            "created_at": "2019-04-17T02:10:15.307Z",
+            "updated_at": "2019-04-17T02:10:15.307Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 31,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 7,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Academic",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with fae",
+            "created_at": "2019-04-17T02:10:15.316Z",
+            "updated_at": "2019-04-17T02:10:15.316Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 32,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 8,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Academic",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with holly",
+            "created_at": "2019-04-17T02:10:15.327Z",
+            "updated_at": "2019-04-17T02:10:15.327Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 33,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 9,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Work",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with lydia",
+            "created_at": "2019-04-17T02:10:15.336Z",
+            "updated_at": "2019-04-17T02:10:15.336Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 34,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 10,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Other",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with neda",
+            "created_at": "2019-04-17T02:10:15.345Z",
+            "updated_at": "2019-04-17T02:10:15.346Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 35,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 11,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Social",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with mireya",
+            "created_at": "2019-04-17T02:10:15.356Z",
+            "updated_at": "2019-04-17T02:10:15.356Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 36,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 12,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Other",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with anglea",
+            "created_at": "2019-04-17T02:10:15.364Z",
+            "updated_at": "2019-04-17T02:10:15.364Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 37,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 13,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Social",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with kami",
+            "created_at": "2019-04-17T02:10:15.373Z",
+            "updated_at": "2019-04-17T02:10:15.373Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 38,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 14,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Work",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with claire",
+            "created_at": "2019-04-17T02:10:15.381Z",
+            "updated_at": "2019-04-17T02:10:15.381Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 39,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 15,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Social",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with theresa",
+            "created_at": "2019-04-17T02:10:15.391Z",
+            "updated_at": "2019-04-17T02:10:15.391Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 40,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 16,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Academic",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with hershel",
+            "created_at": "2019-04-17T02:10:15.399Z",
+            "updated_at": "2019-04-17T02:10:15.399Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 41,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 17,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Work",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ira",
+            "created_at": "2019-04-17T02:10:15.409Z",
+            "updated_at": "2019-04-17T02:10:15.409Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 42,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 18,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Academic",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with mary",
+            "created_at": "2019-04-17T02:10:15.418Z",
+            "updated_at": "2019-04-17T02:10:15.419Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 43,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 19,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Academic",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with kirby",
+            "created_at": "2019-04-17T02:10:15.429Z",
+            "updated_at": "2019-04-17T02:10:15.429Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 44,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 20,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Academic",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with donnell",
+            "created_at": "2019-04-17T02:10:15.441Z",
+            "updated_at": "2019-04-17T02:10:15.441Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 45,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 21,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Other",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ernesto",
+            "created_at": "2019-04-17T02:10:15.449Z",
+            "updated_at": "2019-04-17T02:10:15.449Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 46,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 22,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Social",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ezra",
+            "created_at": "2019-04-17T02:10:15.462Z",
+            "updated_at": "2019-04-17T02:10:15.462Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 47,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 23,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Social",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with dalton",
+            "created_at": "2019-04-17T02:10:15.473Z",
+            "updated_at": "2019-04-17T02:10:15.473Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 48,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 6,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Social",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with sarai",
+            "created_at": "2019-04-17T02:10:15.481Z",
+            "updated_at": "2019-04-17T02:10:15.481Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 49,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 7,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Other",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with fae",
+            "created_at": "2019-04-17T02:10:15.494Z",
+            "updated_at": "2019-04-17T02:10:15.494Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 50,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 8,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Other",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with holly",
+            "created_at": "2019-04-17T02:10:15.507Z",
+            "updated_at": "2019-04-17T02:10:15.507Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 51,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 9,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Work",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with lydia",
+            "created_at": "2019-04-17T02:10:15.515Z",
+            "updated_at": "2019-04-17T02:10:15.515Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 52,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 10,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Other",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with neda",
+            "created_at": "2019-04-17T02:10:15.527Z",
+            "updated_at": "2019-04-17T02:10:15.527Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 53,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 11,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Other",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with mireya",
+            "created_at": "2019-04-17T02:10:15.537Z",
+            "updated_at": "2019-04-17T02:10:15.537Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 54,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 12,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Academic",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with anglea",
+            "created_at": "2019-04-17T02:10:15.546Z",
+            "updated_at": "2019-04-17T02:10:15.546Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 55,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 13,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Other",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with kami",
+            "created_at": "2019-04-17T02:10:15.558Z",
+            "updated_at": "2019-04-17T02:10:15.558Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 56,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 14,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Work",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with claire",
+            "created_at": "2019-04-17T02:10:15.568Z",
+            "updated_at": "2019-04-17T02:10:15.568Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 57,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 15,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Other",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with theresa",
+            "created_at": "2019-04-17T02:10:15.579Z",
+            "updated_at": "2019-04-17T02:10:15.579Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 58,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 16,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Other",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with hershel",
+            "created_at": "2019-04-17T02:10:15.590Z",
+            "updated_at": "2019-04-17T02:10:15.590Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 59,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 17,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Academic",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ira",
+            "created_at": "2019-04-17T02:10:15.599Z",
+            "updated_at": "2019-04-17T02:10:15.599Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 60,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 18,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Other",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with mary",
+            "created_at": "2019-04-17T02:10:15.611Z",
+            "updated_at": "2019-04-17T02:10:15.611Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 61,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 19,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Other",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with kirby",
+            "created_at": "2019-04-17T02:10:15.625Z",
+            "updated_at": "2019-04-17T02:10:15.625Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 62,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 20,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Other",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with donnell",
+            "created_at": "2019-04-17T02:10:15.636Z",
+            "updated_at": "2019-04-17T02:10:15.636Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 63,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 21,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Other",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ernesto",
+            "created_at": "2019-04-17T02:10:15.646Z",
+            "updated_at": "2019-04-17T02:10:15.647Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 64,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 22,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Social",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ezra",
+            "created_at": "2019-04-17T02:10:15.659Z",
+            "updated_at": "2019-04-17T02:10:15.659Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 65,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 23,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Work",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with dalton",
+            "created_at": "2019-04-17T02:10:15.668Z",
+            "updated_at": "2019-04-17T02:10:15.668Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 66,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 6,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Work",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with sarai",
+            "created_at": "2019-04-17T02:10:15.679Z",
+            "updated_at": "2019-04-17T02:10:15.679Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 67,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 7,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Academic",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with fae",
+            "created_at": "2019-04-17T02:10:15.692Z",
+            "updated_at": "2019-04-17T02:10:15.692Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 68,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 8,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Social",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with holly",
+            "created_at": "2019-04-17T02:10:15.701Z",
+            "updated_at": "2019-04-17T02:10:15.701Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 69,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 9,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Work",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with lydia",
+            "created_at": "2019-04-17T02:10:15.712Z",
+            "updated_at": "2019-04-17T02:10:15.712Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 70,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 10,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Academic",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with neda",
+            "created_at": "2019-04-17T02:10:15.725Z",
+            "updated_at": "2019-04-17T02:10:15.725Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 71,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 11,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Other",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with mireya",
+            "created_at": "2019-04-17T02:10:15.735Z",
+            "updated_at": "2019-04-17T02:10:15.735Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 72,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 12,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Other",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with anglea",
+            "created_at": "2019-04-17T02:10:15.746Z",
+            "updated_at": "2019-04-17T02:10:15.746Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 73,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 13,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Work",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with kami",
+            "created_at": "2019-04-17T02:10:15.759Z",
+            "updated_at": "2019-04-17T02:10:15.759Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 74,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 14,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Work",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with claire",
+            "created_at": "2019-04-17T02:10:15.772Z",
+            "updated_at": "2019-04-17T02:10:15.772Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 75,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 15,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Academic",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with theresa",
+            "created_at": "2019-04-17T02:10:15.781Z",
+            "updated_at": "2019-04-17T02:10:15.781Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 76,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 16,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Social",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with hershel",
+            "created_at": "2019-04-17T02:10:15.793Z",
+            "updated_at": "2019-04-17T02:10:15.793Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 77,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 17,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Other",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ira",
+            "created_at": "2019-04-17T02:10:15.803Z",
+            "updated_at": "2019-04-17T02:10:15.803Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 78,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 18,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Work",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with mary",
+            "created_at": "2019-04-17T02:10:15.811Z",
+            "updated_at": "2019-04-17T02:10:15.811Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 79,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 19,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Social",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with kirby",
+            "created_at": "2019-04-17T02:10:15.818Z",
+            "updated_at": "2019-04-17T02:10:15.818Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 80,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 20,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Work",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with donnell",
+            "created_at": "2019-04-17T02:10:15.825Z",
+            "updated_at": "2019-04-17T02:10:15.825Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 81,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 21,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Social",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ernesto",
+            "created_at": "2019-04-17T02:10:15.832Z",
+            "updated_at": "2019-04-17T02:10:15.832Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 82,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 22,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Other",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ezra",
+            "created_at": "2019-04-17T02:10:15.842Z",
+            "updated_at": "2019-04-17T02:10:15.842Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 83,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 23,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Social",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with dalton",
+            "created_at": "2019-04-17T02:10:15.851Z",
+            "updated_at": "2019-04-17T02:10:15.851Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 84,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 6,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Other",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with sarai",
+            "created_at": "2019-04-17T02:10:15.861Z",
+            "updated_at": "2019-04-17T02:10:15.861Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 85,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 7,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Academic",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with fae",
+            "created_at": "2019-04-17T02:10:15.871Z",
+            "updated_at": "2019-04-17T02:10:15.871Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 86,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 8,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Social",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with holly",
+            "created_at": "2019-04-17T02:10:15.879Z",
+            "updated_at": "2019-04-17T02:10:15.879Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 87,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 9,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Social",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with lydia",
+            "created_at": "2019-04-17T02:10:15.892Z",
+            "updated_at": "2019-04-17T02:10:15.892Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 88,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 10,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Academic",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with neda",
+            "created_at": "2019-04-17T02:10:15.901Z",
+            "updated_at": "2019-04-17T02:10:15.901Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 89,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 11,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Academic",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with mireya",
+            "created_at": "2019-04-17T02:10:15.912Z",
+            "updated_at": "2019-04-17T02:10:15.912Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 90,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 12,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Social",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with anglea",
+            "created_at": "2019-04-17T02:10:15.924Z",
+            "updated_at": "2019-04-17T02:10:15.924Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 91,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 13,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Other",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with kami",
+            "created_at": "2019-04-17T02:10:15.934Z",
+            "updated_at": "2019-04-17T02:10:15.934Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 92,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 14,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Other",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with claire",
+            "created_at": "2019-04-17T02:10:15.945Z",
+            "updated_at": "2019-04-17T02:10:15.945Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 93,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 15,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Other",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with theresa",
+            "created_at": "2019-04-17T02:10:15.957Z",
+            "updated_at": "2019-04-17T02:10:15.957Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 94,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 16,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Work",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with hershel",
+            "created_at": "2019-04-17T02:10:15.967Z",
+            "updated_at": "2019-04-17T02:10:15.967Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 95,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 17,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Social",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ira",
+            "created_at": "2019-04-17T02:10:15.978Z",
+            "updated_at": "2019-04-17T02:10:15.978Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 96,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 18,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Social",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with mary",
+            "created_at": "2019-04-17T02:10:15.990Z",
+            "updated_at": "2019-04-17T02:10:15.990Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 97,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 19,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Social",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with kirby",
+            "created_at": "2019-04-17T02:10:15.998Z",
+            "updated_at": "2019-04-17T02:10:15.998Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 98,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 20,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Academic",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with donnell",
+            "created_at": "2019-04-17T02:10:16.011Z",
+            "updated_at": "2019-04-17T02:10:16.011Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 99,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 21,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Other",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ernesto",
+            "created_at": "2019-04-17T02:10:16.024Z",
+            "updated_at": "2019-04-17T02:10:16.024Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 100,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 22,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Work",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ezra",
+            "created_at": "2019-04-17T02:10:16.034Z",
+            "updated_at": "2019-04-17T02:10:16.034Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 101,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 23,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Social",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with dalton",
+            "created_at": "2019-04-17T02:10:16.045Z",
+            "updated_at": "2019-04-17T02:10:16.045Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 102,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 6,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Social",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with sarai",
+            "created_at": "2019-04-17T02:10:16.058Z",
+            "updated_at": "2019-04-17T02:10:16.058Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 103,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 7,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Other",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with fae",
+            "created_at": "2019-04-17T02:10:16.068Z",
+            "updated_at": "2019-04-17T02:10:16.068Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 104,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 8,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Academic",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with holly",
+            "created_at": "2019-04-17T02:10:16.078Z",
+            "updated_at": "2019-04-17T02:10:16.078Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 105,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 9,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Academic",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with lydia",
+            "created_at": "2019-04-17T02:10:16.091Z",
+            "updated_at": "2019-04-17T02:10:16.091Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 106,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 10,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Social",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with neda",
+            "created_at": "2019-04-17T02:10:16.102Z",
+            "updated_at": "2019-04-17T02:10:16.102Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 107,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 11,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Work",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with mireya",
+            "created_at": "2019-04-17T02:10:16.113Z",
+            "updated_at": "2019-04-17T02:10:16.113Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 108,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 12,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Other",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with anglea",
+            "created_at": "2019-04-17T02:10:16.126Z",
+            "updated_at": "2019-04-17T02:10:16.126Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 109,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 13,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Other",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with kami",
+            "created_at": "2019-04-17T02:10:16.138Z",
+            "updated_at": "2019-04-17T02:10:16.138Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 110,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 14,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Academic",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with claire",
+            "created_at": "2019-04-17T02:10:16.147Z",
+            "updated_at": "2019-04-17T02:10:16.147Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 111,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 15,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Academic",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with theresa",
+            "created_at": "2019-04-17T02:10:16.160Z",
+            "updated_at": "2019-04-17T02:10:16.160Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 112,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 16,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Social",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with hershel",
+            "created_at": "2019-04-17T02:10:16.174Z",
+            "updated_at": "2019-04-17T02:10:16.174Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 113,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 17,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Academic",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ira",
+            "created_at": "2019-04-17T02:10:16.186Z",
+            "updated_at": "2019-04-17T02:10:16.186Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 114,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 18,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Academic",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with mary",
+            "created_at": "2019-04-17T02:10:16.196Z",
+            "updated_at": "2019-04-17T02:10:16.196Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 115,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 19,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Other",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with kirby",
+            "created_at": "2019-04-17T02:10:16.209Z",
+            "updated_at": "2019-04-17T02:10:16.209Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 116,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 20,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Other",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with donnell",
+            "created_at": "2019-04-17T02:10:16.223Z",
+            "updated_at": "2019-04-17T02:10:16.223Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 117,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 21,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Work",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ernesto",
+            "created_at": "2019-04-17T02:10:16.234Z",
+            "updated_at": "2019-04-17T02:10:16.234Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 118,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 22,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Other",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ezra",
+            "created_at": "2019-04-17T02:10:16.246Z",
+            "updated_at": "2019-04-17T02:10:16.246Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 119,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 23,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Work",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with dalton",
+            "created_at": "2019-04-17T02:10:16.257Z",
+            "updated_at": "2019-04-17T02:10:16.257Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 120,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 6,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Other",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with sarai",
+            "created_at": "2019-04-17T02:10:16.264Z",
+            "updated_at": "2019-04-17T02:10:16.264Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 121,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 7,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Social",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with fae",
+            "created_at": "2019-04-17T02:10:16.271Z",
+            "updated_at": "2019-04-17T02:10:16.271Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 122,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 8,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Other",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with holly",
+            "created_at": "2019-04-17T02:10:16.278Z",
+            "updated_at": "2019-04-17T02:10:16.278Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 123,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 9,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Work",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with lydia",
+            "created_at": "2019-04-17T02:10:16.290Z",
+            "updated_at": "2019-04-17T02:10:16.290Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 124,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 10,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Work",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with neda",
+            "created_at": "2019-04-17T02:10:16.299Z",
+            "updated_at": "2019-04-17T02:10:16.299Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 125,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 11,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Other",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with mireya",
+            "created_at": "2019-04-17T02:10:16.311Z",
+            "updated_at": "2019-04-17T02:10:16.311Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 126,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 12,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Academic",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with anglea",
+            "created_at": "2019-04-17T02:10:16.323Z",
+            "updated_at": "2019-04-17T02:10:16.323Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 127,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 13,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Other",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with kami",
+            "created_at": "2019-04-17T02:10:16.331Z",
+            "updated_at": "2019-04-17T02:10:16.331Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 128,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 14,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Social",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with claire",
+            "created_at": "2019-04-17T02:10:16.344Z",
+            "updated_at": "2019-04-17T02:10:16.344Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 129,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 15,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Other",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with theresa",
+            "created_at": "2019-04-17T02:10:16.356Z",
+            "updated_at": "2019-04-17T02:10:16.356Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 130,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 16,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Work",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with hershel",
+            "created_at": "2019-04-17T02:10:16.364Z",
+            "updated_at": "2019-04-17T02:10:16.364Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 131,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 17,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Work",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ira",
+            "created_at": "2019-04-17T02:10:16.377Z",
+            "updated_at": "2019-04-17T02:10:16.377Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 132,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 18,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Other",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with mary",
+            "created_at": "2019-04-17T02:10:16.388Z",
+            "updated_at": "2019-04-17T02:10:16.388Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 133,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 19,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Other",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with kirby",
+            "created_at": "2019-04-17T02:10:16.397Z",
+            "updated_at": "2019-04-17T02:10:16.397Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 134,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 20,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Other",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with donnell",
+            "created_at": "2019-04-17T02:10:16.409Z",
+            "updated_at": "2019-04-17T02:10:16.409Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 135,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 21,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Work",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ernesto",
+            "created_at": "2019-04-17T02:10:16.421Z",
+            "updated_at": "2019-04-17T02:10:16.421Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 136,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 22,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Academic",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ezra",
+            "created_at": "2019-04-17T02:10:16.431Z",
+            "updated_at": "2019-04-17T02:10:16.431Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 137,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 23,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Social",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with dalton",
+            "created_at": "2019-04-17T02:10:16.444Z",
+            "updated_at": "2019-04-17T02:10:16.444Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 138,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 6,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Academic",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with sarai",
+            "created_at": "2019-04-17T02:10:16.455Z",
+            "updated_at": "2019-04-17T02:10:16.455Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 139,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 7,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Social",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with fae",
+            "created_at": "2019-04-17T02:10:16.465Z",
+            "updated_at": "2019-04-17T02:10:16.465Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 140,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 8,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Academic",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with holly",
+            "created_at": "2019-04-17T02:10:16.477Z",
+            "updated_at": "2019-04-17T02:10:16.477Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 141,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 9,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Academic",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with lydia",
+            "created_at": "2019-04-17T02:10:16.488Z",
+            "updated_at": "2019-04-17T02:10:16.488Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 142,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 10,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Social",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with neda",
+            "created_at": "2019-04-17T02:10:16.497Z",
+            "updated_at": "2019-04-17T02:10:16.497Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 143,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 11,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Work",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with mireya",
+            "created_at": "2019-04-17T02:10:16.510Z",
+            "updated_at": "2019-04-17T02:10:16.510Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 144,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 12,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Social",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with anglea",
+            "created_at": "2019-04-17T02:10:16.520Z",
+            "updated_at": "2019-04-17T02:10:16.520Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 145,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 13,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Other",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with kami",
+            "created_at": "2019-04-17T02:10:16.529Z",
+            "updated_at": "2019-04-17T02:10:16.529Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 146,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 14,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Academic",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with claire",
+            "created_at": "2019-04-17T02:10:16.541Z",
+            "updated_at": "2019-04-17T02:10:16.541Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 147,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 15,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Social",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with theresa",
+            "created_at": "2019-04-17T02:10:16.551Z",
+            "updated_at": "2019-04-17T02:10:16.552Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 148,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 16,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Work",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with hershel",
+            "created_at": "2019-04-17T02:10:16.564Z",
+            "updated_at": "2019-04-17T02:10:16.564Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 149,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 17,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Social",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ira",
+            "created_at": "2019-04-17T02:10:16.577Z",
+            "updated_at": "2019-04-17T02:10:16.577Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 150,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 18,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Social",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with mary",
+            "created_at": "2019-04-17T02:10:16.587Z",
+            "updated_at": "2019-04-17T02:10:16.587Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 151,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 19,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Other",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with kirby",
+            "created_at": "2019-04-17T02:10:16.596Z",
+            "updated_at": "2019-04-17T02:10:16.596Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 152,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 20,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Academic",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with donnell",
+            "created_at": "2019-04-17T02:10:16.608Z",
+            "updated_at": "2019-04-17T02:10:16.608Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 153,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 21,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Other",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ernesto",
+            "created_at": "2019-04-17T02:10:16.620Z",
+            "updated_at": "2019-04-17T02:10:16.620Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 154,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 22,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Social",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ezra",
+            "created_at": "2019-04-17T02:10:16.630Z",
+            "updated_at": "2019-04-17T02:10:16.630Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 155,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 23,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Work",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with dalton",
+            "created_at": "2019-04-17T02:10:16.644Z",
+            "updated_at": "2019-04-17T02:10:16.644Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 156,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 6,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Academic",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with sarai",
+            "created_at": "2019-04-17T02:10:16.657Z",
+            "updated_at": "2019-04-17T02:10:16.657Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 157,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 7,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Social",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with fae",
+            "created_at": "2019-04-17T02:10:16.669Z",
+            "updated_at": "2019-04-17T02:10:16.669Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 158,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 8,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Other",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with holly",
+            "created_at": "2019-04-17T02:10:16.681Z",
+            "updated_at": "2019-04-17T02:10:16.681Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 159,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 9,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Work",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with lydia",
+            "created_at": "2019-04-17T02:10:16.693Z",
+            "updated_at": "2019-04-17T02:10:16.693Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 160,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 10,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Academic",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with neda",
+            "created_at": "2019-04-17T02:10:16.703Z",
+            "updated_at": "2019-04-17T02:10:16.703Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 161,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 11,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Academic",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with mireya",
+            "created_at": "2019-04-17T02:10:16.711Z",
+            "updated_at": "2019-04-17T02:10:16.711Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 162,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 12,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Other",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with anglea",
+            "created_at": "2019-04-17T02:10:16.723Z",
+            "updated_at": "2019-04-17T02:10:16.723Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 163,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 13,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Social",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with kami",
+            "created_at": "2019-04-17T02:10:16.733Z",
+            "updated_at": "2019-04-17T02:10:16.733Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 164,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 14,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Work",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with claire",
+            "created_at": "2019-04-17T02:10:16.743Z",
+            "updated_at": "2019-04-17T02:10:16.743Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 165,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 15,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Social",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with theresa",
+            "created_at": "2019-04-17T02:10:16.752Z",
+            "updated_at": "2019-04-17T02:10:16.752Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 166,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 16,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Other",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with hershel",
+            "created_at": "2019-04-17T02:10:16.761Z",
+            "updated_at": "2019-04-17T02:10:16.761Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 167,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 17,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Work",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ira",
+            "created_at": "2019-04-17T02:10:16.768Z",
+            "updated_at": "2019-04-17T02:10:16.768Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 168,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 18,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Social",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with mary",
+            "created_at": "2019-04-17T02:10:16.775Z",
+            "updated_at": "2019-04-17T02:10:16.775Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 169,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 19,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Other",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with kirby",
+            "created_at": "2019-04-17T02:10:16.782Z",
+            "updated_at": "2019-04-17T02:10:16.782Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 170,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 20,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Social",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with donnell",
+            "created_at": "2019-04-17T02:10:16.793Z",
+            "updated_at": "2019-04-17T02:10:16.793Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 171,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 21,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Social",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ernesto",
+            "created_at": "2019-04-17T02:10:16.802Z",
+            "updated_at": "2019-04-17T02:10:16.802Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 172,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 22,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Work",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ezra",
+            "created_at": "2019-04-17T02:10:16.812Z",
+            "updated_at": "2019-04-17T02:10:16.812Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 173,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 23,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Work",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with dalton",
+            "created_at": "2019-04-17T02:10:16.825Z",
+            "updated_at": "2019-04-17T02:10:16.825Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 174,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 6,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Academic",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with sarai",
+            "created_at": "2019-04-17T02:10:16.836Z",
+            "updated_at": "2019-04-17T02:10:16.836Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 175,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 7,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Social",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with fae",
+            "created_at": "2019-04-17T02:10:16.846Z",
+            "updated_at": "2019-04-17T02:10:16.846Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 176,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 8,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Work",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with holly",
+            "created_at": "2019-04-17T02:10:16.858Z",
+            "updated_at": "2019-04-17T02:10:16.858Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 177,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 9,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Other",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with lydia",
+            "created_at": "2019-04-17T02:10:16.867Z",
+            "updated_at": "2019-04-17T02:10:16.868Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 178,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 10,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Social",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with neda",
+            "created_at": "2019-04-17T02:10:16.878Z",
+            "updated_at": "2019-04-17T02:10:16.878Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 179,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 11,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Academic",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with mireya",
+            "created_at": "2019-04-17T02:10:16.890Z",
+            "updated_at": "2019-04-17T02:10:16.890Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 180,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 12,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Other",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with anglea",
+            "created_at": "2019-04-17T02:10:16.898Z",
+            "updated_at": "2019-04-17T02:10:16.898Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 181,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 13,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Work",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with kami",
+            "created_at": "2019-04-17T02:10:16.910Z",
+            "updated_at": "2019-04-17T02:10:16.910Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 182,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 14,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Work",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with claire",
+            "created_at": "2019-04-17T02:10:16.923Z",
+            "updated_at": "2019-04-17T02:10:16.923Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 183,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 15,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Other",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with theresa",
+            "created_at": "2019-04-17T02:10:16.932Z",
+            "updated_at": "2019-04-17T02:10:16.932Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 184,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 16,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Work",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with hershel",
+            "created_at": "2019-04-17T02:10:16.944Z",
+            "updated_at": "2019-04-17T02:10:16.944Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 185,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 17,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Academic",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ira",
+            "created_at": "2019-04-17T02:10:16.957Z",
+            "updated_at": "2019-04-17T02:10:16.957Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 186,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 18,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Academic",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with mary",
+            "created_at": "2019-04-17T02:10:16.965Z",
+            "updated_at": "2019-04-17T02:10:16.966Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 187,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 19,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Academic",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with kirby",
+            "created_at": "2019-04-17T02:10:16.978Z",
+            "updated_at": "2019-04-17T02:10:16.978Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 188,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 20,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Academic",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with donnell",
+            "created_at": "2019-04-17T02:10:16.989Z",
+            "updated_at": "2019-04-17T02:10:16.989Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 189,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 21,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Academic",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ernesto",
+            "created_at": "2019-04-17T02:10:16.998Z",
+            "updated_at": "2019-04-17T02:10:16.998Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 190,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 22,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Social",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ezra",
+            "created_at": "2019-04-17T02:10:17.010Z",
+            "updated_at": "2019-04-17T02:10:17.010Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 191,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 23,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Other",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with dalton",
+            "created_at": "2019-04-17T02:10:17.022Z",
+            "updated_at": "2019-04-17T02:10:17.022Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 192,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 6,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Other",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with sarai",
+            "created_at": "2019-04-17T02:10:17.031Z",
+            "updated_at": "2019-04-17T02:10:17.031Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 193,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 7,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Other",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with fae",
+            "created_at": "2019-04-17T02:10:17.043Z",
+            "updated_at": "2019-04-17T02:10:17.043Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 194,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 8,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Work",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with holly",
+            "created_at": "2019-04-17T02:10:17.054Z",
+            "updated_at": "2019-04-17T02:10:17.054Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 195,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 9,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Academic",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with lydia",
+            "created_at": "2019-04-17T02:10:17.063Z",
+            "updated_at": "2019-04-17T02:10:17.064Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 196,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 10,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Other",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with neda",
+            "created_at": "2019-04-17T02:10:17.075Z",
+            "updated_at": "2019-04-17T02:10:17.076Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 197,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 11,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Other",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with mireya",
+            "created_at": "2019-04-17T02:10:17.087Z",
+            "updated_at": "2019-04-17T02:10:17.087Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 198,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 12,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Academic",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with anglea",
+            "created_at": "2019-04-17T02:10:17.097Z",
+            "updated_at": "2019-04-17T02:10:17.097Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 199,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 13,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Other",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with kami",
+            "created_at": "2019-04-17T02:10:17.110Z",
+            "updated_at": "2019-04-17T02:10:17.110Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 200,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 14,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Social",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with claire",
+            "created_at": "2019-04-17T02:10:17.120Z",
+            "updated_at": "2019-04-17T02:10:17.120Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 201,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 15,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Work",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with theresa",
+            "created_at": "2019-04-17T02:10:17.129Z",
+            "updated_at": "2019-04-17T02:10:17.129Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 202,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 16,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Academic",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with hershel",
+            "created_at": "2019-04-17T02:10:17.142Z",
+            "updated_at": "2019-04-17T02:10:17.142Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 203,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 17,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Academic",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ira",
+            "created_at": "2019-04-17T02:10:17.151Z",
+            "updated_at": "2019-04-17T02:10:17.151Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 204,
+        "fields": {
+            "reaction": "Sad",
+            "loggee": 18,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Social",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with mary",
+            "created_at": "2019-04-17T02:10:17.163Z",
+            "updated_at": "2019-04-17T02:10:17.163Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 205,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 19,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Work",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with kirby",
+            "created_at": "2019-04-17T02:10:17.174Z",
+            "updated_at": "2019-04-17T02:10:17.174Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 206,
+        "fields": {
+            "reaction": "Angry",
+            "loggee": 20,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Social",
+            "interaction_medium": "Over The Phone",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with donnell",
+            "created_at": "2019-04-17T02:10:17.181Z",
+            "updated_at": "2019-04-17T02:10:17.181Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 207,
+        "fields": {
+            "reaction": "Tired",
+            "loggee": 21,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Social",
+            "interaction_medium": "Online",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ernesto",
+            "created_at": "2019-04-17T02:10:17.188Z",
+            "updated_at": "2019-04-17T02:10:17.188Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 208,
+        "fields": {
+            "reaction": "Neutral",
+            "loggee": 22,
+            "logger": 1,
+            "time_of_day": "Afternoon",
+            "social_context": "Social",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with ezra",
+            "created_at": "2019-04-17T02:10:17.195Z",
+            "updated_at": "2019-04-17T02:10:17.195Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 209,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 23,
+            "logger": 1,
+            "time_of_day": "Evening",
+            "social_context": "Social",
+            "interaction_medium": "In Person",
+            "content_class": "Small Talk",
+            "other_loggable_text": "Chatted with dalton",
+            "created_at": "2019-04-17T02:10:17.205Z",
+            "updated_at": "2019-04-17T02:10:17.206Z"
         }
     },
     {
