@@ -1,3 +1,4 @@
+from django.db import connection
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -11,6 +12,9 @@ from django.core.mail import EmailMessage
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+
+import facebook
+
 import logging
 
 import json
@@ -356,11 +360,16 @@ def recommendation(request):
         if 'to' in json_body:
             base = base.filter(created_at__lt=json_body['to'])
         logs = list(base)
-
-        feedback_count = Recommendations.objects.raw("""
-        SELECT COUNT(*) FROM api_recommendationfeedback WHERE
-        id IN (SELECT id FROM api_recommendation WHERE recommend_person_id = %d)
-        """, [user_id])
+        
+        cursor = connection.cursor()
+        cursor.execute(
+            """
+            SELECT COUNT(*) FROM api_recommendationfeedback WHERE
+            id IN (SELECT id FROM api_recommendation WHERE recommend_person_id = %s)
+            """,
+            [user_id]
+        )
+        feedback_count = cursor.fetchone()[0]
 
         if feedback_count < ML_SPLIT_THRESHOLD:
             recs = recommender.recommendations_from_logs(logs, user_id)
@@ -417,7 +426,7 @@ def email(request):
     if ret is not None:
         return ret
 
-    #logger_id = request.session[SESSION_USER_KEY]
+    # logger_id = request.session[SESSION_USER_KEY]
 
     # TODO: REMOVE THIS
     logger_id = 73

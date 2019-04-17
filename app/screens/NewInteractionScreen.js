@@ -27,7 +27,6 @@ export default class NewInteractionScreen extends React.Component {
     this.updateName = this.updateName.bind(this)
     this.updateEmojiIndex = this.updateEmojiIndex.bind(this)
     this.handlePostInteraction = this.handlePostInteraction.bind(this)
-    this.handleDescriptionChange = this.handleDescriptionChange.bind(this)
   }
 
   componentDidMount() {

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Avatar, Button, Icon, ListItem, Text } from 'react-native-elements';
-import { Platform, StyleSheet, FlatList, InteractionManager, RefreshControl, ScrollView, View } from 'react-native';
+import { Platform, StyleSheet, SectionList, TouchableWithoutFeedback, InteractionManager, RefreshControl, ScrollView, View } from 'react-native';
 import { getRecommendations, postFeedback } from '../utils/api';
-
+import { recTypes } from '../config/constants';
+const _ = require('lodash');
 const keyExtractor = item => item.id.toString();
 
 export default class RecommendationScreen extends React.Component {
@@ -60,29 +61,21 @@ export default class RecommendationScreen extends React.Component {
     });
   }
 
-  renderRow = ({ item }) => (
-    <ListItem
-      leftAvatar={<Avatar rounded size="small" title={item.rec_typ} />}
-      title={item.recommendation}
-      subtitle={item.rec_description}
-      rightIcon={
-        <View style={{width: 60, flexDirection: 'row'}}>
-          <Icon
-            name={'thumb-up'}
-            color={item.feedback && item.feedback.feedback_typ == "WO" ? "green" : "gray"}
-            onPress={() => this.handleFeedback.bind(this, item, 'WO')}
-          />
-          <Icon
-            name={'thumb-down'}
-            color={item.feedback && item.feedback.feedback_typ == "DW" ? "red" : "gray"}
-            onPress={() => this.handleFeedback.bind(this, item, 'DW')}
-          />  
-        </View>
-      }
-    />
-  );
+  FlatListItemSeparator = () => {
+    return (
+      //Item Separator
+      <View style={{height: 0.5, width: '100%', backgroundColor: '#C8C8C8'}}/>
+    );
+  };
 
   render() {
+    const sortedRecs = 
+      _(this.state.recommendations)
+      .groupBy(event => event.rec_typ)
+      .toPairs()
+      .map((value, key) => ({title: recTypes[value[0]], data: value[1]}))
+      .value();
+    
     return (
         <View style={styles.container}>
             <View style={{flex: 1}}>
@@ -95,12 +88,34 @@ export default class RecommendationScreen extends React.Component {
                           onRefresh={this._onRefresh.bind(this)}
                       />
                   }>
-                
-                  <FlatList
-                    data={this.state.recommendations}
-                    renderItem={this.renderRow}
-                    keyExtractor={keyExtractor}
+
+                <SectionList
+                  ItemSeparatorComponent={this.FlatListItemSeparator}
+                  sections={sortedRecs}
+                  renderSectionHeader={({ section }) => (
+                    <Text style={styles.SectionHeaderStyle}> {section.title} </Text>
+                  )}
+                  renderItem={({item, index, section}) => (
+                      <View style={styles.SectionListItems}>
+                        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                          <Text style={{flex: 3}}>{item.recommendation}</Text>
+                          <Text style={{flex: 7}}>{item.rec_description}</Text>
+                          <Icon style={{flex: 2}}
+                            name={'thumb-up'}
+                            color={item.feedback && item.feedback.feedback_typ == "WO" ? "green" : "gray"}
+                            onPress={() => this.handleFeedback.bind(this, item, 'WO')}
+                          />
+                          <Icon style={{flex: 1}}
+                            name={'thumb-down'}
+                            color={item.feedback && item.feedback.feedback_typ == "DW" ? "red" : "gray"}
+                            onPress={() => this.handleFeedback.bind(this, item, 'DW')}
+                          />  
+                        </View>
+                      </View>
+                  )}
+                  keyExtractor={(item, index) => index}
                   />
+
                 </ScrollView>
               }
             </View>
@@ -119,5 +134,21 @@ const styles = StyleSheet.create({
     },
     subtitleView: {
       marginLeft: 'auto'
-    }
+    },
+    SectionHeaderStyle: {
+      backgroundColor : '#64B5F6',
+      fontSize : 20,
+      padding: 5,
+      color: '#fff',
+      fontWeight: 'bold'
+    },
+    SectionListItems: {
+      fontSize : 16,
+      flex: 1,
+      flexDirection: 'row',
+      display: 'flex',
+      padding: 10,
+      color: '#000',
+      backgroundColor : '#F5F5F5',
+    },
   });

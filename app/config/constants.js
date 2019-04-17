@@ -24,6 +24,13 @@ const timeOfDayEmojis = {
   'NA': ["briefcase", 'Not Applicable']
 }
 
+const recTypes = {
+  'PO': 'Positive',
+  'NE': 'Negative',
+  'AV': 'Avoidance',
+  'GE': 'Generic',
+}
+
 const socialContexts = [ 'Academic', 'Social', 'Work' ]
 const socialContextsEmojis = {
   'AC': ["blue_book", 'Academic'],
@@ -57,5 +64,6 @@ export {
   socialContextsEmojis,
   interactionMedium,
   interactionMediumEmojis,
-  feedbacks
+  feedbacks,
+  recTypes
 }

@@ -15,7 +15,8 @@ function getAxiosInstance() {
         baseURL: API_URL,
         headers: {
             'Content-Type': 'application/json'
-        }
+        },
+        timeout: 2000
     });
 }
 
@@ -81,6 +82,10 @@ function postFeedback(rec_id, feedback_typ, callback) {
         .catch(handleError);
 }
 
+function getEmailUrl() {
+    return API_URL + '/api/email/';
+}
+
 export {
     loginBackend,
     logoutBackend,
@@ -89,5 +94,6 @@ export {
     getFriends,
     postFriend,
     getRecommendations,
-    postFeedback
+    postFeedback,
+    getEmailUrl
 }

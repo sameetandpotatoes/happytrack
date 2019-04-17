@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, Divider, Icon, Text } from 'react-native-elements';
-import { ActivityIndicator, InteractionManager, Platform, StyleSheet, ScrollView, View } from 'react-native';
-import BarChartVerticalWithLabels from '../components/BarChartVerticalWithLabels';
-import PieChartWithCenteredLabels from '../components/PieChartWithCenteredLabels';
+import { ActivityIndicator, InteractionManager, Platform, StyleSheet, RefreshControl, ScrollView, View } from 'react-native';
+import { WebView } from 'react-native-webview';
+import { getEmailUrl } from '../utils/api';
 
 export default class SummaryScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({    
@@ -29,51 +29,40 @@ export default class SummaryScreen extends React.Component {
 
     this.state = {
       summaries: [],
-      isReady: false
+      isReady: false,
+      refreshing: false,
     }
+  }
+
+  _onRefresh() {
+    // Should trigger a re-render
+    this.setState({refreshing: false});
   }
 
   componentDidMount() {
     InteractionManager.runAfterInteractions(() => {
-      this.setState({
-        summaries: [
-          {
-            week: 'Week of 03/18 - 03/24',
-  
-          },
-          {
-            week: 'Week of 03/11 - 03/16',
-  
-          },
-        ],
-        isReady: true
-      })
+      this.setState({isReady: true, refreshing: true});
+      this._onRefresh()
     });
   }
 
   render() {
-    if (!this.state.isReady){
+    if (!this.state.isReady) {
       return <ActivityIndicator />
     }
 
-    const WeeklySummaries = (
-      this.state.summaries.map((value, index) => {
-        const { week } = value;
-        return (
-          <View key={index} style={styles.summaryView}>
-            <Text h3>{week}</Text>
-            <BarChartVerticalWithLabels />
-            <PieChartWithCenteredLabels />
-            <Divider />
-          </View>
-        )
-      })
-    );
-
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.scrollView}>
-          {WeeklySummaries}
+        <ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this._onRefresh.bind(this)}
+              />
+            }>
+        <WebView
+          source={{uri: getEmailUrl()}}
+        />
         </ScrollView>
       </View>
     )

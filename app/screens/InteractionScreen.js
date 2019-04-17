@@ -90,7 +90,7 @@ export default class InteractionScreen extends React.Component {
   getDetailedInteraction(overlayInfo) {
     const {
       time_of_day, social_context, content_class, interaction_medium, created_at,
-      reaction, name, other_loggable_text
+      reaction, loggee, other_loggable_text
     } = overlayInfo;
     return (
       <View style={styles.detailInteraction}>
@@ -153,17 +153,9 @@ export default class InteractionScreen extends React.Component {
         .toPairs()
         .map((value, key) => ({title: moment(value[0], 'MM/DD/YYYY').format('ddd MMMM DD'), data: value[1]}))
         .value();
+
     return (
       <View style={styles.container}>
-        { this.state.overlayInfo &&
-          <Overlay
-            isVisible={true}
-            onBackdropPress={() => this.setState({ overlayInfo: null })}
-          >
-            {this.getDetailedInteraction(this.state.overlayInfo)}
-          </Overlay>
-        }
-
         <View style={{flex: 1}}>
           <ScrollView
             refreshControl={
@@ -223,6 +215,14 @@ export default class InteractionScreen extends React.Component {
           }}
           onPress={this.navToNewInteractionScreen}
         />
+        { this.state.overlayInfo &&
+          <Overlay
+            isVisible={true}
+            onBackdropPress={() => this.setState({ overlayInfo: null })}
+          >
+            {this.getDetailedInteraction(this.state.overlayInfo)}
+          </Overlay>
+        }
       </View>
     )
   }
@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
   },
   detailInteraction: {
     flex: 1,
-    padding: 20
+    padding: 50,
   },
   text: {
     fontSize: 18,
