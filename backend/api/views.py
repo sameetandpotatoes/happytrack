@@ -173,6 +173,7 @@ def interaction(request):
         entry.time_of_day = json_body['time']
         entry.social_context = json_body['social']
         entry.interaction_medium = json_body['medium']
+        entry.content_class = json_body['content']
         entry.other_loggable_text = json_body.get('description', '')
         entry.save()
         return JsonResponse({"success": "true"}, status=200)
