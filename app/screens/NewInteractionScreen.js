@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, ButtonGroup, Text } from 'react-native-elements';
 import { ActivityIndicator, InteractionManager, StyleSheet, ScrollView, TextInput, View } from 'react-native';
 import TextField from '../components/TextField'
-import { emojiButtons, timeOfDays, socialContexts, interactionMedium } from '../config/constants'
+import { emojiButtons, timeOfDays, socialContexts, interactionMedium, socialContents } from '../config/constants'
 import { postFriend, postInteraction } from '../utils/api';
 
 const RobText = props => <Text style={styles.text} {...props} />
@@ -20,6 +20,7 @@ export default class NewInteractionScreen extends React.Component {
       selTimeOfDay: -1, // TODO set time of day based on current time?
       selContext: -1,
       selMedium: -1,
+      selContent: -1,
       nameError: null,
       emojiError: null,
       description: null
@@ -58,7 +59,7 @@ export default class NewInteractionScreen extends React.Component {
   // }
 
   handlePostInteraction(e) {
-    const { name, selEmoji, selTimeOfDay, selContext, selMedium, description } = this.state
+    const { name, selEmoji, selTimeOfDay, selContext, selMedium, selContent, description } = this.state
 
     // null if no error
     const emojiError = this.validate('emoji', selEmoji);
@@ -78,6 +79,7 @@ export default class NewInteractionScreen extends React.Component {
     let timeOfDay = (selTimeOfDay == -1) ? "Not Applicable" : timeOfDays[selTimeOfDay];
     let context = (selContext == -1) ? "Not Applicable" : socialContexts[selContext];
     let medium = (selMedium == -1) ? "Not Applicable" : interactionMedium[selMedium];
+    let content = (selContent == -1) ? "Not Applicable" : socialContents[selContent];
 
     // Get or create friend
     postFriend(name, function(friend) {
@@ -86,6 +88,7 @@ export default class NewInteractionScreen extends React.Component {
         time: timeOfDay,
         social: context,
         medium: medium,
+        content: content,
         reaction: emoji,
         description: description
       }, function(response) {
@@ -108,7 +111,7 @@ export default class NewInteractionScreen extends React.Component {
       return <ActivityIndicator />
     }
 
-    const { selEmoji, selTimeOfDay, selContext, selMedium } = this.state
+    const { selEmoji, selTimeOfDay, selContext, selMedium, selContent } = this.state
 
     return (
       <View style={styles.container}>
@@ -148,6 +151,12 @@ export default class NewInteractionScreen extends React.Component {
             onPress={(selMedium) => this.setState({selMedium})}
             selectedIndex={selMedium}
             buttons={interactionMedium} />
+
+          <RobText>Social Content</RobText>
+          <ButtonGroup
+            onPress={(selContent) => this.setState({selContent})}
+            selectedIndex={selContent}
+            buttons={socialContents} />
 
           <RobText>Any Last Thoughts?</RobText>
           <TextInput

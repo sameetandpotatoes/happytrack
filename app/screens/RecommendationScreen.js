@@ -46,6 +46,7 @@ export default class RecommendationScreen extends React.Component {
     this.setState({refreshing: true});
 
     getRecommendations(function(recs) {
+      console.log(recs.data.data);
       this.setState({
         recommendations: recs.data.data,
         refreshing: false
@@ -54,9 +55,15 @@ export default class RecommendationScreen extends React.Component {
   }
 
   handleFeedback(item, feedback_typ) {
+    // If feedback is already defined, then ignore this. We can only provide feedback once.
+    if (item.feedback !== null) {
+      return;
+    }
+
+
     const reloadData = this._onRefresh;
     postFeedback(item.id, feedback_typ, function(response) {
-        // TODO check status 200?
+        // TODO if we check status 200 and had the index, we can just change the color without actually refreshing and losing our position
         reloadData()
     });
   }
@@ -88,7 +95,6 @@ export default class RecommendationScreen extends React.Component {
                           onRefresh={this._onRefresh.bind(this)}
                       />
                   }>
-
                 <SectionList
                   ItemSeparatorComponent={this.FlatListItemSeparator}
                   sections={sortedRecs}
@@ -98,18 +104,20 @@ export default class RecommendationScreen extends React.Component {
                   renderItem={({item, index, section}) => (
                       <View style={styles.SectionListItems}>
                         <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-                          <Text style={{flex: 3}}>{item.recommendation}</Text>
-                          <Text style={{flex: 7}}>{item.rec_description}</Text>
-                          <Icon style={{flex: 2}}
-                            name={'thumb-up'}
-                            color={item.feedback && item.feedback.feedback_typ == "WO" ? "green" : "gray"}
-                            onPress={() => this.handleFeedback.bind(this, item, 'WO')}
-                          />
-                          <Icon style={{flex: 1}}
-                            name={'thumb-down'}
-                            color={item.feedback && item.feedback.feedback_typ == "DW" ? "red" : "gray"}
-                            onPress={() => this.handleFeedback.bind(this, item, 'DW')}
-                          />  
+                          <Text style={{flex: 3, fontSize: 20}}>{item.recommendation}</Text>
+                          <Text style={{flex: 6, fontSize: 18}}>{item.rec_description}</Text>
+                          <View style={{flex: 1, flexdirection: 'column', justifyContent: 'space-evenly'}}>
+                            <Icon
+                              name={'thumb-up'}
+                              color={item.feedback && item.feedback.feedback_typ == "Worked" ? "green" : "gray"}
+                              onPress={() => this.handleFeedback(item, 'Worked')}
+                            />
+                            <Icon
+                              name={'thumb-down'}
+                              color={item.feedback && item.feedback.feedback_typ == "Doesn\'t Work" ? "red" : "gray"}
+                              onPress={() => this.handleFeedback(item, 'Doesn\'t Work')}
+                            />  
+                          </View>
                         </View>
                       </View>
                   )}

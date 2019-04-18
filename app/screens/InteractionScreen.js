@@ -92,44 +92,45 @@ export default class InteractionScreen extends React.Component {
       time_of_day, social_context, content_class, interaction_medium, created_at,
       reaction, loggee, other_loggable_text
     } = overlayInfo;
+    console.log(overlayInfo);
     return (
       <View style={styles.detailInteraction}>
         <Text h4>Your interaction with {loggee}</Text>
         <Text style={styles.text}>Recorded at: {this.getDate(created_at) + " at " + this.getTime(created_at)}</Text>
 
-        { time_of_day && time_of_day != '' &&
+        { time_of_day !== '' &&
           <Text style={styles.text}>
             Time Of Day:
-            <Text style={{fontWeight: "bold"}}> {timeOfDayEmojis[time_of_day][1]}</Text>
+            <Text style={{fontWeight: "bold"}}> {time_of_day}</Text>
           </Text>
         }
 
-        { interaction_medium && interaction_medium != '' &&
+        { interaction_medium !== '' &&
           <Text style={styles.text}>
             Social Interaction Medium:
-            <Text style={{fontWeight: "bold"}}> {interactionMediumEmojis[interaction_medium][1]}</Text>
+            <Text style={{fontWeight: "bold"}}> {interaction_medium}</Text>
           </Text>
         }
 
-        { content_class && content_class != '' &&
+        { content_class !== '' &&
           <Text style={styles.text}>
             Content Class:
             <Text style={{fontWeight: "bold"}}> {content_class}</Text>
           </Text>
         }
 
-        { social_context && social_context != '' &&
+        { social_context !== '' &&
           <Text style={styles.text}>
             Social Context:
-            <Text style={{fontWeight: "bold"}}> {socialContextsEmojis[social_context][1]}</Text>
+            <Text style={{fontWeight: "bold"}}> {social_context}</Text>
           </Text>
         }
 
-        {/* { other_loggable_text && other_loggable_text != '' &&
+        { other_loggable_text && other_loggable_text != '' &&
           <Text style={styles.text}>
             Interaction Notes: {"\n\n" + other_loggable_text}
           </Text>
-        } */}
+        }
       </View>
     );
 
@@ -153,7 +154,7 @@ export default class InteractionScreen extends React.Component {
         .toPairs()
         .map((value, key) => ({title: moment(value[0], 'MM/DD/YYYY').format('ddd MMMM DD'), data: value[1]}))
         .value();
-
+    console.log(sortedInteractions);
     return (
       <View style={styles.container}>
         <View style={{flex: 1}}>

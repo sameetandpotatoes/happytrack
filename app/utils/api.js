@@ -53,15 +53,7 @@ function postFriend(friend, callback) {
 }
 
 function postInteraction(data, callback) {
-    getAxiosInstance().post('/api/interaction/', 
-        {
-            loggee_id: data.loggee_id,
-            time: data.time,
-            social: data.social,
-            medium: data.medium,
-            reaction: data.reaction,
-            description: data.description
-        })
+    getAxiosInstance().post('/api/interaction/', data)
         .then(callback)
         .catch(handleError);
 }

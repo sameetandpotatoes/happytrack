@@ -162,6 +162,7 @@ def _check_time_fairness(logs, user_id):
             rec_type = 'PO',
             recommendation = "Spread your interactions throughout the day.",
             rec_description = SPREAD_INTERACTIONS_REC_DESC,
+            recommend_person = user_id,
         )
         return _create_and_save_recommendation(rec)
     return None
@@ -178,7 +179,7 @@ def _count_reactions(logs):
     })
 
     for log in logs:
-        reactions[log.loggee][LogEntry.REACTION_DICT[log.reaction]] += 1
+        reactions[log.loggee][dict(LogEntry.REACTION_CHOICES)[log.reaction]] += 1
         reactions[log.loggee]['total'] += 1
 
     return dict(reactions)
