@@ -46,7 +46,6 @@ export default class RecommendationScreen extends React.Component {
     this.setState({refreshing: true});
 
     getRecommendations(function(recs) {
-      console.log(recs.data.data);
       this.setState({
         recommendations: recs.data.data,
         refreshing: false

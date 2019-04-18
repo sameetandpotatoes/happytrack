@@ -92,7 +92,6 @@ export default class InteractionScreen extends React.Component {
       time_of_day, social_context, content_class, interaction_medium, created_at,
       reaction, loggee, other_loggable_text
     } = overlayInfo;
-    console.log(overlayInfo);
     return (
       <View style={styles.detailInteraction}>
         <Text h4>Your interaction with {loggee}</Text>
@@ -154,7 +153,6 @@ export default class InteractionScreen extends React.Component {
         .toPairs()
         .map((value, key) => ({title: moment(value[0], 'MM/DD/YYYY').format('ddd MMMM DD'), data: value[1]}))
         .value();
-    console.log(sortedInteractions);
     return (
       <View style={styles.container}>
         <View style={{flex: 1}}>
