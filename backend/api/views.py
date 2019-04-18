@@ -72,15 +72,15 @@ def login(request):
     # Validate token
     token = json_body['token']
     request.session[SESSION_TOKEN_KEY] = token
-    # if settings.DEBUG:
-    #     name = 'Lenny'
-    #     email = 'lpitt2@illinois.edu'
-    # else:
-    graph = facebook.GraphAPI(token)
-    args = {'fields' : 'id,name,email', }
-    profile = graph.get_object('me', **args)
-    name = profile['name']
-    email = profile['email']
+    if settings.DEBUG:
+        name = 'Lenny'
+        email = 'lpitt2@illinois.edu'
+    else:
+        graph = facebook.GraphAPI(token)
+        args = {'fields' : 'id,name,email', }
+        profile = graph.get_object('me', **args)
+        name = profile['name']
+        email = profile['email']
 
     m, created = models.User.objects.get_or_create(
         email=email,
@@ -146,8 +146,7 @@ def interaction(request):
 
     Output:
     {
-        logger_id: int, # Who was logging
-        loggee_id: int, # Who was logged
+        success: bool
     }
     """
 
@@ -197,18 +196,17 @@ def interaction(request):
         entry.time_of_day = json_body['time']
         entry.social_context = json_body['social']
         entry.interaction_medium = json_body['medium']
-        entry.content = json_body['content']
+        entry.content_class = json_body['content']
         entry.other_loggable_text = json_body.get('description', '')
         entry.save()
-        ret = json.dumps(dict(logger_id=entry.logger_id, loggee_id = entry.loggee_id))
-        return HttpResponse(json.dumps(ret), content_type='application/json', status=200)
+        return JsonResponse({"success": "true"}, status=200)
 
 @csrf_exempt
 @restrict_function(allowed=['GET', 'POST'])
 def friends(request):
     """
     Get:
-    Retrieves all friends for logged in users
+    Retrieves all friends for logged in user
 
     Input:
     Empty Body
