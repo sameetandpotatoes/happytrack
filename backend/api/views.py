@@ -77,23 +77,37 @@ def login(request):
     # Validate token
     token = json_body['token']
     request.session[SESSION_TOKEN_KEY] = token
-    if settings.DEBUG:
-        name = 'Lenny'
-        email = 'lpitt2@illinois.edu'
-    else:
-        graph = facebook.GraphAPI(token)
-        args = dict(
-            fields='id,name,email',
-            )
-        profile = graph.get_object('me', **args)
-        name = profile['name']
-        email = profile['email']
+    use_fb = False
+    graph = facebook.GraphAPI(token)
+    use_fb = True
+    args = {'fields' : 'id,name,email', }
+    profile = graph.get_object('me', **args)
+    name = profile['name']
+    email = profile['email']
 
     m, created = models.User.objects.get_or_create(
         email=email,
     )
     m.name = name
     m.save()
+
+    if use_fb:
+        posts = graph.get_object('me/feed')
+        for post in posts['data']:
+            msg = post.get('message', None)
+            if not msg:
+                continue
+            log = models.LogEntry()
+            log.reaction = 'NE'
+            log.logger = m
+            log.time_of_day = 'NA'
+            log.social_context = 'SO'
+            log.interaction_medium = 'ON'
+            log.content_class = 'NA'
+            log.other_loggable_text = msg
+            log.from_fb = True
+            log.fb_id = post['id']
+            log.save()
 
     # Store in session
     request.session[SESSION_USER_KEY] = str(m.id)
@@ -366,6 +380,7 @@ def recommendation(request):
         if 'to' in json_body:
             base = base.filter(created_at__lt=json_body['to'])
         logs = list(base)
+
         cursor = connection.cursor()
         cursor.execute(
             """
