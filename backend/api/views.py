@@ -73,7 +73,9 @@ def login(request):
         email = 'lpitt2@illinois.edu'
     else:
         graph = facebook.GraphAPI(token)
-        args = {'fields' : 'id,name,email', }
+        args = dict(
+            fields='id,name,email',
+            )
         profile = graph.get_object('me', **args)
         name = profile['name']
         email = profile['email']
@@ -429,9 +431,8 @@ def email(request):
             base = base.filter(created_at__lt=json_body['to'])
     else:
         today = datetime.date.today()
-        day_idx = (today.weekday() + 1) % 7 # MON = 0, SUN = 6 -> SUN = 0 .. SAT = 6
-        prev_sun = today - datetime.timedelta(7+day_idx)
-        sun = prev_sun + datetime.timedelta(7)
+        sun = utils.round_to_sun(today)
+        prev_sun = sun - datetime.timedelta(7)
         base = base.filter(created_at__lt=sun)
         base = base.filter(created_at__gte=prev_sun)
         from_datetime = prev_sun.strftime("%m/%d/%y")
@@ -455,29 +456,6 @@ def email(request):
         person_embed = person_png,
         word_embed = word_png
     )
-
-    """
-    INSTANCE_START += 1
-    inst = INSTANCE_START
-    INSTANCE_MAPPING[inst] = dict()
-
-    email_subject = 'Happytrack summary for {} - {}'.format(from_datetime, to_datetime)
-    email_html = MIMEMultipart(_subtype='related')
-    email_html_str = template.render(context)
-    body = MIMEText(email_html_str, _subtype='html')
-    email_html.attach(body)
-
-    for f, data in [(freq_file, freq_raw)]:
-        msg_img = MIMEImage(data)
-        msg_img.add_header('Content-ID', '<{}>'.format(f))
-        msg_img.add_header("Content-Disposition", "inline", filename=f) # David Hess recommended this edit
-        email_html.attach(msg_img)
-
-    msg = EmailMessage(email_subject, '',
-                             'noreply@happytrack.org', ['bvenkat2@illinois.edu'])
-    msg.attach(email_html)
-    msg.send()
-    """
 
     rendered_html = template.render(context)
     return HttpResponse(rendered_html, status=200)

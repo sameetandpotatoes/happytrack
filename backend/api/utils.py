@@ -1,5 +1,11 @@
 from django.http import HttpResponse
 from . import models
+import datetime
+
+def round_to_sun(dt):
+    day_idx = (dt.weekday() + 1) % 7 # MON = 0, SUN = 6 -> SUN = 0 .. SAT = 6
+    sun = dt - datetime.timedelta(day_idx)
+    return sun
 
 class restrict_function(object):
     def __init__(self, allowed=None):

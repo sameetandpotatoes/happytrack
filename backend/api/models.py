@@ -64,7 +64,7 @@ class LogEntry(models.Model):
     social_context = models.CharField(max_length=2, choices=SOCIAL_CHOICES)
     interaction_medium = models.CharField(max_length=2, choices=MEDIUM_CHOICES)
     content_class = models.CharField(max_length=2, choices=CONTENT_CHOICES)
-    other_loggable_text = models.CharField(max_length=512)
+    other_loggable_text = models.CharField(max_length=512, default="")
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -97,7 +97,6 @@ class RecommendationFeedback(models.Model):
     FEEDBACK_CHOICES = (
         ('WO', 'Worked'),
         ('DW', 'Doesn\'t Work'),
-        ('NE', 'Neutral'),
     )
 
     id = models.AutoField(primary_key=True)

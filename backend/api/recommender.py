@@ -4,6 +4,11 @@ from .models import User, Friend, Recommendation, LogEntry
 from collections import defaultdict
 from sklearn.ensemble import RandomForestClassifier
 import datetime
+from . import utils
+import logging
+from pprint import pprint
+
+logger = logging.getLogger(__name__)
 
 IN_PERSON_REC_DESC = (
     "In-person interactions allow for more control "
@@ -125,7 +130,7 @@ def _check_in_person_recommendations(logs, user_id):
 
     if in_person_frac < 50:
         rec = dict(
-            rec_type = 'PA',
+            rec_type = 'PO',
             recommendation = "Try to have more in-person interactions.",
             rec_description = IN_PERSON_REC_DESC,
             recommend_person = user_id,
@@ -163,6 +168,7 @@ def _check_time_fairness(logs, user_id):
             rec_type = 'PO',
             recommendation = "Spread your interactions throughout the day.",
             rec_description = SPREAD_INTERACTIONS_REC_DESC,
+            recommend_person=user_id
         )
         _create_and_save_recommendation(rec)
         return rec
@@ -179,8 +185,10 @@ def _count_reactions(logs):
         'total': 0,
     })
 
+    reacc_dict = dict(LogEntry.REACTION_CHOICES)
+
     for log in logs:
-        reactions[log.loggee][LogEntry.REACTION_DICT[log.reaction]] += 1
+        reactions[log.loggee][reacc_dict[log.reaction]] += 1
         reactions[log.loggee]['total'] += 1
 
     return dict(reactions)
@@ -275,9 +283,8 @@ def _count_small_talk(logs):
 def _recommended_this_week(user_id):
     base = Recommendation.objects.filter(recommend_person_id=user_id)
     today = datetime.date.today()
-    day_idx = (today.weekday() + 1) % 7 # MON = 0, SUN = 6 -> SUN = 0 .. SAT = 6
-    sun = today - datetime.timedelta(day_idx)
-    base = base.filter(created_at__gte=sun)
+    sun = utils.round_to_sun(today)
+    base = base.filter(created_at__gt=sun)
     return base.all()
 
 def recommendations_from_logs(logs, user_id):
@@ -365,12 +372,33 @@ def recommendations_from_logs(logs, user_id):
 
     return dict(data=rec_list)
 
+def group_list_by_sel(lis, sel):
+    ret = defaultdict(lambda: [])
+    for li in lis:
+        key = sel(li)
+        ret[key].append(li)
+    return dict(ret)
+
+standard_date_format = "%y-%m-%d"
+def logs_by_week(logs):
+    selector = lambda x: utils.round_to_sun(x.created_at).strftime(standard_date_format)
+    return group_list_by_sel(logs, selector)
+
+def recs_by_week(user_id):
+    recs = Recommendation.objects.filter(recommend_person_id=user_id)
+    selector = lambda x: utils.round_to_sun(x.created_at).strftime(standard_date_format)
+    return group_list_by_sel(recs, selector)
+
 def recommendations_from_ml(logs, user_id, from_dt=None, to_dt=None):
     # All the setup recommendations should be good
     person_classifier = RandomForestClassifier(n_estimators=3)
-    reacts = _count_reactions(logs)
+    logs_by = logs_by_week(logs)
+    recs_week = recs_by_week(user_id)
+    # rec.tied_recommendation.all()
+
     # Data format is going to be by week
     # [friend_id, happy_perc, neutral_perc, angry_perc, sad_perc, academic_perc, social_perc, work_perc, ip_perc, online_perc, phone_perc]
     # y is going to be one-hot good recommendation dose
+
 
 
