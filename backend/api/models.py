@@ -96,7 +96,7 @@ class Recommendation(models.Model):
 class RecommendationFeedback(models.Model):
     FEEDBACK_CHOICES = (
         ('WO', 'Worked'),
-        ('DW', 'Doesn\'t Work'),
+        ('DW', 'Doesn\'t Work')
     )
 
     id = models.AutoField(primary_key=True)

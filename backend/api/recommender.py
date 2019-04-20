@@ -5,8 +5,10 @@ from collections import defaultdict
 from sklearn.ensemble import RandomForestClassifier
 import datetime
 from . import utils
+from . import models
 import logging
 from pprint import pprint
+import numpy as np
 
 logger = logging.getLogger(__name__)
 
@@ -174,22 +176,28 @@ def _check_time_fairness(logs, user_id):
         return rec
     return None
 
+def _count_all(logs):
+    # Takes an arr and a list of selectors and counts the keys
+    # with a special "total" key that aggreages the row
+    reactions = defaultdict(lambda: defaultdict(lambda: 0))
+
+    for log in logs:
+        reactions[log.loggee][log.reaction] += 1
+        reactions[log.loggee][log.time_of_day] += 1
+        reactions[log.loggee][log.social_context] += 1
+        reactions[log.loggee][log.interaction_medium] += 1
+
+    return reactions
+
+
 
 def _count_reactions(logs):
-    reactions = defaultdict(lambda: { # key is friend ID
-        'Happy': 0,
-        'Neutral': 0,
-        'Tired': 0,
-        'Angry': 0,
-        'Sad': 0,
-        'total': 0,
-    })
-
+    # id -> reaction -> count
+    reactions = defaultdict(lambda: defaultdict(lambda: 0))
     reacc_dict = dict(LogEntry.REACTION_CHOICES)
 
     for log in logs:
         reactions[log.loggee][reacc_dict[log.reaction]] += 1
-        reactions[log.loggee]['total'] += 1
 
     return dict(reactions)
 
@@ -282,8 +290,7 @@ def _count_small_talk(logs):
 
 def _recommended_this_week(user_id):
     base = Recommendation.objects.filter(recommend_person_id=user_id)
-    today = datetime.date.today()
-    sun = utils.round_to_sun(today)
+    sun = utils.last_sunday()
     base = base.filter(created_at__gt=sun)
     return base.all()
 
@@ -326,7 +333,7 @@ def recommendations_from_logs(logs, user_id):
 
     for friend in reactions:
         name = friend.name
-        total = reactions[friend]['total']
+        total = sum(reactions[friend].values())
 
         r = dict(recommend_person= user_id,)
 
@@ -380,6 +387,7 @@ def group_list_by_sel(lis, sel):
     return dict(ret)
 
 standard_date_format = "%y-%m-%d"
+
 def logs_by_week(logs):
     selector = lambda x: utils.round_to_sun(x.created_at).strftime(standard_date_format)
     return group_list_by_sel(logs, selector)
@@ -389,16 +397,96 @@ def recs_by_week(user_id):
     selector = lambda x: utils.round_to_sun(x.created_at).strftime(standard_date_format)
     return group_list_by_sel(recs, selector)
 
+def check_recs_now(recs_week):
+    ls = utils.last_sunday()
+    most_recent_key = ls.strftime(standard_date_format)
+    return recs_week.get(most_recent_key)
+
+def _aggregate_and_normalize(diction, keys):
+    ret = []
+    for key in keys:
+        ret.append(diction[key])
+
+    tot = sum(ret)
+    if tot == 0:
+        return ret
+    for i in range(len(ret)):
+        ret[i] /= tot
+    return ret
+
+def rolling_disposition_by_friend(logs_week, recs_week):
+    # Each person for a friend is a bunch of arrs
+    # week, Reaction, social, and, type
+
+    # [friend_id, date, happy_perc, neutral_perc, angry_perc, sad_perc, academic_perc, social_perc, work_perc, ip_perc, online_perc, phone_perc, feedback_type]
+    reacc_keys = ['HA', 'NE', 'AN', "SA",]
+    social_keys = ['AC', 'SO', 'WO',]
+    medium_keys = ['IP', 'ON', 'PH']
+    rec_arr = [x[0] for x in models.Recommendation.RECOMMENDATION_CHOICES]
+    feed_arr = [x[0] for x in models.RecommendationFeedback.FEEDBACK_CHOICES]
+    Xs = []
+    ys = []
+    ordered_keys = list(sorted(logs_week.keys()))
+    for i, key in enumerate(ordered_keys):
+        rec = recs_week.get(key)
+        if not rec:
+            continue
+
+        # Get all the logs that are earlier
+        preceding_logs = []
+        for k, v in logs_week.items():
+            if k > key:
+                continue
+            preceding_logs.extend(v)
+
+        counts = _count_all(preceding_logs)
+        for person, count in counts.items():
+            rec_obj = next((x for x in rec if x.about_person_id == person.id), None)
+            if not rec_obj:
+                continue
+
+            feeds = list(rec_obj.tied_recommendation.all())
+            feed_typ = next((x for x in feeds if x.feedback_typ != ''), None)
+            if not feed_typ:
+                continue
+
+            row = []
+            # Row and then date
+            row.append(person.id)
+            row.append(i)
+            row.extend(_aggregate_and_normalize(count, reacc_keys))
+            row.extend(_aggregate_and_normalize(count, social_keys))
+            row.extend(_aggregate_and_normalize(count, medium_keys))
+            row.append(rec_arr.index(rec_obj.rec_typ))
+            Xs.append(row)
+            ys.append(feed_arr.index(feeds[0].feedback_typ))
+
+        return Xs, ys
+
+
+def generate_ml_recommendations(logs_week, recs_week):
+
+    # Create a cumulative rolling sum of the data by person
+    person_classifier = RandomForestClassifier(n_estimators=3)
+    Xs, ys = rolling_disposition_by_friend(logs_week, recs_week)
+    person_classifier.fit(Xs, ys)
+
+
 def recommendations_from_ml(logs, user_id, from_dt=None, to_dt=None):
     # All the setup recommendations should be good
-    person_classifier = RandomForestClassifier(n_estimators=3)
     logs_by = logs_by_week(logs)
     recs_week = recs_by_week(user_id)
-    # rec.tied_recommendation.all()
+
+    has_recs = check_recs_now(recs_week)
+    if has_recs:
+        # TODO: Return recs in format
+        return
+
+    ml_recs = generate_ml_recommendations(logs_by, recs_week)
+    # TODO: Return ml recommendations in format
+    return
+
 
     # Data format is going to be by week
-    # [friend_id, happy_perc, neutral_perc, angry_perc, sad_perc, academic_perc, social_perc, work_perc, ip_perc, online_perc, phone_perc]
+    # [friend_id, happy_perc, neutral_perc, angry_perc, sad_perc, academic_perc, social_perc, work_perc, ip_perc, online_perc, phone_perc, feedback_type]
     # y is going to be one-hot good recommendation dose
-
-
-

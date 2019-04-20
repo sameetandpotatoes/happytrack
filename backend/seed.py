@@ -63,9 +63,9 @@ def promote_rec(rec, rec_to_promote, assigned_dt):
     rec_feed = models.RecommendationFeedback()
     rec_feed.rec = rec
     if rec.rec_typ == rec_to_promote:
-        rec_feed.feedback_type = 'WO'
+        rec_feed.feedback_typ = 'WO'
     else:
-        rec_feed.feedback_type = 'DW'
+        rec_feed.feedback_typ = 'DW'
     rec_feed.save()
     rec_feed.created_at = assigned_dt
     rec_feed.save()

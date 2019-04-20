@@ -430,8 +430,7 @@ def email(request):
         if 'to' in json_body:
             base = base.filter(created_at__lt=json_body['to'])
     else:
-        today = datetime.date.today()
-        sun = utils.round_to_sun(today)
+        sun = utils.last_sunday()
         prev_sun = sun - datetime.timedelta(7)
         base = base.filter(created_at__lt=sun)
         base = base.filter(created_at__gte=prev_sun)
