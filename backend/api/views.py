@@ -1,3 +1,4 @@
+from django.db import connection
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -11,6 +12,9 @@ from django.core.mail import EmailMessage
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+
+import facebook
+
 import logging
 
 import json
@@ -138,13 +142,13 @@ def interaction(request):
         time: str, # Time of data
         social: str, # Social context
         medium: str, # Medium
+        content: str, # social content
         description: optional(str), # Any additional information
     }
 
     Output:
     {
-        logger_id: int, # Who was logging
-        loggee_id: int, # Who was logged
+        success: bool
     }
     """
 
@@ -171,19 +175,18 @@ def interaction(request):
         for it in base:
             interaction_json['interactions'].append({
                 "id": it.id,
-                "reaction": it.reaction,
+                "reaction": it.get_reaction_display(),
                 "loggee": it.loggee.name,
                 "logger": it.logger.name,
-                "time_of_day": it.time_of_day,
-                "social_context": it.social_context,
-                "interaction_medium": it.interaction_medium,
-                "content_class": it.content_class,
+                "time_of_day": it.get_time_of_day_display(),
+                "social_context": it.get_social_context_display(),
+                "interaction_medium": it.get_interaction_medium_display(),
+                "content_class": it.get_content_class_display(),
                 "other_loggable_text": it.other_loggable_text,
                 "created_at": it.created_at
             })
         return JsonResponse(interaction_json, status=200)
     elif request.method == 'POST':
-        print(json_body)
         ret = validate(json_body, interaction_post_schema)
         if ret is not None:
             return ret
@@ -195,17 +198,17 @@ def interaction(request):
         entry.time_of_day = json_body['time']
         entry.social_context = json_body['social']
         entry.interaction_medium = json_body['medium']
+        entry.content_class = json_body['content']
         entry.other_loggable_text = json_body.get('description', '')
         entry.save()
-        ret = json.dumps(dict(logger_id=entry.logger_id, loggee_id = entry.loggee_id))
-        return HttpResponse(json.dumps(ret), content_type='application/json', status=200)
+        return JsonResponse({"success": "true"}, status=200)
 
 @csrf_exempt
 @restrict_function(allowed=['GET', 'POST'])
 def friends(request):
     """
     Get:
-    Retrieves all friends for logged in users
+    Retrieves all friends for logged in user
 
     Input:
     Empty Body
@@ -358,11 +361,16 @@ def recommendation(request):
         if 'to' in json_body:
             base = base.filter(created_at__lt=json_body['to'])
         logs = list(base)
-
-        feedback_count = Recommendations.objects.raw("""
-        SELECT COUNT(*) FROM api_recommendationfeedback WHERE
-        id IN (SELECT id FROM api_recommendation WHERE recommend_person_id = %d)
-        """, [user_id])
+        
+        cursor = connection.cursor()
+        cursor.execute(
+            """
+            SELECT COUNT(*) FROM api_recommendationfeedback WHERE
+            id IN (SELECT id FROM api_recommendation WHERE recommend_person_id = %s)
+            """,
+            [user_id]
+        )
+        feedback_count = cursor.fetchone()[0]
 
         if feedback_count < ML_SPLIT_THRESHOLD:
             recs = recommender.recommendations_from_logs(logs, user_id)
@@ -419,7 +427,7 @@ def email(request):
     if ret is not None:
         return ret
 
-    #logger_id = request.session[SESSION_USER_KEY]
+    # logger_id = request.session[SESSION_USER_KEY]
 
     # TODO: REMOVE THIS
     logger_id = 73

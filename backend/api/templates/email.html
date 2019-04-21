@@ -19,12 +19,20 @@
      }
 
      .center {
-         position: absolute;
+         /* position: absolute;
          margin: 0;
          top: 0;
          left: 50%;
-         transform: translate(-50%, 0%)
+         transform: translate(-50%, 0%) */
+        width: 50%;
+        margin: auto;
      }
+
+     @media only screen and (max-width: 600px) {
+        .center {
+            width: 100%;
+        }
+    }
 
      .title {
          padding: 1px 5px;
@@ -58,7 +66,7 @@
          display: flex;
      }
 
-     #person-container img {
+     #person-img {
          flex: 0 0 70%
      }
 
@@ -116,7 +124,9 @@
 
     <!-- Interactions by each person bar chart -->
     <div id="person-container">
-        <img src="data:image/png;base64,{{ person_embed | safe}}" />
+        <div id="person-img">
+            <img src="data:image/png;base64,{{ person_embed | safe}}" />
+        </div>
         <p>
             Vitae rerum a et quia incidunt voluptatem aut voluptate. Et non officia occaecati qui aut quod fuga consectetur. Perspiciatis impedit blanditiis nesciunt omnis. Quo exercitationem culpa omnis asperiores itaque occaecati. At natus tempora incidunt nihil.…
         </p>

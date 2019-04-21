@@ -15,7 +15,8 @@ function getAxiosInstance() {
         baseURL: API_URL,
         headers: {
             'Content-Type': 'application/json'
-        }
+        },
+        timeout: 2000
     });
 }
 
@@ -52,15 +53,7 @@ function postFriend(friend, callback) {
 }
 
 function postInteraction(data, callback) {
-    getAxiosInstance().post('/api/interaction/', 
-        {
-            loggee_id: data.loggee_id,
-            time: data.time,
-            social: data.social,
-            medium: data.medium,
-            reaction: data.reaction,
-            description: data.description
-        })
+    getAxiosInstance().post('/api/interaction/', data)
         .then(callback)
         .catch(handleError);
 }
@@ -81,6 +74,10 @@ function postFeedback(rec_id, feedback_typ, callback) {
         .catch(handleError);
 }
 
+function getEmailUrl() {
+    return API_URL + '/api/email/';
+}
+
 export {
     loginBackend,
     logoutBackend,
@@ -89,5 +86,6 @@ export {
     getFriends,
     postFriend,
     getRecommendations,
-    postFeedback
+    postFeedback,
+    getEmailUrl
 }

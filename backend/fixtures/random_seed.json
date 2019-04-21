@@ -1,0 +1,1381 @@
+[
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 1,
+        "fields": {
+            "app_label": "admin",
+            "model": "logentry"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 2,
+        "fields": {
+            "app_label": "auth",
+            "model": "permission"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 3,
+        "fields": {
+            "app_label": "auth",
+            "model": "group"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 4,
+        "fields": {
+            "app_label": "auth",
+            "model": "user"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 5,
+        "fields": {
+            "app_label": "contenttypes",
+            "model": "contenttype"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 6,
+        "fields": {
+            "app_label": "sessions",
+            "model": "session"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 7,
+        "fields": {
+            "app_label": "api",
+            "model": "logentry"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 8,
+        "fields": {
+            "app_label": "api",
+            "model": "recommendation"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 9,
+        "fields": {
+            "app_label": "api",
+            "model": "recommendationfeedback"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 10,
+        "fields": {
+            "app_label": "api",
+            "model": "friend"
+        }
+    },
+    {
+        "model": "contenttypes.contenttype",
+        "pk": 11,
+        "fields": {
+            "app_label": "api",
+            "model": "user"
+        }
+    },
+    {
+        "model": "sessions.session",
+        "pk": "7a43ea3eomlo1msw3vfp4208fheunhwu",
+        "fields": {
+            "session_data": "MmFlZDgzMzg5NjdmOGRhNWE1N2ZkOTUxNmYzOTM5ZDY1ZjU0Mjc0Mjp7ImF1dGgtdG9rZW4iOiJzZXNzaW9uX3Rva2VuIiwidXNlci1pZCI6IjEifQ==",
+            "expire_date": "2019-04-27T03:24:25.387Z"
+        }
+    },
+    {
+        "model": "api.user",
+        "pk": 1,
+        "fields": {
+            "name": "Lenny",
+            "email": "lpitt2@illinois.edu",
+            "has_generic_recs": false
+        }
+    },
+    {
+        "model": "api.user",
+        "pk": 2,
+        "fields": {
+            "name": "Page international recognize their.",
+            "email": "michaelingram@wilson-perez.org",
+            "has_generic_recs": true
+        }
+    },
+    {
+        "model": "api.user",
+        "pk": 3,
+        "fields": {
+            "name": "Shake age pattern lot role fill. Guess visit factor.",
+            "email": "lindseyalvarado@vasquez.com",
+            "has_generic_recs": true
+        }
+    },
+    {
+        "model": "api.user",
+        "pk": 4,
+        "fields": {
+            "name": "Join for part suddenly use create.",
+            "email": "ryanmendoza@gmail.com",
+            "has_generic_recs": true
+        }
+    },
+    {
+        "model": "api.user",
+        "pk": 5,
+        "fields": {
+            "name": "Consider listen activity film.",
+            "email": "clementssean@bell-davis.com",
+            "has_generic_recs": true
+        }
+    },
+    {
+        "model": "api.user",
+        "pk": 6,
+        "fields": {
+            "name": "Purpose simple history member.",
+            "email": "elamb@hotmail.com",
+            "has_generic_recs": false
+        }
+    },
+    {
+        "model": "api.user",
+        "pk": 7,
+        "fields": {
+            "name": "Moment find firm skin property.",
+            "email": "robert14@farmer.net",
+            "has_generic_recs": false
+        }
+    },
+    {
+        "model": "api.user",
+        "pk": 8,
+        "fields": {
+            "name": "Course choice college expert president.",
+            "email": "dale37@anderson.com",
+            "has_generic_recs": true
+        }
+    },
+    {
+        "model": "api.user",
+        "pk": 9,
+        "fields": {
+            "name": "Themselves city one sometimes. Their school step soldier.",
+            "email": "willieortiz@yahoo.com",
+            "has_generic_recs": true
+        }
+    },
+    {
+        "model": "api.user",
+        "pk": 10,
+        "fields": {
+            "name": "Big dream big less during enough ago win.",
+            "email": "lhoover@russell.com",
+            "has_generic_recs": false
+        }
+    },
+    {
+        "model": "api.user",
+        "pk": 11,
+        "fields": {
+            "name": "Consider could long view sit operation.",
+            "email": "ljohnson@gmail.com",
+            "has_generic_recs": true
+        }
+    },
+    {
+        "model": "api.user",
+        "pk": 12,
+        "fields": {
+            "name": "Guy traditional face cultural hair pull.",
+            "email": "teresalove@robles-reed.net",
+            "has_generic_recs": false
+        }
+    },
+    {
+        "model": "api.user",
+        "pk": 13,
+        "fields": {
+            "name": "Tough same science data space.",
+            "email": "amandasmith@gmail.com",
+            "has_generic_recs": true
+        }
+    },
+    {
+        "model": "api.user",
+        "pk": 14,
+        "fields": {
+            "name": "Would official laugh data lose wind. Wish would dark.",
+            "email": "audrey28@nelson.com",
+            "has_generic_recs": false
+        }
+    },
+    {
+        "model": "api.user",
+        "pk": 15,
+        "fields": {
+            "name": "Owner chance kid outside four. Door tax later such think.",
+            "email": "klinewilliam@hill-alvarez.biz",
+            "has_generic_recs": false
+        }
+    },
+    {
+        "model": "api.user",
+        "pk": 16,
+        "fields": {
+            "name": "Plant first health woman near. Second third smile color agree.",
+            "email": "ariasshannon@yahoo.com",
+            "has_generic_recs": true
+        }
+    },
+    {
+        "model": "api.friend",
+        "pk": 1,
+        "fields": {
+            "name": "billy",
+            "user": 1
+        }
+    },
+    {
+        "model": "api.friend",
+        "pk": 2,
+        "fields": {
+            "name": "billy2",
+            "user": 1
+        }
+    },
+    {
+        "model": "api.friend",
+        "pk": 3,
+        "fields": {
+            "name": "Result poor baby small accept civil away.",
+            "user": 16
+        }
+    },
+    {
+        "model": "api.friend",
+        "pk": 4,
+        "fields": {
+            "name": "Because have success air mean.",
+            "user": 14
+        }
+    },
+    {
+        "model": "api.friend",
+        "pk": 5,
+        "fields": {
+            "name": "Man nor energy matter. Identify even nice no push near.",
+            "user": 14
+        }
+    },
+    {
+        "model": "api.friend",
+        "pk": 6,
+        "fields": {
+            "name": "Out pretty along. Outside since road visit to cup.",
+            "user": 2
+        }
+    },
+    {
+        "model": "api.friend",
+        "pk": 7,
+        "fields": {
+            "name": "Detail tax most. Watch by mother. Part forget thank.",
+            "user": 9
+        }
+    },
+    {
+        "model": "api.friend",
+        "pk": 8,
+        "fields": {
+            "name": "Good final place across necessary letter.",
+            "user": 10
+        }
+    },
+    {
+        "model": "api.friend",
+        "pk": 9,
+        "fields": {
+            "name": "Different heart nor production official country doctor.",
+            "user": 4
+        }
+    },
+    {
+        "model": "api.friend",
+        "pk": 10,
+        "fields": {
+            "name": "Trouble recent entire teach.",
+            "user": 6
+        }
+    },
+    {
+        "model": "api.friend",
+        "pk": 11,
+        "fields": {
+            "name": "Nor vote determine responsibility high war research week.",
+            "user": 3
+        }
+    },
+    {
+        "model": "api.friend",
+        "pk": 12,
+        "fields": {
+            "name": "Factor change front sit toward carry write.",
+            "user": 9
+        }
+    },
+    {
+        "model": "api.friend",
+        "pk": 13,
+        "fields": {
+            "name": "Hotel Mrs until main herself ever series follow.",
+            "user": 15
+        }
+    },
+    {
+        "model": "api.friend",
+        "pk": 14,
+        "fields": {
+            "name": "Sure what many rate. Fund buy tonight concern item before ten.",
+            "user": 3
+        }
+    },
+    {
+        "model": "api.friend",
+        "pk": 15,
+        "fields": {
+            "name": "Pressure idea soldier environment themselves among.",
+            "user": 14
+        }
+    },
+    {
+        "model": "api.friend",
+        "pk": 16,
+        "fields": {
+            "name": "Half human own rest. Condition religious start me big.",
+            "user": 9
+        }
+    },
+    {
+        "model": "api.friend",
+        "pk": 17,
+        "fields": {
+            "name": "Under writer player point month about part.",
+            "user": 13
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 1,
+        "fields": {
+            "reaction": "Happy",
+            "loggee": 1,
+            "logger": 1,
+            "time_of_day": "Morning",
+            "social_context": "Academic",
+            "interaction_medium": "Online",
+            "content_class": "SM",
+            "other_loggable_text": "saw billy in class",
+            "created_at": "2019-04-13T16:40:00.326Z",
+            "updated_at": "2019-04-13T16:40:00.326Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 2,
+        "fields": {
+            "reaction": "AN",
+            "loggee": 9,
+            "logger": 12,
+            "time_of_day": "AF",
+            "social_context": "OC",
+            "interaction_medium": "IP",
+            "content_class": "OP",
+            "other_loggable_text": "Actually push minute draw. Which yourself pattern community. Always sell think health. It city alone scientist along personal.\nAlone them pattern plan country. Detail past main world.\nBit laugh front know. Democratic rock treat. Traditional significant religious couple about least family.\nFeel maintain pick baby kind. Forget itself get type house address various.\nArt condition second. Station rise me personal soldier economic man. Good worry may feel bring kind something.",
+            "created_at": "2000-01-14T04:25:54Z",
+            "updated_at": "2009-04-28T00:18:27Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 3,
+        "fields": {
+            "reaction": "AN",
+            "loggee": 7,
+            "logger": 16,
+            "time_of_day": "AF",
+            "social_context": "WO",
+            "interaction_medium": "IP",
+            "content_class": "BP",
+            "other_loggable_text": "Know special at rich which various four. Protect instead performance. Summer billion question recently.\nQuality eight thought condition. Notice trouble old worry course mention prepare language.\nOr ball have office. Room may business above when.\nCup forward nor tend statement several necessary. Market very whom all carry something.\nCreate across study end customer. Because student thing individual lay most near.",
+            "created_at": "2016-09-10T00:40:02Z",
+            "updated_at": "1998-10-01T01:12:12Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 4,
+        "fields": {
+            "reaction": "HA",
+            "loggee": 14,
+            "logger": 7,
+            "time_of_day": "MO",
+            "social_context": "SO",
+            "interaction_medium": "NA",
+            "content_class": "SM",
+            "other_loggable_text": "Financial interview political section. Movie hotel what present.\nDiscuss share part science wish how. From subject treat poor. Half identify occur church school pressure.\nTop you behind it.\nHow choose mention religious between she edge. Current idea during south past if money form.\nCommercial perhaps case upon often another. Manage including type another thus.\nMaybe stand check. Hold party magazine really listen. While population ahead size sense future.",
+            "created_at": "1981-06-21T09:19:17Z",
+            "updated_at": "2005-05-22T02:28:45Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 5,
+        "fields": {
+            "reaction": "AN",
+            "loggee": 14,
+            "logger": 12,
+            "time_of_day": "NA",
+            "social_context": "SO",
+            "interaction_medium": "IP",
+            "content_class": "OP",
+            "other_loggable_text": "Decide reveal add your me force address coach. Church check home to receive pretty fund. Nation oil PM economy city option way edge.\nEnough arm writer character. Morning just maintain bit we let PM.\nAnother involve music tax treatment. Brother must fund board cause. Low song behavior week mention establish trade.\nMovement effort rock edge claim. Easy American recent worry bring partner order. No none up war.",
+            "created_at": "2007-08-25T06:29:22Z",
+            "updated_at": "1989-09-17T16:22:46Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 6,
+        "fields": {
+            "reaction": "AN",
+            "loggee": 10,
+            "logger": 13,
+            "time_of_day": "NA",
+            "social_context": "NA",
+            "interaction_medium": "IP",
+            "content_class": "BP",
+            "other_loggable_text": "National political stand feel consider eight. Region feeling north writer during else us. Remain sound case worker develop former responsibility health.\nJust trade you throughout under process part.\nIdea item understand skin fine laugh center. Recognize nation ok fall already.\nPull really national fly war hold food likely. Deep performance eat.\nBoth national goal meeting social. Follow create despite box law up. Note traditional country tend.\nEconomy her sound. Like among market her.",
+            "created_at": "1982-10-27T02:29:03Z",
+            "updated_at": "2018-09-14T22:31:58Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 7,
+        "fields": {
+            "reaction": "NE",
+            "loggee": 16,
+            "logger": 10,
+            "time_of_day": "AF",
+            "social_context": "WO",
+            "interaction_medium": "ON",
+            "content_class": "BP",
+            "other_loggable_text": "Gun industry give book lot. Together war together career read husband. Whole reason field else run subject candidate student.\nCity available nice son that crime will. Improve meeting friend.\nFirst sister room wife real. Talk no each standard rock simple.\nPaper natural see since result age capital reason. Entire to white hold road meet.\nDream season service bar purpose allow since artist. Son prepare force individual cup. Lot would generation son use.\nOffice beat community stage doctor dinner.",
+            "created_at": "2014-05-23T05:19:52Z",
+            "updated_at": "1995-08-29T17:33:34Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 8,
+        "fields": {
+            "reaction": "AN",
+            "loggee": 12,
+            "logger": 11,
+            "time_of_day": "NA",
+            "social_context": "SO",
+            "interaction_medium": "IP",
+            "content_class": "SM",
+            "other_loggable_text": "Level region yard success check prepare. Move evening friend hold this lawyer. Bad buy task back sell.\nTeam when cause dream book determine focus. Discover stay window fill may yes. Professor production begin relate prove full write.\nDescribe pattern we attack everybody real. Attorney because senior.\nPartner scientist large still edge pressure market mention. Doctor staff still wait project pattern carry. Enough performance benefit others. Several last form.",
+            "created_at": "2009-11-03T08:52:08Z",
+            "updated_at": "2010-12-31T13:05:49Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 9,
+        "fields": {
+            "reaction": "AN",
+            "loggee": 8,
+            "logger": 4,
+            "time_of_day": "EV",
+            "social_context": "SO",
+            "interaction_medium": "NA",
+            "content_class": "BP",
+            "other_loggable_text": "Plant share point store. Success kitchen once anyone. Specific mother magazine experience poor magazine.\nFamily glass town around. According might production. Early set piece debate.\nGrow see various what less property. Lay among middle may only now up.\nCommunity take Mr them issue almost stop. Level tough TV including fire generation value. Particular point pick real.\nKid positive including happy attorney. Seek seem city decide. Describe easy similar walk respond serve.",
+            "created_at": "1976-10-20T20:30:49Z",
+            "updated_at": "2014-05-24T20:16:09Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 10,
+        "fields": {
+            "reaction": "NE",
+            "loggee": 4,
+            "logger": 15,
+            "time_of_day": "AF",
+            "social_context": "SO",
+            "interaction_medium": "IP",
+            "content_class": "BP",
+            "other_loggable_text": "Large camera your ok news figure. Leave sea effect modern then leg thank.\nRequire job attack most phone daughter war. Away six candidate dinner different.\nLoss sea owner concern claim region move. Learn factor majority general high soon less.\nContinue pick old mind. Majority true pretty participant you consider time simple. Scientist agency laugh strong develop make service three. Bank woman her relate professional church onto night.\nOperation sport raise identify alone.",
+            "created_at": "1975-01-08T01:01:05Z",
+            "updated_at": "2016-06-19T23:33:13Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 11,
+        "fields": {
+            "reaction": "TI",
+            "loggee": 10,
+            "logger": 11,
+            "time_of_day": "MO",
+            "social_context": "SO",
+            "interaction_medium": "IP",
+            "content_class": "SM",
+            "other_loggable_text": "Property environment heart game economy.\nStructure cover program either protect. Worker until small situation stock view. Security experience role.\nTo reality sure necessary interesting our middle. Cultural establish vote focus building concern.\nMoment question fear. Force listen hour become season crime chance personal.\nOff forward generation mind.\nQuite policy garden main capital nothing. Section my national agent chair worry.",
+            "created_at": "1997-05-06T19:43:06Z",
+            "updated_at": "1970-05-31T22:02:02Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 12,
+        "fields": {
+            "reaction": "TI",
+            "loggee": 9,
+            "logger": 14,
+            "time_of_day": "MO",
+            "social_context": "OC",
+            "interaction_medium": "PH",
+            "content_class": "BP",
+            "other_loggable_text": "Travel paper where start prepare environment east. Billion lose opportunity work east black. Need trade skill east nation expert doctor alone.\nSuccess recently worry address many. Interesting friend century commercial.\nIdentify office might become mind report prove.\nIndicate around probably toward trial training market. His method material future name to off. Involve dog my long.",
+            "created_at": "2017-10-27T13:49:08Z",
+            "updated_at": "1982-04-01T02:50:43Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 13,
+        "fields": {
+            "reaction": "NE",
+            "loggee": 16,
+            "logger": 8,
+            "time_of_day": "EV",
+            "social_context": "NA",
+            "interaction_medium": "IP",
+            "content_class": "OP",
+            "other_loggable_text": "Save respond near agree we. Fight partner my identify past walk. Course list cell there condition specific.\nCourse whom home red billion hear. Three several political sure thank word might.\nOrder wide indeed hear medical down system. Something person less present join move third.\nLeave value each media.\nFact bring environment respond summer bill. Industry realize speak good nature style police. Situation special action argue. Audience prevent dream practice whether own.",
+            "created_at": "1975-05-04T22:42:28Z",
+            "updated_at": "1995-04-23T23:42:10Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 14,
+        "fields": {
+            "reaction": "HA",
+            "loggee": 11,
+            "logger": 8,
+            "time_of_day": "EV",
+            "social_context": "NA",
+            "interaction_medium": "NA",
+            "content_class": "BP",
+            "other_loggable_text": "Approach despite position during. Ok open those skill if play Democrat. Card general again drive center choose.\nPast former factor his when man left theory. Design me meeting professional especially common. Eye successful station avoid probably under.\nPractice building fly center reality fight price. Voice plan early. Manager drive make thank glass Democrat million community.\nMind know fund teach glass hot decision. Detail thus sea vote the improve by.",
+            "created_at": "1979-05-08T17:51:36Z",
+            "updated_at": "2019-04-05T10:59:53Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 15,
+        "fields": {
+            "reaction": "NE",
+            "loggee": 15,
+            "logger": 11,
+            "time_of_day": "EV",
+            "social_context": "AC",
+            "interaction_medium": "IP",
+            "content_class": "SM",
+            "other_loggable_text": "Heavy maybe factor hair require language adult. Subject word pattern point. Check dog education write even question serious.\nTechnology rich six thought. Whose however since describe create visit successful. Me performance tend less evening meeting.\nCustomer indeed answer leg such. Direction dream describe receive court learn own.\nDecision future police give piece. More him size production environmental machine. Authority stop Mr seven traditional blood.\nStyle money gas list. Fill see read kid wide.",
+            "created_at": "2004-05-24T18:45:27Z",
+            "updated_at": "2010-10-14T05:38:38Z"
+        }
+    },
+    {
+        "model": "api.logentry",
+        "pk": 16,
+        "fields": {
+            "reaction": "HA",
+            "loggee": 4,
+            "logger": 13,
+            "time_of_day": "NA",
+            "social_context": "OC",
+            "interaction_medium": "ON",
+            "content_class": "BP",
+            "other_loggable_text": "Paper media southern yeah. Sport weight west campaign general pattern. Able protect off specific off. Trip consider I parent.\nLot wear think car course identify. Force official project senior.\nMore nice hand analysis agency. According my beyond camera. Short visit bill successful forward particular question them. Garden sort call red detail unit take.\nNature establish military recent. Ground tough any parent. Chair my pick but score bring myself.",
+            "created_at": "1978-08-18T01:02:07Z",
+            "updated_at": "1997-08-17T04:58:39Z"
+        }
+    },
+    {
+        "model": "api.recommendation",
+        "pk": 1,
+        "fields": {
+            "rec_typ": "PA",
+            "recommendation": "Try to have more in-person interactions.",
+            "rec_description": "In-person interactions allow for more control over the interaction, like body language and other visual cues. Online and over-the-phone interactions should be used once a good relationship is already built.",
+            "recommend_person": 1,
+            "about_person": null
+        }
+    },
+    {
+        "model": "api.recommendation",
+        "pk": 2,
+        "fields": {
+            "rec_typ": "PA",
+            "recommendation": "Try to have more in-person interactions.",
+            "rec_description": "In-person interactions allow for more control over the interaction, like body language and other visual cues. Online and over-the-phone interactions should be used once a good relationship is already built.",
+            "recommend_person": 1,
+            "about_person": null
+        }
+    },
+    {
+        "model": "api.recommendation",
+        "pk": 3,
+        "fields": {
+            "rec_typ": "PO",
+            "recommendation": "Spend more time with billy.",
+            "rec_description": "Looks like your interactions with this friend are typically positive - try to have more of them!",
+            "recommend_person": 1,
+            "about_person": null
+        }
+    },
+    {
+        "model": "api.recommendation",
+        "pk": 4,
+        "fields": {
+            "rec_typ": "PA",
+            "recommendation": "Try to have more in-person interactions.",
+            "rec_description": "In-person interactions allow for more control over the interaction, like body language and other visual cues. Online and over-the-phone interactions should be used once a good relationship is already built.",
+            "recommend_person": 1,
+            "about_person": null
+        }
+    },
+    {
+        "model": "api.recommendation",
+        "pk": 5,
+        "fields": {
+            "rec_typ": "PO",
+            "recommendation": "Spend more time with billy.",
+            "rec_description": "Looks like your interactions with this friend are typically positive - try to have more of them!",
+            "recommend_person": 1,
+            "about_person": null
+        }
+    },
+    {
+        "model": "api.recommendation",
+        "pk": 6,
+        "fields": {
+            "rec_typ": "AV",
+            "recommendation": "Avoid small talk with billy.",
+            "rec_description": "Studies have shown that having more small talk than not has a negative impact on happiness and interaction quality. Focus on having more substantive conversations, especially with this friend.",
+            "recommend_person": 1,
+            "about_person": null
+        }
+    },
+    {
+        "model": "api.recommendation",
+        "pk": 7,
+        "fields": {
+            "rec_typ": "AV",
+            "recommendation": "Believe usually spring center. Attack professional society during hotel in. Through standard big should send might Congress.",
+            "rec_description": "Admit detail defense light husband this vote.\nAction bill write few week smile. Herself control since itself similar meet.\nAbove become three step money. Space population American at option outside.\nStar modern water fund yourself any. Son fill travel different firm. Whole truth foreign offer shoulder.\nSomebody run most believe catch ask country point. Member feel real hot.\nStand coach training someone develop film. Travel simple wrong set.\nIdentify attorney week yes.",
+            "recommend_person": 5,
+            "about_person": 6
+        }
+    },
+    {
+        "model": "api.recommendation",
+        "pk": 8,
+        "fields": {
+            "rec_typ": "NE",
+            "recommendation": "Baby away draw fly floor.",
+            "rec_description": "Name fight price consider either character. Bit friend analysis goal paper manage.\nEven space society Democrat recently admit especially. Space break trial perhaps conference policy fire.\nAssume edge technology happy another church. Those year true.\nPerhaps nearly ready performance specific what food campaign. Behavior hold whatever force suffer as.\nProbably mind your relationship church hard sort them. Study need many full available half ever his. Home nation animal want sing.",
+            "recommend_person": 7,
+            "about_person": 8
+        }
+    },
+    {
+        "model": "api.recommendation",
+        "pk": 9,
+        "fields": {
+            "rec_typ": "AV",
+            "recommendation": "She less all them his art floor. Particular apply nor growth seven. Cut career arm decade method nation all kind.",
+            "rec_description": "Price majority day care bad industry rest among.\nEat his cause store. Serve other building author.\nPrepare value off politics. Of various catch.\nTheir foot spring just million whatever strong. Impact event knowledge memory.\nDirector street produce sea. Quickly kid such parent foot yes still still. Character training agreement wait mother risk. Growth from movie.\nExpect former factor realize. Fly Congress prove form talk provide memory. Range actually kind method both.",
+            "recommend_person": 10,
+            "about_person": 15
+        }
+    },
+    {
+        "model": "api.recommendation",
+        "pk": 10,
+        "fields": {
+            "rec_typ": "PO",
+            "recommendation": "Beyond program card whose media agent. Hold herself analysis know everything people.",
+            "rec_description": "Population sometimes design simple ever about laugh. Fill defense kitchen other benefit heavy. Dog continue heavy quickly.\nI with tree generation his financial question. Performance bank way wide skin middle financial. Still in compare easy respond fly without.\nEarly current PM himself. Best option organization article when name. Somebody though house same every.\nWife off religious relate visit. Fish work probably. Up summer affect.",
+            "recommend_person": 13,
+            "about_person": 13
+        }
+    },
+    {
+        "model": "api.recommendation",
+        "pk": 11,
+        "fields": {
+            "rec_typ": "GE",
+            "recommendation": "Clear remain improve kind. Later vote goal maybe state over.",
+            "rec_description": "Though year for answer above phone. Improve treat east heavy.\nRemember opportunity beyond tax. Fall say billion result increase fly yes.\nWeight plant ask message car station. Environment small perhaps together though couple.\nImage too help sure speak. First pass own hotel close notice. Doctor since system decide safe.\nAt garden cover sport. Finally guess thus people network later peace. Method leg position thank field.\nNetwork capital question such nothing. Operation candidate federal benefit example.",
+            "recommend_person": 3,
+            "about_person": 12
+        }
+    },
+    {
+        "model": "api.recommendation",
+        "pk": 12,
+        "fields": {
+            "rec_typ": "AV",
+            "recommendation": "Improve officer purpose. Management white hold hear.",
+            "rec_description": "Early military check theory college. Water improve somebody not beyond bank. Send administration artist as decade.\nWin discussion job military. New sing on sort sound.\nCharacter all family machine. Development join lay change.\nData woman involve. Decision gun few design. Radio hold evening both write task record recent. Deep off population level different try just.\nNation face many ground lead. Then consider challenge water newspaper born. Work foreign open such century notice station forward.",
+            "recommend_person": 4,
+            "about_person": 12
+        }
+    },
+    {
+        "model": "api.recommendation",
+        "pk": 13,
+        "fields": {
+            "rec_typ": "PO",
+            "recommendation": "Foreign spring interesting citizen however. Himself cold seem week five.\nPick field like buy across reason.",
+            "rec_description": "Story next get artist card position weight. Reality especially plan scientist side end argue. Know near character reflect place car hair.\nAccording better activity raise cell radio. Accept human put off. Under long perhaps religious.\nA toward past. This finish bad.\nBehavior reason box question. Table action news wrong. Four truth author many.\nFor others certain go certain who strategy. Red necessary my share contain subject hold.",
+            "recommend_person": 13,
+            "about_person": 9
+        }
+    },
+    {
+        "model": "api.recommendation",
+        "pk": 14,
+        "fields": {
+            "rec_typ": "GE",
+            "recommendation": "Government wall provide exactly range huge work. Because seat professor international radio.",
+            "rec_description": "Future role make necessary as write. The surface listen suffer fire article. Someone you beat big risk history tree through.\nLong herself either loss early quality. Democratic treat author show. Five likely class want act political blue. Make last hit everyone cover.\nDecade matter Republican. Describe nature nothing be test. War wide job bag structure head. House new mouth involve prepare town wait.\nWay next others fund within she. Year choose generation manage decade pick.",
+            "recommend_person": 8,
+            "about_person": 16
+        }
+    },
+    {
+        "model": "api.recommendation",
+        "pk": 15,
+        "fields": {
+            "rec_typ": "NE",
+            "recommendation": "Behind deal against doctor. Would pick difference call stay first debate. Much again allow people spend.",
+            "rec_description": "Tonight value appear relate. Recently nature wind work off part. Realize use performance arm yeah believe him. Choice chance speak tough else arm view success.\nComputer table agent. Go cover history seven concern. Arm gun still body at.\nWind discussion worker still. On whatever democratic end. Type southern matter position style home another.\nCar drug become chair attorney person. Social policy turn many past necessary. Pretty tonight also.",
+            "recommend_person": 16,
+            "about_person": 7
+        }
+    },
+    {
+        "model": "api.recommendation",
+        "pk": 16,
+        "fields": {
+            "rec_typ": "NE",
+            "recommendation": "Health evidence simple able power outside possible. Character goal red third yet. Same specific test find. Sister most perhaps.",
+            "rec_description": "Part sense short bit yard her. Worry what party level surface political medical.\nAuthor too spend still similar city. Media it task something discussion left type. Ask until wonder.\nDiscover word window though write. Financial television no rule.\nSide woman agent after happy crime could. Firm account fear behind three every. Either election month rate relationship small.\nFather later fight message commercial stage tonight.\nMrs always official group oil. American source lot hope eight its thousand.",
+            "recommend_person": 14,
+            "about_person": 12
+        }
+    },
+    {
+        "model": "api.recommendation",
+        "pk": 17,
+        "fields": {
+            "rec_typ": "AV",
+            "recommendation": "Significant particularly pressure answer hundred. Lay response treat road production.",
+            "rec_description": "Public teacher both too process. Deal social not. Road speak significant free music require sure.\nPull event understand drug get finish on carry. Read television company skin full this agreement.\nMay under third participant man as its. Subject at the inside choice interest tax.\nBegin fine far. Almost deal environmental stop industry pull style raise. Individual agency nearly student.\nTruth every reason choice world really. Organization concern difference as.",
+            "recommend_person": 5,
+            "about_person": 13
+        }
+    },
+    {
+        "model": "api.recommendation",
+        "pk": 18,
+        "fields": {
+            "rec_typ": "NE",
+            "recommendation": "Pull as old short. Ask a must toward Democrat into thought.",
+            "rec_description": "Direction knowledge door who. Listen senior agent.\nOk star dream again how far color.\nShould right poor treat. Maybe for act tough.\nLeg because teach old. Source mouth continue have low because environmental ground. Western word career too.\nSix executive you inside need. Live indeed argue. Professional price together ok with.\nMember together individual she body beautiful role. New lawyer authority word according. Girl audience free campaign.",
+            "recommend_person": 16,
+            "about_person": 6
+        }
+    },
+    {
+        "model": "api.recommendation",
+        "pk": 19,
+        "fields": {
+            "rec_typ": "GE",
+            "recommendation": "Most entire child different foot trouble. Expect admit anything. Ability feel candidate property.",
+            "rec_description": "Maintain down among.\nTelevision series gun language. Field attack stage partner. Debate particular economy charge moment.\nDegree particular bit if. We buy capital dark other. Relate research today war turn federal hope. Their dog my notice hand community.\nArgue night same it a month customer organization. Fire job source plant important structure six picture. Security produce authority want.\nComputer president between. During enter discover issue question happen letter.",
+            "recommend_person": 6,
+            "about_person": 6
+        }
+    },
+    {
+        "model": "api.recommendation",
+        "pk": 20,
+        "fields": {
+            "rec_typ": "AV",
+            "recommendation": "Thought budget they collection piece present top. Option onto word avoid somebody. Give system food though friend.",
+            "rec_description": "Relationship investment mouth modern morning. Society also fine threat.\nEat through plan art. Current forward break recognize court ok structure one.\nCase nothing remember prepare city end none. Make thing mind bed rather region oil age.\nMusic color authority ok almost. Always sure maybe attack he arm.\nMeeting sing grow almost edge or option. Officer budget truth. Popular color leg international his employee. Buy form run.\nHead upon cost network skin order fight. Work most role half three seem.",
+            "recommend_person": 4,
+            "about_person": 15
+        }
+    },
+    {
+        "model": "api.recommendation",
+        "pk": 21,
+        "fields": {
+            "rec_typ": "PO",
+            "recommendation": "Live hot again time. On point write general position seek. National truth view popular mother.",
+            "rec_description": "Some top long week painting low accept. Method type trouble most third give election. Perform near experience policy.\nMusic table officer issue necessary forget. Defense hold step next.\nEdge employee want serious any. Research out marriage third that parent. Together fact place professor employee. Lead page on would option garden everyone.\nSee give them out office behavior animal. Manager pull administration.",
+            "recommend_person": 5,
+            "about_person": 17
+        }
+    },
+    {
+        "model": "api.recommendationfeedback",
+        "pk": 1,
+        "fields": {
+            "rec": 16,
+            "feedback_typ": "WO"
+        }
+    },
+    {
+        "model": "api.recommendationfeedback",
+        "pk": 2,
+        "fields": {
+            "rec": 21,
+            "feedback_typ": "NE"
+        }
+    },
+    {
+        "model": "api.recommendationfeedback",
+        "pk": 3,
+        "fields": {
+            "rec": 7,
+            "feedback_typ": "WO"
+        }
+    },
+    {
+        "model": "api.recommendationfeedback",
+        "pk": 4,
+        "fields": {
+            "rec": 7,
+            "feedback_typ": "WO"
+        }
+    },
+    {
+        "model": "api.recommendationfeedback",
+        "pk": 5,
+        "fields": {
+            "rec": 15,
+            "feedback_typ": "NE"
+        }
+    },
+    {
+        "model": "api.recommendationfeedback",
+        "pk": 6,
+        "fields": {
+            "rec": 20,
+            "feedback_typ": "WO"
+        }
+    },
+    {
+        "model": "api.recommendationfeedback",
+        "pk": 7,
+        "fields": {
+            "rec": 8,
+            "feedback_typ": "DW"
+        }
+    },
+    {
+        "model": "api.recommendationfeedback",
+        "pk": 8,
+        "fields": {
+            "rec": 13,
+            "feedback_typ": "DW"
+        }
+    },
+    {
+        "model": "api.recommendationfeedback",
+        "pk": 9,
+        "fields": {
+            "rec": 17,
+            "feedback_typ": "NE"
+        }
+    },
+    {
+        "model": "api.recommendationfeedback",
+        "pk": 10,
+        "fields": {
+            "rec": 15,
+            "feedback_typ": "WO"
+        }
+    },
+    {
+        "model": "api.recommendationfeedback",
+        "pk": 11,
+        "fields": {
+            "rec": 15,
+            "feedback_typ": "NE"
+        }
+    },
+    {
+        "model": "api.recommendationfeedback",
+        "pk": 12,
+        "fields": {
+            "rec": 20,
+            "feedback_typ": "WO"
+        }
+    },
+    {
+        "model": "api.recommendationfeedback",
+        "pk": 13,
+        "fields": {
+            "rec": 14,
+            "feedback_typ": "DW"
+        }
+    },
+    {
+        "model": "api.recommendationfeedback",
+        "pk": 14,
+        "fields": {
+            "rec": 17,
+            "feedback_typ": "NE"
+        }
+    },
+    {
+        "model": "api.recommendationfeedback",
+        "pk": 15,
+        "fields": {
+            "rec": 11,
+            "feedback_typ": "NE"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 1,
+        "fields": {
+            "name": "Can add log entry",
+            "content_type": 1,
+            "codename": "add_logentry"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 2,
+        "fields": {
+            "name": "Can change log entry",
+            "content_type": 1,
+            "codename": "change_logentry"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 3,
+        "fields": {
+            "name": "Can delete log entry",
+            "content_type": 1,
+            "codename": "delete_logentry"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 4,
+        "fields": {
+            "name": "Can view log entry",
+            "content_type": 1,
+            "codename": "view_logentry"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 5,
+        "fields": {
+            "name": "Can add permission",
+            "content_type": 2,
+            "codename": "add_permission"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 6,
+        "fields": {
+            "name": "Can change permission",
+            "content_type": 2,
+            "codename": "change_permission"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 7,
+        "fields": {
+            "name": "Can delete permission",
+            "content_type": 2,
+            "codename": "delete_permission"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 8,
+        "fields": {
+            "name": "Can view permission",
+            "content_type": 2,
+            "codename": "view_permission"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 9,
+        "fields": {
+            "name": "Can add group",
+            "content_type": 3,
+            "codename": "add_group"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 10,
+        "fields": {
+            "name": "Can change group",
+            "content_type": 3,
+            "codename": "change_group"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 11,
+        "fields": {
+            "name": "Can delete group",
+            "content_type": 3,
+            "codename": "delete_group"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 12,
+        "fields": {
+            "name": "Can view group",
+            "content_type": 3,
+            "codename": "view_group"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 13,
+        "fields": {
+            "name": "Can add user",
+            "content_type": 4,
+            "codename": "add_user"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 14,
+        "fields": {
+            "name": "Can change user",
+            "content_type": 4,
+            "codename": "change_user"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 15,
+        "fields": {
+            "name": "Can delete user",
+            "content_type": 4,
+            "codename": "delete_user"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 16,
+        "fields": {
+            "name": "Can view user",
+            "content_type": 4,
+            "codename": "view_user"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 17,
+        "fields": {
+            "name": "Can add content type",
+            "content_type": 5,
+            "codename": "add_contenttype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 18,
+        "fields": {
+            "name": "Can change content type",
+            "content_type": 5,
+            "codename": "change_contenttype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 19,
+        "fields": {
+            "name": "Can delete content type",
+            "content_type": 5,
+            "codename": "delete_contenttype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 20,
+        "fields": {
+            "name": "Can view content type",
+            "content_type": 5,
+            "codename": "view_contenttype"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 21,
+        "fields": {
+            "name": "Can add session",
+            "content_type": 6,
+            "codename": "add_session"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 22,
+        "fields": {
+            "name": "Can change session",
+            "content_type": 6,
+            "codename": "change_session"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 23,
+        "fields": {
+            "name": "Can delete session",
+            "content_type": 6,
+            "codename": "delete_session"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 24,
+        "fields": {
+            "name": "Can view session",
+            "content_type": 6,
+            "codename": "view_session"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 25,
+        "fields": {
+            "name": "Can add log entry",
+            "content_type": 7,
+            "codename": "add_logentry"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 26,
+        "fields": {
+            "name": "Can change log entry",
+            "content_type": 7,
+            "codename": "change_logentry"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 27,
+        "fields": {
+            "name": "Can delete log entry",
+            "content_type": 7,
+            "codename": "delete_logentry"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 28,
+        "fields": {
+            "name": "Can view log entry",
+            "content_type": 7,
+            "codename": "view_logentry"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 29,
+        "fields": {
+            "name": "Can add recommendation",
+            "content_type": 8,
+            "codename": "add_recommendation"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 30,
+        "fields": {
+            "name": "Can change recommendation",
+            "content_type": 8,
+            "codename": "change_recommendation"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 31,
+        "fields": {
+            "name": "Can delete recommendation",
+            "content_type": 8,
+            "codename": "delete_recommendation"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 32,
+        "fields": {
+            "name": "Can view recommendation",
+            "content_type": 8,
+            "codename": "view_recommendation"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 33,
+        "fields": {
+            "name": "Can add recommendation feedback",
+            "content_type": 9,
+            "codename": "add_recommendationfeedback"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 34,
+        "fields": {
+            "name": "Can change recommendation feedback",
+            "content_type": 9,
+            "codename": "change_recommendationfeedback"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 35,
+        "fields": {
+            "name": "Can delete recommendation feedback",
+            "content_type": 9,
+            "codename": "delete_recommendationfeedback"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 36,
+        "fields": {
+            "name": "Can view recommendation feedback",
+            "content_type": 9,
+            "codename": "view_recommendationfeedback"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 37,
+        "fields": {
+            "name": "Can add friend",
+            "content_type": 10,
+            "codename": "add_friend"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 38,
+        "fields": {
+            "name": "Can change friend",
+            "content_type": 10,
+            "codename": "change_friend"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 39,
+        "fields": {
+            "name": "Can delete friend",
+            "content_type": 10,
+            "codename": "delete_friend"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 40,
+        "fields": {
+            "name": "Can view friend",
+            "content_type": 10,
+            "codename": "view_friend"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 41,
+        "fields": {
+            "name": "Can add user",
+            "content_type": 11,
+            "codename": "add_user"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 42,
+        "fields": {
+            "name": "Can change user",
+            "content_type": 11,
+            "codename": "change_user"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 43,
+        "fields": {
+            "name": "Can delete user",
+            "content_type": 11,
+            "codename": "delete_user"
+        }
+    },
+    {
+        "model": "auth.permission",
+        "pk": 44,
+        "fields": {
+            "name": "Can view user",
+            "content_type": 11,
+            "codename": "view_user"
+        }
+    }
+]

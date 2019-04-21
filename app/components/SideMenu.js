@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import { Avatar, Button, Text } from 'react-native-elements';
 import { GraphRequest, GraphRequestManager, LoginManager } from 'react-native-fbsdk';
-import {ScrollView, StyleSheet, View} from 'react-native';
-import { logoutBackend } from '../utils/api';
+import { InteractionManager, ScrollView, StyleSheet, View } from 'react-native';
+import { logoutBackend, getFriends } from '../utils/api';
 
 class SideMenu extends Component {
   constructor() {
@@ -15,7 +15,8 @@ class SideMenu extends Component {
         name: '',
         email: '',
         profile_pic_url: ''
-      }
+      },
+      friends: []
     }
 
     this._responseInfoCallback = this._responseInfoCallback.bind(this)
@@ -42,16 +43,32 @@ class SideMenu extends Component {
   }
 
   componentDidMount() {
-    const infoRequest = new GraphRequest(
-      '/me?fields=id,name,email',
-      null,
-      this._responseInfoCallback
-    );
-          
-    new GraphRequestManager().addRequest(infoRequest).start()
+    InteractionManager.runAfterInteractions(() => {
+      const infoRequest = new GraphRequest(
+        '/me?fields=id,name,email',
+        null,
+        this._responseInfoCallback
+      );
+            
+      new GraphRequestManager().addRequest(infoRequest).start()
+
+      getFriends(function(response) {
+        this.setState({friends: response.data.friends});
+      }.bind(this));
+    });
   }
 
   render () {
+    const Friends = (
+      this.state.friends.map((value, index) => {
+        return (
+          <View key={value[1]}>
+            <Text>- {value[0]}</Text>
+          </View>
+        )
+      })
+    );
+
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -70,6 +87,13 @@ class SideMenu extends Component {
               <Text style={styles.navItemStyle}>
                 {this.state.oauth.email}
               </Text>
+            </View>
+
+            <View>
+              <Text h4>Your friends:</Text>
+              <ScrollView>
+                {Friends}
+              </ScrollView>
             </View>
           </View>
         </ScrollView>

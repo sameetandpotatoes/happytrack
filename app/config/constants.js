@@ -18,24 +18,36 @@ const emojiButtons = [
 
 const timeOfDays = [ 'Morning', 'Afternoon', 'Evening' ]
 const timeOfDayEmojis = {
-  'Morning': "city_sunrise",
-  'Afternoon': "city_sunset",
-  'Evening': "bridge_at_night",
+  'Morning': ["city_sunrise", 'Morning'],
+  'Afternoon': ["city_sunset", 'Afternoon'],
+  'Evening': ["bridge_at_night", 'Evening'],
+  'Not Applicable': ["briefcase", 'Not Applicable']
+}
+
+const recTypes = {
+  'PO': 'Positive',
+  'NE': 'Negative',
+  'AV': 'Avoidance',
+  'GE': 'Generic',
 }
 
 const socialContexts = [ 'Academic', 'Social', 'Work' ]
 const socialContextsEmojis = {
-  'Academic': "blue_book",
-  'Social': "left_speech_bubble",
-  'Work': "briefcase",
+  'Academic': ["blue_book", 'Academic'],
+  'Social': ["left_speech_bubble", 'Social'],
+  'Work': ["briefcase", 'Work'],
+  'Not Applicable': ["briefcase", 'Not Applicable'],
+  'Other': ["briefcase", 'Other']
 }
 
+const socialContents = [ 'Small Talk', 'One Personal', 'Both Personal' ];
 
-const interactionMedium = [ 'In Person', 'Phone', 'Online' ]
+const interactionMedium = [ 'In Person', 'Over The Phone', 'Online' ]
 const interactionMediumEmojis = {
-  'In Person': "handshake",
-  'Phone': "phone",
-  'Online': "computer",
+  'In Person': ["handshake", 'In Person'],
+  'Over The Phone': ["phone", 'Over The Phone'],
+  'Online': ["computer", 'Online'],
+  'Not Applicable': ['briefcase', 'Not Applicable']
 }
 
 const feedbacks = {
@@ -52,5 +64,7 @@ export {
   socialContextsEmojis,
   interactionMedium,
   interactionMediumEmojis,
-  feedbacks
+  socialContents,
+  feedbacks,
+  recTypes
 }

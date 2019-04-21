@@ -3,6 +3,7 @@ import Emoji from 'react-native-emoji';
 import { Avatar, Button, Icon, ListItem, Overlay, Text } from 'react-native-elements';
 import { InteractionManager, Platform, SectionList, StyleSheet, RefreshControl, ScrollView, TouchableWithoutFeedback, View } from 'react-native';
 import moment from 'moment';
+import { NavigationEvents } from 'react-navigation';
 import Faker from 'faker';
 import { timeOfDay, timeOfDayEmojis, socialContexts, socialContextsEmojis, interactionMedium, interactionMediumEmojis } from '../config/constants';
 import { getInteractions } from '../utils/api';
@@ -89,38 +90,45 @@ export default class InteractionScreen extends React.Component {
 
   getDetailedInteraction(overlayInfo) {
     const {
-      timeOfDay, context, medium, timestamp,
-      emoji, name, other_loggable_text
+      time_of_day, social_context, content_class, interaction_medium, created_at,
+      reaction, loggee, other_loggable_text
     } = overlayInfo;
     return (
       <View style={styles.detailInteraction}>
-        <Text h4>Your interaction with {name}</Text>
-        <Text style={styles.text}>Recorded at: {this.getDate(timestamp) + " at " + this.getTime(timestamp)}</Text>
+        <Text h4>Your interaction with {loggee}</Text>
+        <Text style={styles.text}>Recorded at: {this.getDate(created_at) + " at " + this.getTime(created_at)}</Text>
 
-        { timeOfDay && timeOfDay != '' &&
+        { time_of_day !== '' &&
           <Text style={styles.text}>
             Time Of Day:
-            <Text style={{fontWeight: "bold"}}> {timeOfDay}</Text>
+            <Text style={{fontWeight: "bold"}}> {time_of_day}</Text>
           </Text>
         }
 
-        { medium && medium != '' &&
+        { interaction_medium !== '' &&
           <Text style={styles.text}>
             Social Interaction Medium:
-            <Text style={{fontWeight: "bold"}}> {medium}</Text>
+            <Text style={{fontWeight: "bold"}}> {interaction_medium}</Text>
           </Text>
         }
 
-        { context && context != '' &&
+        { content_class !== '' &&
+          <Text style={styles.text}>
+            Content Class:
+            <Text style={{fontWeight: "bold"}}> {content_class}</Text>
+          </Text>
+        }
+
+        { social_context !== '' &&
           <Text style={styles.text}>
             Social Context:
-            <Text style={{fontWeight: "bold"}}> {context}</Text>
+            <Text style={{fontWeight: "bold"}}> {social_context}</Text>
           </Text>
         }
 
         { other_loggable_text && other_loggable_text != '' &&
           <Text style={styles.text}>
-            Interaction Notes: {"\n\n" + other_loggable_text}
+            Interaction Notes: {"\n" + other_loggable_text}
           </Text>
         }
       </View>
@@ -136,9 +144,8 @@ export default class InteractionScreen extends React.Component {
   };
 
   render() {
-    const emojiFS = 22;
+    const emojiFS = 25;
 
-    console.log(this.state.interactions);
     const sortedInteractions = 
         _(this.state.interactions)
         .sortBy(event => event.created_at)
@@ -147,18 +154,11 @@ export default class InteractionScreen extends React.Component {
         .toPairs()
         .map((value, key) => ({title: moment(value[0], 'MM/DD/YYYY').format('ddd MMMM DD'), data: value[1]}))
         .value();
-    console.log(sortedInteractions);
     return (
       <View style={styles.container}>
-        { this.state.overlayInfo &&
-          <Overlay
-            isVisible={true}
-            onBackdropPress={() => this.setState({ overlayInfo: null })}
-          >
-            {this.getDetailedInteraction(this.state.overlayInfo)}
-          </Overlay>
-        }
-
+        <NavigationEvents
+          onWillFocus={payload => this.fetchData()}
+        />
         <View style={{flex: 1}}>
           <ScrollView
             refreshControl={
@@ -176,22 +176,16 @@ export default class InteractionScreen extends React.Component {
               renderItem={({item, index, section}) => (
                 <TouchableWithoutFeedback onPress={ () => this.viewDetail(item)}>
                   <View style={styles.SectionListItems} onPress={this.viewDetail}>
-                    {/* <Avatar rounded size="medium" title={this.getInitials(item.name)} /> */}
-                    <View style={{flexDirection: 'column', marginLeft: 5}}>
-                      <Text style={{fontSize: 20}}>{item.loggee}</Text>
-                      <Text style={{fontSize: 16}}>{"at " + this.getTime(item.created_at)}</Text>
+                    <Avatar rounded size="medium" title={this.getInitials(item.loggee)} />
+                    <View style={{flexDirection: 'column', marginLeft: 15}}>
+                      <Text style={{fontSize: 21}}>{item.reaction} interaction</Text>
+                      <Text style={{fontSize: 16}}>{item.loggee} - <Text style={{fontWeight: 'bold'}}>{item.social_context}</Text></Text>
                     </View>
                     <View style={styles.subtitleView}>
-                      {/* <Emoji name={item.fields.reaction} style={{fontSize: emojiFS, position: 'absolute', right: 0, bottom: 10}} /> */}
-                      { item.time_of_day && item.time_of_day != '' &&
-                        <Emoji name={timeOfDayEmojis[item.time_of_day]} style={{fontSize: emojiFS, position: 'absolute', right: 40, bottom: 10}} />
-                      }
-                      { item.social_context && item.social_context != '' &&
-                        <Emoji name={socialContextsEmojis[item.social_context]} style={{fontSize: emojiFS, position: 'absolute', right: 80, bottom: 10}} />
-                      }
                       { item.interaction_medium && item.interaction_medium != '' &&
-                        <Emoji name={interactionMediumEmojis[item.interaction_medium]} style={{fontSize: emojiFS, position: 'absolute', right: 120, bottom: 10}} />
+                        <Emoji name={interactionMediumEmojis[item.interaction_medium][0]} style={{fontSize: emojiFS, position: 'absolute', right: 120, bottom: 10}} />
                       }
+                      <Text style={{fontSize: 18}}>{ this.getTime(item.created_at) }</Text>
                     </View>
                   </View>
                 </TouchableWithoutFeedback>
@@ -218,6 +212,14 @@ export default class InteractionScreen extends React.Component {
           }}
           onPress={this.navToNewInteractionScreen}
         />
+        { this.state.overlayInfo &&
+          <Overlay
+            isVisible={true}
+            onBackdropPress={() => this.setState({ overlayInfo: null })}
+          >
+            {this.getDetailedInteraction(this.state.overlayInfo)}
+          </Overlay>
+        }
       </View>
     )
   }
@@ -229,7 +231,7 @@ const styles = StyleSheet.create({
   },
   detailInteraction: {
     flex: 1,
-    padding: 20
+    padding: 50,
   },
   text: {
     fontSize: 18,
@@ -258,6 +260,7 @@ const styles = StyleSheet.create({
     backgroundColor : '#F5F5F5',
   },
   subtitleView: {
-    marginLeft: 'auto'
+    marginLeft: 'auto',
+    justifyContent: 'center'
   }
 });

@@ -180,5 +180,7 @@ def generate_person(name, email, num_friends, num_logs):
         rec.save()
 
 
+# TODO change username based on who's testing the app
 generate_person('Bhuvan Venkatesh', 'bvenkat2@illinois.edu', 5, 10)
+generate_person('Sameet Sapra', 'sameetandpotatoes@gmail.com', 5, 10)
 generate_person('Lenny Pitt', 'lpitt2@illinois.edu', 15, 50)

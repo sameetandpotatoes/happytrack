@@ -82,8 +82,8 @@ interaction_post_schema = {
         },
     },
     "required": ["reaction", "time",
-                 'social', 'medium',
-                 'loggee_id'],
+                 "social", "medium",
+                 "content", "loggee_id"],
 }
 
 summary_get_schema = {

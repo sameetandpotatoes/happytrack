@@ -138,8 +138,7 @@ def _check_in_person_recommendations(logs, user_id):
             recommend_person = user_id,
         )
 
-        _create_and_save_recommendation(rec)
-        return rec
+        return _create_and_save_recommendation(rec)
     return None
 
 
@@ -170,10 +169,9 @@ def _check_time_fairness(logs, user_id):
             rec_type = 'PO',
             recommendation = "Spread your interactions throughout the day.",
             rec_description = SPREAD_INTERACTIONS_REC_DESC,
-            recommend_person=user_id
+            recommend_person = user_id,
         )
-        _create_and_save_recommendation(rec)
-        return rec
+        return _create_and_save_recommendation(rec)
     return None
 
 def _count_all(logs):
@@ -215,8 +213,7 @@ def _save_generic_recommendations(logs, user_id):
         rec_type = rec_type
         )
 
-    _create_and_save_recommendation(laugh_rec)
-    generic_recs.append(laugh_rec)
+    generic_recs.append(_create_and_save_recommendation(laugh_rec))
 
 
     compl_rec = dict(
@@ -226,8 +223,7 @@ def _save_generic_recommendations(logs, user_id):
         rec_type = rec_type
         )
 
-    _create_and_save_recommendation(compl_rec)
-    generic_recs.append(compl_rec)
+    generic_recs.append(_create_and_save_recommendation(compl_rec))
 
     body_rec = dict(
         recommendation = "Use body language.",
@@ -247,8 +243,7 @@ def _save_generic_recommendations(logs, user_id):
         rec_type = rec_type
         )
 
-    _create_and_save_recommendation(eval_rec)
-    generic_recs.append(eval_rec)
+    generic_recs.append(_create_and_save_recommendation(eval_rec))
 
     humor_rec = dict(
         recommendation = "Use humor!",
@@ -257,8 +252,7 @@ def _save_generic_recommendations(logs, user_id):
         rec_type = rec_type
         )
 
-    _create_and_save_recommendation(humor_rec)
-    generic_recs.append(humor_rec)
+    generic_recs.append(_create_and_save_recommendation(humor_rec))
 
     open_rec = dict(
         recommendation = "Open up.",
@@ -267,8 +261,7 @@ def _save_generic_recommendations(logs, user_id):
         rec_type = rec_type
         )
 
-    _create_and_save_recommendation(open_rec)
-    generic_recs.append(open_rec)
+    generic_recs.append(_create_and_save_recommendation(open_rec))
 
     user.has_generic_recs = True
     user.save()
@@ -295,17 +288,10 @@ def _recommended_this_week(user_id):
     return base.all()
 
 def recommendations_from_logs(logs, user_id):
+    # Don't regenerate recommendations if we already have recommendations
     has_generated = _recommended_this_week(user_id)
     if len(has_generated) != 0:
-        return dict(data=[
-            dict(
-                rec_type=rec.rec_typ,
-                recommendation=rec.recommendation,
-                rec_description=rec.rec_description,
-                recommend_person=user_id
-            )
-            for rec in has_generated
-        ])
+        return has_generated
 
     rec_list = list()
 
@@ -345,7 +331,7 @@ def recommendations_from_logs(logs, user_id):
             rec_list.append(r)
         elif (reactions[friend]['Tired']/total * 100) > 10:
             r['rec_type'] = 'PO'
-            r["recommendation"] = "Talk to {} different times.".format(name)
+            r["recommendation"] = "Talk to {} at different times.".format(name)
             r["rec_description"] = DIFFERENT_TIME_REC_DESC
             _create_and_save_recommendation(r, friend_id=friend.id)
             rec_list.append(r)

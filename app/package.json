@@ -10,7 +10,6 @@
     "adm-zip": "^0.4.13",
     "axios": "^0.18.0",
     "faker": "^4.1.0",
-    "fetch": "^1.1.0",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "plist": "^3.0.1",
@@ -23,6 +22,7 @@
     "react-native-svg": "^8.0.0",
     "react-native-svg-charts": "^5.2.0",
     "react-native-vector-icons": "^6.4.2",
+    "react-native-webview": "^5.7.0",
     "react-navigation": "^3.5.1",
     "xcode": "^2.0.0"
   },

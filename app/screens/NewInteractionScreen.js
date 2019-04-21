@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, ButtonGroup, Text } from 'react-native-elements';
 import { ActivityIndicator, InteractionManager, StyleSheet, ScrollView, TextInput, View } from 'react-native';
 import TextField from '../components/TextField'
-import { emojiButtons, timeOfDays, socialContexts, interactionMedium } from '../config/constants'
+import { emojiButtons, timeOfDays, socialContexts, interactionMedium, socialContents } from '../config/constants'
 import { postFriend, postInteraction } from '../utils/api';
 
 const RobText = props => <Text style={styles.text} {...props} />
@@ -20,17 +20,14 @@ export default class NewInteractionScreen extends React.Component {
       selTimeOfDay: -1, // TODO set time of day based on current time?
       selContext: -1,
       selMedium: -1,
+      selContent: -1,
       nameError: null,
       emojiError: null,
       description: null
     }
     this.updateName = this.updateName.bind(this)
     this.updateEmojiIndex = this.updateEmojiIndex.bind(this)
-    this.updateTimeOfDayIndex = this.updateTimeOfDayIndex.bind(this)
-    this.updateContextIndex = this.updateContextIndex.bind(this)
-    this.updateMediumIndex = this.updateMediumIndex.bind(this)
     this.handlePostInteraction = this.handlePostInteraction.bind(this)
-    this.handleDescriptionChange = this.handleDescriptionChange.bind(this)
   }
 
   componentDidMount() {
@@ -55,30 +52,14 @@ export default class NewInteractionScreen extends React.Component {
     })
   }
 
-  updateTimeOfDayIndex(selTimeOfDay) {
-    this.setState({selTimeOfDay})
-  }
-
-  updateContextIndex(selContext) {
-    this.setState({selContext})
-  }
-
-  updateMediumIndex(selMedium) {
-    this.setState({selMedium})
-  }
-
-  handleDescriptionChange(text) {
-    this.setState({description: text});
-  }
-
-  handleInputChange(event = {}) {
-    const value = event.target && event.target.value;
+  // handleInputChange(event = {}) {
+  //   const value = event.target && event.target.value;
   
-    this.setState({description: value});
-  }
+  //   this.setState({description: value});
+  // }
 
   handlePostInteraction(e) {
-    const { name, selEmoji, selTimeOfDay, selContext, selMedium, description } = this.state
+    const { name, selEmoji, selTimeOfDay, selContext, selMedium, selContent, description } = this.state
 
     // null if no error
     const emojiError = this.validate('emoji', selEmoji);
@@ -95,9 +76,10 @@ export default class NewInteractionScreen extends React.Component {
     }
 
     let emoji = emojiButtons[selEmoji].text;
-    let timeOfDay = (selTimeOfDay == -1) ? null : timeOfDays[selTimeOfDay];
-    let context = (selContext == -1) ? null : socialContexts[selContext];
-    let medium = (selMedium == -1) ? null : interactionMedium[selMedium];
+    let timeOfDay = (selTimeOfDay == -1) ? "Not Applicable" : timeOfDays[selTimeOfDay];
+    let context = (selContext == -1) ? "Not Applicable" : socialContexts[selContext];
+    let medium = (selMedium == -1) ? "Not Applicable" : interactionMedium[selMedium];
+    let content = (selContent == -1) ? "Not Applicable" : socialContents[selContent];
 
     // Get or create friend
     postFriend(name, function(friend) {
@@ -106,8 +88,9 @@ export default class NewInteractionScreen extends React.Component {
         time: timeOfDay,
         social: context,
         medium: medium,
+        content: content,
         reaction: emoji,
-        description: description
+        description: description || ""
       }, function(response) {
         this.props.navigation.navigate('InteractionScreen');
       }.bind(this));
@@ -128,7 +111,7 @@ export default class NewInteractionScreen extends React.Component {
       return <ActivityIndicator />
     }
 
-    const { selEmoji, selTimeOfDay, selContext, selMedium } = this.state
+    const { selEmoji, selTimeOfDay, selContext, selMedium, selContent } = this.state
 
     return (
       <View style={styles.container}>
@@ -153,27 +136,33 @@ export default class NewInteractionScreen extends React.Component {
 
           <RobText>Time Of Day</RobText>
           <ButtonGroup
-            onPress={this.updateTimeOfDayIndex}
+            onPress={(selTimeOfDay) => this.setState({selTimeOfDay})}
             selectedIndex={selTimeOfDay}
             buttons={timeOfDays} />
 
           <RobText>Social Context</RobText>
           <ButtonGroup
-            onPress={this.updateContextIndex}
+            onPress={(selContext) => this.setState({selContext})}
             selectedIndex={selContext}
             buttons={socialContexts} />
 
           <RobText>Interaction Medium</RobText>
           <ButtonGroup
-            onPress={this.updateMediumIndex}
+            onPress={(selMedium) => this.setState({selMedium})}
             selectedIndex={selMedium}
             buttons={interactionMedium} />
+
+          <RobText>Social Content</RobText>
+          <ButtonGroup
+            onPress={(selContent) => this.setState({selContent})}
+            selectedIndex={selContent}
+            buttons={socialContents} />
 
           <RobText>Any Last Thoughts?</RobText>
           <TextInput
             style={{height: 100, borderColor: 'gray', borderWidth: 1}}
             name="description"
-            onChangeText={this.handleDescriptionChange}
+            onChangeText={(description) => this.setState({description})}
             value={this.state.descripton}
           />
 
