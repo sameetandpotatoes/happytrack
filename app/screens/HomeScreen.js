@@ -21,7 +21,6 @@ export default class HomeScreen extends React.Component {
       isLoading: true
     }
 
-    this.loginWithTwitter = this.loginWithTwitter.bind(this)
     this.loginWithFacebook = this.loginWithFacebook.bind(this)
   }
 
@@ -60,11 +59,6 @@ export default class HomeScreen extends React.Component {
     this.checkForAccessToken();
   }
 
-  loginWithTwitter() {
-    const {navigate} = this.props.navigation
-    navigate('AppScreen')
-  }
-
   render() {
     return (
       <ThemeProvider theme={theme}>
@@ -86,7 +80,7 @@ export default class HomeScreen extends React.Component {
                   <SocialIcon
                     title='Sign In With Twitter'
                     button
-                    onPress={this.loginWithTwitter}
+                    onPress={this.loginWithFacebook}
                     type='twitter'
                   />
                 </View>

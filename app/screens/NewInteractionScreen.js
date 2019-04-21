@@ -90,7 +90,7 @@ export default class NewInteractionScreen extends React.Component {
         medium: medium,
         content: content,
         reaction: emoji,
-        description: description
+        description: description || ""
       }, function(response) {
         this.props.navigation.navigate('InteractionScreen');
       }.bind(this));

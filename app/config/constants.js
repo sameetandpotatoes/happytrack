@@ -40,7 +40,7 @@ const socialContextsEmojis = {
   'Other': ["briefcase", 'Other']
 }
 
-const socialContents = [ 'Small Talk', 'One Personal', 'Two Personal' ];
+const socialContents = [ 'Small Talk', 'One Personal', 'Both Personal' ];
 
 const interactionMedium = [ 'In Person', 'Over The Phone', 'Online' ]
 const interactionMediumEmojis = {

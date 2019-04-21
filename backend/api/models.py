@@ -50,6 +50,7 @@ class LogEntry(models.Model):
     )
 
     CONTENT_CHOICES = (
+        ('NA', 'Not Applicable'),
         ('SM', 'Small Talk'),
         ('OP', 'One Personal'),
         ('BP', 'Both Personal'),

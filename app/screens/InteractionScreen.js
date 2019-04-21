@@ -3,6 +3,7 @@ import Emoji from 'react-native-emoji';
 import { Avatar, Button, Icon, ListItem, Overlay, Text } from 'react-native-elements';
 import { InteractionManager, Platform, SectionList, StyleSheet, RefreshControl, ScrollView, TouchableWithoutFeedback, View } from 'react-native';
 import moment from 'moment';
+import { NavigationEvents } from 'react-navigation';
 import Faker from 'faker';
 import { timeOfDay, timeOfDayEmojis, socialContexts, socialContextsEmojis, interactionMedium, interactionMediumEmojis } from '../config/constants';
 import { getInteractions } from '../utils/api';
@@ -127,7 +128,7 @@ export default class InteractionScreen extends React.Component {
 
         { other_loggable_text && other_loggable_text != '' &&
           <Text style={styles.text}>
-            Interaction Notes: {"\n\n" + other_loggable_text}
+            Interaction Notes: {"\n" + other_loggable_text}
           </Text>
         }
       </View>
@@ -143,7 +144,7 @@ export default class InteractionScreen extends React.Component {
   };
 
   render() {
-    const emojiFS = 22;
+    const emojiFS = 25;
 
     const sortedInteractions = 
         _(this.state.interactions)
@@ -155,6 +156,9 @@ export default class InteractionScreen extends React.Component {
         .value();
     return (
       <View style={styles.container}>
+        <NavigationEvents
+          onWillFocus={payload => this.fetchData()}
+        />
         <View style={{flex: 1}}>
           <ScrollView
             refreshControl={
@@ -172,22 +176,16 @@ export default class InteractionScreen extends React.Component {
               renderItem={({item, index, section}) => (
                 <TouchableWithoutFeedback onPress={ () => this.viewDetail(item)}>
                   <View style={styles.SectionListItems} onPress={this.viewDetail}>
-                    <Avatar rounded size="medium" title={this.getInitials(item.loggee).substring(0, 1)} />
-                    <View style={{flexDirection: 'column', marginLeft: 5}}>
-                      <Text style={{fontSize: 20}}>{item.loggee}</Text>
-                      <Text style={{fontSize: 16}}>{"at " + this.getTime(item.created_at)}</Text>
+                    <Avatar rounded size="medium" title={this.getInitials(item.loggee)} />
+                    <View style={{flexDirection: 'column', marginLeft: 15}}>
+                      <Text style={{fontSize: 21}}>{item.reaction} interaction</Text>
+                      <Text style={{fontSize: 16}}>{item.loggee} - <Text style={{fontWeight: 'bold'}}>{item.social_context}</Text></Text>
                     </View>
                     <View style={styles.subtitleView}>
-                      {/* <Emoji name={item.fields.reaction} style={{fontSize: emojiFS, position: 'absolute', right: 0, bottom: 10}} /> */}
-                      { item.time_of_day && item.time_of_day != '' &&
-                        <Emoji name={timeOfDayEmojis[item.time_of_day][0]} style={{fontSize: emojiFS, position: 'absolute', right: 40, bottom: 10}} />
-                      }
-                      { item.social_context && item.social_context != '' &&
-                        <Emoji name={socialContextsEmojis[item.social_context][0]} style={{fontSize: emojiFS, position: 'absolute', right: 80, bottom: 10}} />
-                      }
                       { item.interaction_medium && item.interaction_medium != '' &&
                         <Emoji name={interactionMediumEmojis[item.interaction_medium][0]} style={{fontSize: emojiFS, position: 'absolute', right: 120, bottom: 10}} />
                       }
+                      <Text style={{fontSize: 18}}>{ this.getTime(item.created_at) }</Text>
                     </View>
                   </View>
                 </TouchableWithoutFeedback>
@@ -262,6 +260,7 @@ const styles = StyleSheet.create({
     backgroundColor : '#F5F5F5',
   },
   subtitleView: {
-    marginLeft: 'auto'
+    marginLeft: 'auto',
+    justifyContent: 'center'
   }
 });
