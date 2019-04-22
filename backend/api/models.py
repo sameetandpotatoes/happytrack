@@ -61,11 +61,12 @@ class LogEntry(models.Model):
     # Who is logged about
     loggee = models.ForeignKey('Friend', models.SET_NULL, related_name='loggee_person', null=True)
     logger = models.ForeignKey('User', models.CASCADE, related_name='logger_person')
+
     time_of_day = models.CharField(max_length=2, choices=TIME_CHOICES)
     social_context = models.CharField(max_length=2, choices=SOCIAL_CHOICES)
     interaction_medium = models.CharField(max_length=2, choices=MEDIUM_CHOICES)
     content_class = models.CharField(max_length=2, choices=CONTENT_CHOICES)
-    other_loggable_text = models.CharField(max_length=512)
+    other_loggable_text = models.CharField(max_length=512, default="")
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -97,8 +98,7 @@ class Recommendation(models.Model):
 class RecommendationFeedback(models.Model):
     FEEDBACK_CHOICES = (
         ('WO', 'Worked'),
-        ('DW', 'Doesn\'t Work'),
-        ('NE', 'Neutral'),
+        ('DW', 'Doesn\'t Work')
     )
 
     id = models.AutoField(primary_key=True)

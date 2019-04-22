@@ -42,7 +42,7 @@ def validate(instance, schema, *args, **kwargs):
 SESSION_TOKEN_KEY = 'auth-token'
 SESSION_USER_KEY = 'user-id'
 
-ML_SPLIT_THRESHOLD = 20
+ML_SPLIT_THRESHOLD = 10
 
 @csrf_exempt
 @restrict_function(allowed=['GET'])
@@ -82,7 +82,9 @@ def login(request):
         email = 'lpitt2@illinois.edu'
     else:
         graph = facebook.GraphAPI(token)
-        args = {'fields' : 'id,name,email', }
+        args = dict(
+            fields='id,name,email',
+            )
         profile = graph.get_object('me', **args)
         name = profile['name']
         email = profile['email']
@@ -364,12 +366,11 @@ def recommendation(request):
         if 'to' in json_body:
             base = base.filter(created_at__lt=json_body['to'])
         logs = list(base)
-        
         cursor = connection.cursor()
         cursor.execute(
             """
             SELECT COUNT(*) FROM api_recommendationfeedback WHERE
-            id IN (SELECT id FROM api_recommendation WHERE recommend_person_id = %s)
+            id IN (SELECT id FROM api_recommendation WHERE recommend_person_id = %s) AND feedback_typ = 'WO'
             """,
             [user_id]
         )
@@ -409,42 +410,17 @@ def recommendation(request):
         feedback.save()
         return HttpResponse(status=200)
 
-@csrf_exempt
-@restrict_function(allowed=['GET'])
-def email(request):
-    """
-    Get:
-    Debug Endpoint: Sends an email
 
-    {
-        'from': optional(date),
-        'to': optional(date),
-    }
-    """
-    try:
-        json_body = json.loads(request.body or '{}')
-    except json.decoder.JSONDecodeError as e:
-        return HttpResponseBadRequest(str(e))
-
-    ret = validate(json_body, email_get_schema)
-    if ret is not None:
-        return ret
-
-    # logger_id = request.session[SESSION_USER_KEY]
-
-    # TODO: REMOVE THIS
-    logger_id = 73
+def perform_email_logic(logger_id, from_date=None, to_date=None):
     base = models.LogEntry.objects.filter(logger_id=logger_id)
-    if 'from' in json_body or 'to' in json_body:
-        if 'from' in json_body:
-            base = base.filter(created_at__ge=json_body['from'])
-        if 'to' in json_body:
-            base = base.filter(created_at__lt=json_body['to'])
+    if from_date or to_date:
+        if from_date:
+            base = base.filter(created_at__ge=from_date)
+        if to_date:
+            base = base.filter(created_at__lt=to_date)
     else:
-        today = datetime.date.today()
-        day_idx = (today.weekday() + 1) % 7 # MON = 0, SUN = 6 -> SUN = 0 .. SAT = 6
-        prev_sun = today - datetime.timedelta(7+day_idx)
-        sun = prev_sun + datetime.timedelta(7)
+        sun = utils.last_sunday()
+        prev_sun = sun - datetime.timedelta(7)
         base = base.filter(created_at__lt=sun)
         base = base.filter(created_at__gte=prev_sun)
         from_datetime = prev_sun.strftime("%m/%d/%y")
@@ -469,29 +445,98 @@ def email(request):
         word_embed = word_png
     )
 
-    """
-    INSTANCE_START += 1
-    inst = INSTANCE_START
-    INSTANCE_MAPPING[inst] = dict()
-
-    email_subject = 'Happytrack summary for {} - {}'.format(from_datetime, to_datetime)
-    email_html = MIMEMultipart(_subtype='related')
-    email_html_str = template.render(context)
-    body = MIMEText(email_html_str, _subtype='html')
-    email_html.attach(body)
-
-    for f, data in [(freq_file, freq_raw)]:
-        msg_img = MIMEImage(data)
-        msg_img.add_header('Content-ID', '<{}>'.format(f))
-        msg_img.add_header("Content-Disposition", "inline", filename=f) # David Hess recommended this edit
-        email_html.attach(msg_img)
-
-    msg = EmailMessage(email_subject, '',
-                             'noreply@happytrack.org', ['bvenkat2@illinois.edu'])
-    msg.attach(email_html)
-    msg.send()
-    """
-
     rendered_html = template.render(context)
     return HttpResponse(rendered_html, status=200)
+
+
+@csrf_exempt
+@restrict_function(allowed=['GET'])
+def email(request):
+    """
+    Get:
+    Displays what an email would look like
+    """
+
+    try:
+        json_body = json.loads(request.body or '{}')
+    except json.decoder.JSONDecodeError as e:
+        return HttpResponseBadRequest(str(e))
+
+    ret = validate(json_body, email_get_schema)
+    if ret is not None:
+        return ret
+
+    logger_id = request.session[SESSION_USER_KEY]
+
+    return perform_email_logic(logger_id)
+
+@csrf_exempt
+@restrict_function(allowed=['GET'])
+def email_debug(request):
+    """
+    Get:
+    Debug Endpoint: display an email for a particular `logger_id`
+    """
+    try:
+        logger_id = int(self.request.GET['logger_id'])
+    except KeyError as e:
+        return HttpResponseBadRequest(str(e))
+
+    return perform_email_logic(logger_id)
+
+@csrf_exempt
+@restrict_function(allowed=['GET'])
+def viz(request):
+    """
+    Get:
+    Requests a visualization with a query string
+    """
+
+    json_body = request.GET
+    joined = {k: ''.join(v) for k, v in json_body.items()}
+    ret = validate(joined, utils.viz_get_schema)
+    if ret is not None:
+        return ret
+
+    logger_id = int(request.session[SESSION_USER_KEY])
+
+    viz_data = charts.perform_viz_request(logger_id, joined)
+    return HttpResponse(viz_data, status=200)
+
+@csrf_exempt
+@restrict_function(allowed=['GET'])
+def viz_viewer(request):
+    """
+    Get:
+    Requests a visualization with a query string
+    """
+
+    ctx = dict()
+    json_body = request.GET
+    if settings.DEBUG:
+        ctx['logger_id'] = json_body.get('logger_id')
+    template = loader.get_template('viz.html')
+
+    rendered_html = template.render(ctx)
+    return HttpResponse(rendered_html, status=200)
+
+
+
+@csrf_exempt
+@restrict_function(allowed=['GET'])
+def viz_debug(request):
+    """
+    Get:
+    Requests a visualization with a query string
+    """
+
+    json_body = request.GET
+    joined = {k: ''.join(v) for k, v in json_body.items()}
+    ret = validate(joined, utils.viz_get_schema)
+    if ret is not None:
+        return ret
+    logger_id = int(joined['logger_id'])
+
+    viz_data = charts.perform_viz_request(logger_id, joined)
+    return HttpResponse(viz_data, status=200)
 

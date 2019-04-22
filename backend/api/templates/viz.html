@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Custom Vizualizer</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+    <style>
+     body {
+         font-family: "DejaVu Sans",sans-serif;
+     }
+
+     p {
+         font-family: "Cambria", sans-serif;
+     }
+
+     .container {
+         width: 100%;
+         min-height: 70vh;
+         position: relative;
+     }
+
+     .center {
+         width: 50%;
+         margin: auto;
+     }
+
+     @media only screen and (max-width: 600px) {
+         .center {
+             width: 100%;
+         }
+     }
+
+     .title {
+         padding: 1px 5px;
+     }
+
+     img {
+         width: 100%;
+     }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="center">
+    <div class="title">
+    <h1>Custom Vizualizer</h1>
+    </div>
+
+    <div class="">
+        <img id="custom-viz" src="">
+    </div>
+
+    <div id="aggregation-div">
+        <h2>Aggregation Type</h2>
+        <label><input type="radio" name="agg" value="sum" checked /> Sum</label>
+        <!-- <label><input type="radio" name="agg" value="week_avg" />Week over week average</label> -->
+        <!-- <label><input type="radio" name="agg" value="week_time" />Week over week time series</label> -->
+    </div>
+
+
+    <div id="category-div">
+        <h2>Category</h2>
+        <label><input type="radio" name="category" value="react" checked /> Reaction</label>
+        <label><input type="radio" name="category" value="people" />People</label>
+        <label><input type="radio" name="category" value="time" />Time of Day</label>
+        <label><input type="radio" name="category" value="context" />Social Context</label>
+        <label><input type="radio" name="category" value="medium" />Interaction Medium</label>
+        <label><input type="radio" name="category" value="content_class" />Content Class</label>
+        <label><input type="radio" name="category" value="word" />Word Cloud</label>
+    </div>
+
+    <!-- 
+    <div id="group-div">
+        <h2>Group</h2>
+        <label><input type="radio" name="group" value="na" checked /> None</label>
+        <label><input type="radio" name="group" value="react" /> Reaction</label>
+        <label><input type="radio" name="group" value="people" />People</label>
+        <label><input type="radio" name="group" value="time" />Time of Day</label>
+        <label><input type="radio" name="group" value="context" />Social Context</label>
+        <label><input type="radio" name="group" value="medium" />Interaction Medium</label>
+        <label><input type="radio" name="group" value="content_class" />Content Class</label>
+    </div>
+    -->
+
+    <div>
+        <h2>(Optional) From Date</h2>
+        <input name='from-date' type='text' value='' class='date-picker' id="from-date" />
+    </div>
+
+    <div>
+        <h2>(Optional) To Date</h2>
+    <input name='to-date' type='text' value='' class='date-picker' id="to-date" />
+    </div>
+
+    <div>
+    <input type="button" value="Reload" id="submit">
+    </div>
+
+
+    <script type="text/javascript">
+     "use strict";
+
+     {% if logger_id %}
+     const logger_id = {{ logger_id }};
+     const get_url = "/api/viz_debug/";
+     {% else %}
+     const logger_id = null;
+     const get_url = "/api/viz/";
+     {% endif %}
+
+     const ready = function(fn) {
+         if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading"){
+             fn();
+         } else {
+             document.addEventListener('DOMContentLoaded', fn);
+         }
+     }
+
+     const get_request = function(url, onload, onerror) {
+         var request = new XMLHttpRequest();
+         request.open('GET', url, true);
+
+         request.onload = function() {
+             if (request.status >= 200 && request.status < 400) {
+                 // Success!
+                 var resp = request.responseText;
+                 onload(resp);
+             } else {
+                 onerror(request);
+                 // We reached our target server, but it returned an error
+             }
+         };
+
+         request.onerror = function() {
+             console.log("Connection error");
+         };
+
+         request.send();
+     }
+
+     const serialize = function(obj) {
+         var str = [];
+         for (var p in obj)
+             if (obj.hasOwnProperty(p)) {
+                 str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+             }
+         return str.join("&");
+     };
+     ready(function(){
+         const format = 'YYYY-MM-DD';
+
+         new Pikaday({
+             format: format,
+             field: document.getElementById('from-date')
+         });
+
+         new Pikaday({
+             format: format,
+             field: document.getElementById('to-date')
+         });
+
+
+         const onclick_handler = function(e) {
+             if (e !== null) e.preventDefault();
+
+             const agg = document.querySelector('input[name="agg"]:checked').value;
+             const category = document.querySelector('input[name="category"]:checked').value;
+             //const group = document.querySelector('input[name="group"]:checked').value;
+
+             const ret = {
+                 field: category,
+                 aggregation: agg,
+             }
+
+             //if (group !== 'na') ret['group'] = group;
+             if (logger_id !== null) ret['logger_id'] = logger_id;
+
+             const good_req = function(e) {
+                 const img = document.getElementById('custom-viz');
+                 img.src = "data:image/png;base64," + e;
+             };
+
+             const bad_req = function(e) {
+                 console.log(e);
+             };
+
+             const suffix = serialize(ret);
+             get_request(get_url + '?' + suffix, good_req, bad_req);
+         };
+
+         document.getElementById('submit').onclick = onclick_handler;
+
+         onclick_handler(null);
+     });
+
+    </script>
+</div>
+</body>
+</html>

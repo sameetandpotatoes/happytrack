@@ -1,5 +1,18 @@
 from django.http import HttpResponse
 from . import models
+import datetime
+from django.utils.timezone import get_current_timezone
+
+def round_to_sun(dt):
+    day_idx = (dt.weekday() + 1) % 7 # MON = 0, SUN = 6 -> SUN = 0 .. SAT = 6
+    sun = dt - datetime.timedelta(day_idx)
+    return sun
+
+def last_sunday():
+    today_date = datetime.date.today().timetuple()[:6]
+    today = get_current_timezone().localize(datetime.datetime(*today_date))
+
+    return round_to_sun(today)
 
 class restrict_function(object):
     def __init__(self, allowed=None):
@@ -137,6 +150,27 @@ friend_post_schema = {
 email_get_schema = {
     "type": "object",
     "properties": {
-
     }
+}
+
+viz_get_schema = {
+    "type": "object",
+    "properties": {
+        "field": {
+            'type': 'string',
+        },
+        "type": {
+            'anyOf': [
+                {'type': 'string', 'pattern': 'wordcloud'},
+                {'type': 'string', 'pattern': 'bar'},
+                ]
+        },
+        "aggregation": {
+            'type': 'string',
+        },
+        "group": {
+            'type': 'string',
+        }
+    },
+    "required": ["field", "aggregation"],
 }
