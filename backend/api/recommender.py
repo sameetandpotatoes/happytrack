@@ -2,13 +2,14 @@ import copy
 
 from .models import User, Friend, Recommendation, LogEntry
 from collections import defaultdict
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 import datetime
 from . import utils
 from . import models
 import logging
-from pprint import pprint
 import numpy as np
+from django.db.models import Q
 
 logger = logging.getLogger(__name__)
 
@@ -109,6 +110,34 @@ OPEN_UP_REC_DESC = (
     "in the other person as well as opening up. "
     "Opening up makes it easier for others to "
     "relate to you, but make sure you're authentic."
+)
+
+
+ML_POS_REC_DESC = (
+    "You should have more positive interactions "
+    "with this person. Your past successes have "
+    "shown that this person is someone who you may "
+    "get along with. Factors that we looked at include {}"
+)
+
+
+ML_NEG_REC_DESC = (
+    "Your interaction experience with this person is "
+    "mostly negative, and we really don't think this will "
+    "improve. We recommend interacting with this person on "
+    "a need to know and surface level basis to avoid discomfort. "
+    "The factors that we looked into while making this decision "
+    "include {}"
+)
+
+
+ML_AVOID_REC_DESC = (
+    "This person looks a lot like people whom you avoid in "
+    "in your past. Our recommendation is to minimize interactions "
+    "interactions entirely with this person. Get on a need "
+    "to know basis with this person and stay there. "
+    "Factors that we looked into while making this decision "
+    "include {}"
 )
 
 def _create_and_save_recommendation(rec, friend_id=None):
@@ -379,7 +408,7 @@ def logs_by_week(logs):
     return group_list_by_sel(logs, selector)
 
 def recs_by_week(user_id):
-    recs = Recommendation.objects.filter(recommend_person_id=user_id)
+    recs = Recommendation.objects.filter(recommend_person_id=user_id).filter(~Q(rec_typ = 'GE'))
     selector = lambda x: utils.round_to_sun(x.created_at).strftime(standard_date_format)
     return group_list_by_sel(recs, selector)
 
@@ -401,19 +430,32 @@ def _aggregate_and_normalize(diction, keys):
     return ret
 
 def rolling_disposition_by_friend(logs_week, recs_week):
-    # Each person for a friend is a bunch of arrs
-    # week, Reaction, social, and, type
-
-    # [friend_id, date, happy_perc, neutral_perc, angry_perc, sad_perc, academic_perc, social_perc, work_perc, ip_perc, online_perc, phone_perc, feedback_type]
     reacc_keys = ['HA', 'NE', 'AN', "SA",]
     social_keys = ['AC', 'SO', 'WO',]
     medium_keys = ['IP', 'ON', 'PH']
+
+    english_keys = [
+        'Happy Interaction Percentage',
+        'Negative Interaction Percentage',
+        'Angry Interaction Percentage',
+        'Sad Interaction Percentage',
+        'Academic Interaction Percentage',
+        'Social Interaction Percentage',
+        'Work Interaction Percentage',
+        'In-Person Interaction Percentage',
+        'Online Interaction Percentage',
+        'Phone Interaction Percentage',
+    ]
+
     rec_arr = [x[0] for x in models.Recommendation.RECOMMENDATION_CHOICES]
     feed_arr = [x[0] for x in models.RecommendationFeedback.FEEDBACK_CHOICES]
     Xs = []
+    Xs_neg = []
     ys = []
+    ys_neg = []
     ordered_keys = list(sorted(logs_week.keys()))
-    for i, key in enumerate(ordered_keys):
+    for i in range(len(ordered_keys) - 1):
+        key = ordered_keys[i]
         rec = recs_week.get(key)
         if not rec:
             continue
@@ -437,25 +479,59 @@ def rolling_disposition_by_friend(logs_week, recs_week):
                 continue
 
             row = []
-            # Row and then date
-            row.append(person.id)
-            row.append(i)
             row.extend(_aggregate_and_normalize(count, reacc_keys))
             row.extend(_aggregate_and_normalize(count, social_keys))
             row.extend(_aggregate_and_normalize(count, medium_keys))
-            row.append(rec_arr.index(rec_obj.rec_typ))
-            Xs.append(row)
-            ys.append(feed_arr.index(feeds[0].feedback_typ))
+            if feed_typ.feedback_typ == 'WO':
+                Xs.append(row)
+                ys.append(rec_arr.index(rec_obj.rec_typ))
+            else:
+                Xs_neg.append(row)
+                ys_neg.append(rec_arr.index(rec_obj.rec_typ))
 
-        return Xs, ys
+        last_week = []
+        all_logs = []
+        for v in logs_week.values():
+            all_logs.extend(v)
+        counts = _count_all(all_logs)
+
+        for person, count in counts.items():
+            row = []
+            # Row and then date
+            row.extend(_aggregate_and_normalize(count, reacc_keys))
+            row.extend(_aggregate_and_normalize(count, social_keys))
+            row.extend(_aggregate_and_normalize(count, medium_keys))
+            last_week.append((person.id, row))
+
+        return Xs, ys, Xs_neg, ys_neg, last_week, english_keys
 
 
 def generate_ml_recommendations(logs_week, recs_week):
 
     # Create a cumulative rolling sum of the data by person
-    person_classifier = RandomForestClassifier(n_estimators=3)
-    Xs, ys = rolling_disposition_by_friend(logs_week, recs_week)
-    person_classifier.fit(Xs, ys)
+    pos_classifier = DecisionTreeClassifier(criterion='entropy', splitter='random', random_state=104)
+    Xs, ys, _, _, lw, ek = rolling_disposition_by_friend(logs_week, recs_week)
+    pos_classifier.fit(Xs, ys)
+
+    feats = [x[-1] for x in lw]
+
+    pos_preds = pos_classifier.predict(feats)
+    paths = pos_classifier.decision_path(feats)
+
+    ret = []
+    for pos_pred, path, (person_id, _) in zip(pos_preds, paths, lw):
+        idxes = path.nonzero()[-1]
+        english_labels = [ek[i] for i in idxes][:3]
+        if len(english_labels) == 1:
+            english_label = english_label[0]
+        elif len(english_labels) == 2:
+            english_label = "{} and {}".format(*english_labels)
+        else:
+            english_label = "{}, {}, and {}".format(*english_labels)
+        rec_enum = Recommendation.RECOMMENDATION_CHOICES[pos_pred][0]
+        ret.append((rec_enum, english_label, person_id))
+
+    return ret
 
 
 def recommendations_from_ml(logs, user_id, from_dt=None, to_dt=None):
@@ -464,15 +540,52 @@ def recommendations_from_ml(logs, user_id, from_dt=None, to_dt=None):
     recs_week = recs_by_week(user_id)
 
     has_recs = check_recs_now(recs_week)
+    rec_list = []
     if has_recs:
-        # TODO: Return recs in format
-        return
+        for rec in has_recs:
+            rec_dict = dict(
+                recommend_person=user_id,
+                rec_type=rec.rec_typ,
+                recommendation=rec.recommendation,
+                rec_description=rec.rec_description,
+                )
+            rec_list.append(rec_dict)
+        return rec_list
 
     ml_recs = generate_ml_recommendations(logs_by, recs_week)
-    # TODO: Return ml recommendations in format
-    return
+    for rec_enum, english_label, person_id in ml_recs:
+        person = models.Friend.objects.filter(id=person_id).first()
+
+        # We don't give generic recommendation
+        if rec_enum == 'PO':
+            positive_ml_rec = dict(
+                recommend_person=user_id,
+                rec_type=rec_enum,
+                recommendation="Try acting more positive with {}".format(person.name),
+                rec_description=ML_POS_REC_DESC.format(english_label),
+                )
+            _create_and_save_recommendation(positive_ml_rec, friend_id=person_id)
+            rec_list.append(positive_ml_rec)
+
+        elif rec_enum == 'NE':
+            neg_ml_rec = dict(
+                recommend_person=user_id,
+                rec_type=rec_enum,
+                recommendation="Try a surface-level relationship with {}".format(person.name),
+                rec_description=ML_NEG_REC_DESC.format(english_label),
+                )
+            _create_and_save_recommendation(neg_ml_rec, friend_id=person_id)
+            rec_list.append(neg_ml_rec)
+        else:
+            avoid_ml_rec = dict(
+                recommend_person=user_id,
+                rec_type=rec_enum,
+                recommendation="Try avoiding {}".format(person.name),
+                rec_description=ML_AVOID_REC_DESC.format(english_label),
+                )
+            _create_and_save_recommendation(avoid_ml_rec, friend_id=person_id)
+            rec_list.append(avoid_ml_rec)
+
+    return rec_list
 
 
-    # Data format is going to be by week
-    # [friend_id, happy_perc, neutral_perc, angry_perc, sad_perc, academic_perc, social_perc, work_perc, ip_perc, online_perc, phone_perc, feedback_type]
-    # y is going to be one-hot good recommendation dose

@@ -26,10 +26,22 @@ def gen_random_logs_starting(starting_dt, person, friends, num_logs):
     logs = []
     day_choices = list(range(7))
     for _ in range(num_logs):
-        friend_obj = random.choice(friends)
+        friend_idx = random.randint(0, len(friends)-1)
+        friend_obj = friends[friend_idx]
         bout_a_week = starting_dt + datetime.timedelta(days=random.choice(day_choices))
         le = models.LogEntry()
-        le.reaction = chooser_factory(models.LogEntry.REACTION_CHOICES)
+        flip = random.random() < .1
+        if flip:
+            check = friend_idx > len(friends) // 2
+        else:
+            check = friend_idx <= len(friends) // 2
+
+        # Add some randomness
+        if check:
+            le.reaction = random.choice(['HA', 'NE'])
+        else:
+            le.reaction = random.choice(['AN', 'SA'])
+
         le.other_loggable_text = random.choice(["", fake.paragraph()])
         le.logger = person
         le.loggee = friend_obj

@@ -42,7 +42,7 @@ def validate(instance, schema, *args, **kwargs):
 SESSION_TOKEN_KEY = 'auth-token'
 SESSION_USER_KEY = 'user-id'
 
-ML_SPLIT_THRESHOLD = 20
+ML_SPLIT_THRESHOLD = 10
 
 @csrf_exempt
 @restrict_function(allowed=['POST'])
@@ -361,12 +361,11 @@ def recommendation(request):
         if 'to' in json_body:
             base = base.filter(created_at__lt=json_body['to'])
         logs = list(base)
-        
         cursor = connection.cursor()
         cursor.execute(
             """
             SELECT COUNT(*) FROM api_recommendationfeedback WHERE
-            id IN (SELECT id FROM api_recommendation WHERE recommend_person_id = %s)
+            id IN (SELECT id FROM api_recommendation WHERE recommend_person_id = %s) AND feeedback_typ = 'WO'
             """,
             [user_id]
         )
