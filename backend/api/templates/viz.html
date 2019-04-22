@@ -83,7 +83,6 @@
         <label><input type="radio" name="group" value="content_class" />Content Class</label>
     </div>
 
-
     <div>
         <h2>(Optional) From Date</h2>
         <input name='from-date' type='text' value='' class='date-picker' id="from-date" />
@@ -101,6 +100,14 @@
 
     <script type="text/javascript">
      "use strict";
+
+     {% if logger_id %}
+     const logger_id = {{ logger_id }};
+     const get_url = "/api/viz_debug/";
+     {% else %}
+     const logger_id = null;
+     const get_url = "/api/viz/";
+     {% endif %}
 
      const ready = function(fn) {
          if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading"){
@@ -132,6 +139,14 @@
          request.send();
      }
 
+     const serialize = function(obj) {
+         var str = [];
+         for (var p in obj)
+             if (obj.hasOwnProperty(p)) {
+                 str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+             }
+         return str.join("&");
+     };
      ready(function(){
          const format = 'YYYY-MM-DD';
 
@@ -147,13 +162,38 @@
 
 
          const onclick_handler = function(e) {
-             e.preventDefault();
-             console.log("Hello");
+             if (e !== null) e.preventDefault();
+
+             const agg = document.querySelector('input[name="agg"]:checked').value;
+             const category = document.querySelector('input[name="category"]:checked').value;
+             const group = document.querySelector('input[name="group"]:checked').value;
+
+             const ret = {
+                 field: category,
+                 aggregation: agg,
+             }
+
+             if (group !== 'na') ret['group'] = group;
+             if (logger_id !== null) ret['logger_id'] = logger_id;
+
+             const good_req = function(e) {
+                 const img = document.getElementById('custom-viz');
+                 img.src = "data:image/png;base64," + e;
+             };
+
+             const bad_req = function(e) {
+                 console.log(e);
+             };
+
+             const suffix = serialize(ret);
+             get_request(get_url + '?' + suffix, good_req, bad_req);
          };
 
          document.getElementById('submit').onclick = onclick_handler;
 
+         onclick_handler(null);
      });
+
     </script>
 </div>
 </body>

@@ -12,6 +12,7 @@ urlpatterns = [
     path('recommendation/', views.recommendation),
     path('email/', views.email),
     path('viz/', views.viz),
+    path('viz_viewer/', views.viz_viewer),
 ]
 
 if settings.DEBUG:

@@ -484,52 +484,6 @@ def email_debug(request):
 
     return perform_email_logic(logger_id)
 
-def apply_filters(filt):
-    if not filt:
-        return {}
-
-    ret = dict()
-    # Filters are in the form key1,v1,v2...|key2...
-    for filter_s in filt.split('|'):
-        key, *rest = filter_s.split(',')
-        ret[key + '__in'] = rest
-
-    return ret
-
-def perform_viz_request(person_id, params):
-    filters = dict(logger_id=person_id)
-
-    from_date = params.get('from')
-    if from_date:
-        filters['created_at_gte'] = from_date
-
-    to_date = params.get('to')
-    if to_date:
-        filters['created_at_lte'] = to_date
-
-    filt_dj = apply_filters(params.get('filters', ''))
-    final_filts = {**filters, **filt_dj}
-
-    # Now we have all the filters, grab all the logs
-    # no need to be too efficient
-    logs = models.LogEntry.objects.filter(**final_filts).all()
-    print(logs)
-    print(params)
-    viz_type = params['type']
-
-    if viz_type == 'wordcloud':
-        viz_data = charts.interaction_word_data_string(logs, 'Word cloud')
-    elif viz_type == 'bar':
-        viz_data = ""
-
-    template = loader.get_template('viz.html')
-    ctx = dict(
-        #viz_data=viz_data
-        )
-
-    rendered_html = template.render(ctx)
-    return HttpResponse(rendered_html, status=200)
-
 @csrf_exempt
 @restrict_function(allowed=['GET'])
 def viz(request):
@@ -546,7 +500,26 @@ def viz(request):
 
     logger_id = int(request.session[SESSION_USER_KEY])
 
-    return perform_viz_request(logger_id, joined)
+    viz_data = charts.perform_viz_request(logger_id, joined)
+    return HttpResponse(viz_data, status=200)
+
+@csrf_exempt
+@restrict_function(allowed=['GET'])
+def viz_viewer(request):
+    """
+    Get:
+    Requests a visualization with a query string
+    """
+
+    ctx = dict()
+    json_body = request.GET
+    if settings.DEBUG:
+        ctx['logger_id'] = json_body.get('logger_id')
+    template = loader.get_template('viz.html')
+
+    rendered_html = template.render(ctx)
+    return HttpResponse(rendered_html, status=200)
+
 
 
 @csrf_exempt
@@ -564,5 +537,6 @@ def viz_debug(request):
         return ret
     logger_id = int(joined['logger_id'])
 
-    return perform_viz_request(logger_id, joined)
+    viz_data = charts.perform_viz_request(logger_id, joined)
+    return HttpResponse(viz_data, status=200)
 
