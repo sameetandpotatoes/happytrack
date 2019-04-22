@@ -61,6 +61,7 @@ class LogEntry(models.Model):
     # Who is logged about
     loggee = models.ForeignKey('Friend', models.SET_NULL, related_name='loggee_person', null=True)
     logger = models.ForeignKey('User', models.CASCADE, related_name='logger_person')
+
     time_of_day = models.CharField(max_length=2, choices=TIME_CHOICES)
     social_context = models.CharField(max_length=2, choices=SOCIAL_CHOICES)
     interaction_medium = models.CharField(max_length=2, choices=MEDIUM_CHOICES)

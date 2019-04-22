@@ -1,13 +1,14 @@
 try:
     import matplotlib
     matplotlib.use("TkAgg")
+    import matplotlib.pyplot as plt
 except ImportError as e:
+    import matplotlib
+    import matplotlib.pyplot as plt
     # macOS needs TkAgg I think, but Linux doesn't
     # we can also just do apt-get install python-tk then it should work
     pass
 
-import matplotlib.pyplot as plt
-import matplotlib
 from io import BytesIO
 import base64
 from . import utils

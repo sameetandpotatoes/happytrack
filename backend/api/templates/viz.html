@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Happytrack Report {{ week_start }} - {{ week_end }} </title>
+    <title>Custom Vizualizer</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
     <style>
      body {
          font-family: "DejaVu Sans",sans-serif;
@@ -19,55 +22,18 @@
      }
 
      .center {
-         /* position: absolute;
-         margin: 0;
-         top: 0;
-         left: 50%;
-         transform: translate(-50%, 0%) */
-        width: 50%;
-        margin: auto;
+         width: 50%;
+         margin: auto;
      }
 
      @media only screen and (max-width: 600px) {
-        .center {
-            width: 100%;
-        }
-    }
+         .center {
+             width: 100%;
+         }
+     }
 
      .title {
          padding: 1px 5px;
-     }
-
-     #count-container {
-         display: flex;
-     }
-
-     #count-container p {
-         flex: 0 0 30%;
-     }
-
-     #time-container {
-         display: flex;
-     }
-
-     #time-container p {
-         flex: 0 0 30%;
-     }
-
-     #social-context-container {
-         display: flex;
-     }
-
-     #context-img {
-         flex: 0 0 70%;
-     }
-
-     #person-container {
-         display: flex;
-     }
-
-     #person-img {
-         flex: 0 0 70%
      }
 
      img {
@@ -80,67 +46,115 @@
 <div class="container">
     <div class="center">
     <div class="title">
-    <h1>Happytrack Report {{ week_start }} - {{ week_end }} </h1>
+    <h1>Custom Vizualizer</h1>
     </div>
 
-    <div class="sub-title">
-    <h2>Social Summaries</h2>
-    <p>These are meant to give you a better picture of your interactions throughout the week.</p>
+    <div class="">
+        <img id="custom-viz" src="">
     </div>
 
-    <!-- Interactions by total social count -->
-    <div id="count-container">
-        <p>
-            Vitae rerum a et quia incidunt voluptatem aut voluptate. Et non officia occaecati qui aut quod fuga consectetur. Perspiciatis impedit blanditiis nesciunt omnis. Quo exercitationem culpa omnis asperiores itaque occaecati. At natus tempora incidunt nihil.…
-        </p>
-
-        <div id="count-img">
-        <img src="data:image/png;base64,{{ frequency_embed | safe }}"\>
-        </div>
+    <div id="aggregation-div">
+        <h2>Aggregation Type</h2>
+        <label><input type="radio" name="agg" value="sum" checked /> Sum</label>
+        <label><input type="radio" name="agg" value="week_avg" />Week over week average</label>
+        <label><input type="radio" name="agg" value="week_time" />Week over week time series</label>
     </div>
 
-    <!-- Interactions by social context with pie chart -->
-    <div id="social-context-container">
 
-        <div id="context-img">
-        <img src="data:image/png;base64,{{ social_embed | safe }}"\>
-        </div>
-
-        <p>
-            Vitae rerum a et quia incidunt voluptatem aut voluptate. Et non officia occaecati qui aut quod fuga consectetur. Perspiciatis impedit blanditiis nesciunt omnis. Quo exercitationem culpa omnis asperiores itaque occaecati. At natus tempora incidunt nihil.…
-        </p>
-
+    <div id="category-div">
+        <h2>Category</h2>
+        <label><input type="radio" name="category" value="react" checked /> Reaction</label>
+        <label><input type="radio" name="category" value="people" />People</label>
+        <label><input type="radio" name="category" value="time" />Time of Day</label>
+        <label><input type="radio" name="category" value="context" />Social Context</label>
+        <label><input type="radio" name="category" value="medium" />Interaction Medium</label>
+        <label><input type="radio" name="category" value="content_class" />Content Class</label>
+        <label><input type="radio" name="category" value="word" />Word Cloud</label>
     </div>
 
-    <!-- Interactions by time of day with pie chart -->
-    <div id="time-container">
-        <p>
-            Vitae rerum a et quia incidunt voluptatem aut voluptate. Et non officia occaecati qui aut quod fuga consectetur. Perspiciatis impedit blanditiis nesciunt omnis. Quo exercitationem culpa omnis asperiores itaque occaecati. At natus tempora incidunt nihil.…
-        </p>
-        <div id="time-img">
-        <img src="data:image/png;base64,{{ time_embed | safe}}" />
-        </div>
+    <div id="group-div">
+        <h2>Group</h2>
+        <label><input type="radio" name="group" value="na" checked /> None</label>
+        <label><input type="radio" name="group" value="react" /> Reaction</label>
+        <label><input type="radio" name="group" value="people" />People</label>
+        <label><input type="radio" name="group" value="time" />Time of Day</label>
+        <label><input type="radio" name="group" value="context" />Social Context</label>
+        <label><input type="radio" name="group" value="medium" />Interaction Medium</label>
+        <label><input type="radio" name="group" value="content_class" />Content Class</label>
     </div>
 
-    <!-- Interactions by each person bar chart -->
-    <div id="person-container">
-        <div id="person-img">
-            <img src="data:image/png;base64,{{ person_embed | safe}}" />
-        </div>
-        <p>
-            Vitae rerum a et quia incidunt voluptatem aut voluptate. Et non officia occaecati qui aut quod fuga consectetur. Perspiciatis impedit blanditiis nesciunt omnis. Quo exercitationem culpa omnis asperiores itaque occaecati. At natus tempora incidunt nihil.…
-        </p>
+
+    <div>
+        <h2>(Optional) From Date</h2>
+        <input name='from-date' type='text' value='' class='date-picker' id="from-date" />
     </div>
 
-    <h2>Word Cloud</h2>
-
-    <p>This word cloud is hopefully to pique your interests</p>
-
-    <!-- Interactions by Word cloud by each week/time -->
-    <div id="word-cloud-container">
-        <img src="data:image/png;base64,{{ word_embed | safe}}" />
+    <div>
+        <h2>(Optional) To Date</h2>
+    <input name='to-date' type='text' value='' class='date-picker' id="to-date" />
     </div>
+
+    <div>
+    <input type="button" value="Reload" id="submit">
     </div>
+
+
+    <script type="text/javascript">
+     "use strict";
+
+     const ready = function(fn) {
+         if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading"){
+             fn();
+         } else {
+             document.addEventListener('DOMContentLoaded', fn);
+         }
+     }
+
+     const get_request = function(url, onload, onerror) {
+         var request = new XMLHttpRequest();
+         request.open('GET', url, true);
+
+         request.onload = function() {
+             if (request.status >= 200 && request.status < 400) {
+                 // Success!
+                 var resp = request.responseText;
+                 onload(resp);
+             } else {
+                 onerror(request);
+                 // We reached our target server, but it returned an error
+             }
+         };
+
+         request.onerror = function() {
+             console.log("Connection error");
+         };
+
+         request.send();
+     }
+
+     ready(function(){
+         const format = 'YYYY-MM-DD';
+
+         new Pikaday({
+             format: format,
+             field: document.getElementById('from-date')
+         });
+
+         new Pikaday({
+             format: format,
+             field: document.getElementById('to-date')
+         });
+
+
+         const onclick_handler = function(e) {
+             e.preventDefault();
+             console.log("Hello");
+         };
+
+         document.getElementById('submit').onclick = onclick_handler;
+
+     });
+    </script>
 </div>
 </body>
 </html>

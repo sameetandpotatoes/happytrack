@@ -159,6 +159,12 @@ viz_get_schema = {
         "field": {
             'type': 'string',
         },
+        "type": {
+            'anyOf': [
+                {'type': 'string', 'pattern': 'wordcloud'},
+                {'type': 'string', 'pattern': 'bar'},
+                ]
+        },
         "aggregation": {
             'type': 'string',
         },
