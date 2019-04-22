@@ -45,6 +45,11 @@ SESSION_USER_KEY = 'user-id'
 ML_SPLIT_THRESHOLD = 10
 
 @csrf_exempt
+@restrict_function(allowed=['GET'])
+def test(request):
+    return JsonResponse({"success": "true"}, status=200)
+        
+@csrf_exempt
 @restrict_function(allowed=['POST'])
 def login(request):
     """

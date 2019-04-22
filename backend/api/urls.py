@@ -4,6 +4,7 @@ from . import views
 from django.conf import settings
 
 urlpatterns = [
+    path('', views.test),
     path('login/', views.login),
     path('logout/', views.logout),
     path('interaction/', views.interaction),
