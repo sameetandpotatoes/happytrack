@@ -187,11 +187,10 @@ def gen_image(aggregation, viz_type):
     if viz_type == 'word':
         viz_data = charts.interaction_word_data_string(logs, 'Word cloud')
 
-    labels = []
     vals = []
-    for k, v in aggregation.items():
-        labels.append(k)
-        vals.append(v)
+    labels = sorted(aggregation.keys())
+    for k in labels:
+        vals.append(aggregation[k])
     xs = list(range(len(labels)))
 
     plt.clf()

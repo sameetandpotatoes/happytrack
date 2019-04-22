@@ -56,8 +56,8 @@
     <div id="aggregation-div">
         <h2>Aggregation Type</h2>
         <label><input type="radio" name="agg" value="sum" checked /> Sum</label>
-        <label><input type="radio" name="agg" value="week_avg" />Week over week average</label>
-        <label><input type="radio" name="agg" value="week_time" />Week over week time series</label>
+        <!-- <label><input type="radio" name="agg" value="week_avg" />Week over week average</label> -->
+        <!-- <label><input type="radio" name="agg" value="week_time" />Week over week time series</label> -->
     </div>
 
 
@@ -72,6 +72,7 @@
         <label><input type="radio" name="category" value="word" />Word Cloud</label>
     </div>
 
+    <!-- 
     <div id="group-div">
         <h2>Group</h2>
         <label><input type="radio" name="group" value="na" checked /> None</label>
@@ -82,6 +83,7 @@
         <label><input type="radio" name="group" value="medium" />Interaction Medium</label>
         <label><input type="radio" name="group" value="content_class" />Content Class</label>
     </div>
+    -->
 
     <div>
         <h2>(Optional) From Date</h2>
@@ -166,14 +168,14 @@
 
              const agg = document.querySelector('input[name="agg"]:checked').value;
              const category = document.querySelector('input[name="category"]:checked').value;
-             const group = document.querySelector('input[name="group"]:checked').value;
+             //const group = document.querySelector('input[name="group"]:checked').value;
 
              const ret = {
                  field: category,
                  aggregation: agg,
              }
 
-             if (group !== 'na') ret['group'] = group;
+             //if (group !== 'na') ret['group'] = group;
              if (logger_id !== null) ret['logger_id'] = logger_id;
 
              const good_req = function(e) {
