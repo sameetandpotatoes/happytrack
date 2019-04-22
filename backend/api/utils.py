@@ -150,6 +150,21 @@ friend_post_schema = {
 email_get_schema = {
     "type": "object",
     "properties": {
-
     }
+}
+
+viz_get_schema = {
+    "type": "object",
+    "properties": {
+        "field": {
+            'type': 'string',
+        },
+        "aggregation": {
+            'type': 'string',
+        },
+        "group": {
+            'type': 'string',
+        }
+    },
+    "required": ["field", "aggregation"],
 }

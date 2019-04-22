@@ -405,37 +405,14 @@ def recommendation(request):
         feedback.save()
         return HttpResponse(status=200)
 
-@csrf_exempt
-@restrict_function(allowed=['GET'])
-def email(request):
-    """
-    Get:
-    Debug Endpoint: Sends an email
 
-    {
-        'from': optional(date),
-        'to': optional(date),
-    }
-    """
-    try:
-        json_body = json.loads(request.body or '{}')
-    except json.decoder.JSONDecodeError as e:
-        return HttpResponseBadRequest(str(e))
-
-    ret = validate(json_body, email_get_schema)
-    if ret is not None:
-        return ret
-
-    # logger_id = request.session[SESSION_USER_KEY]
-
-    # TODO: REMOVE THIS
-    logger_id = 73
+def perform_email_logic(logger_id, from_date=None, to_date=None):
     base = models.LogEntry.objects.filter(logger_id=logger_id)
-    if 'from' in json_body or 'to' in json_body:
-        if 'from' in json_body:
-            base = base.filter(created_at__ge=json_body['from'])
-        if 'to' in json_body:
-            base = base.filter(created_at__lt=json_body['to'])
+    if from_date or to_date:
+        if from_date:
+            base = base.filter(created_at__ge=from_date)
+        if to_date:
+            base = base.filter(created_at__lt=to_date)
     else:
         sun = utils.last_sunday()
         prev_sun = sun - datetime.timedelta(7)
@@ -465,4 +442,79 @@ def email(request):
 
     rendered_html = template.render(context)
     return HttpResponse(rendered_html, status=200)
+
+
+@csrf_exempt
+@restrict_function(allowed=['GET'])
+def email(request):
+    """
+    Get:
+    Displays what an email would look like
+    """
+
+    try:
+        json_body = json.loads(request.body or '{}')
+    except json.decoder.JSONDecodeError as e:
+        return HttpResponseBadRequest(str(e))
+
+    ret = validate(json_body, email_get_schema)
+    if ret is not None:
+        return ret
+
+    logger_id = request.session[SESSION_USER_KEY]
+
+    return perform_email_logic(logger_id)
+
+@csrf_exempt
+@restrict_function(allowed=['GET'])
+def email_debug(request):
+    """
+    Get:
+    Debug Endpoint: display an email for a particular `logger_id`
+    """
+    try:
+        logger = self.request.GET['logger_id']
+    except KeyError as e:
+        return HttpResponseBadRequest(str(e))
+
+    return perform_email_logic(logger)
+
+def perform_viz_request(person_id, params):
+    pass
+
+
+@csrf_exempt
+@restrict_function(allowed=['GET'])
+def viz(request):
+    """
+    Get:
+    Requests a visualization with a query string
+    """
+
+    json_body = self.request.GET
+    ret = validate(json_body, viz_get_schema)
+    if ret is not None:
+        return ret
+
+    logger_id = request.session[SESSION_USER_KEY]
+
+    return perform_viz_request(logger_id, ret)
+
+
+@csrf_exempt
+@restrict_function(allowed=['GET'])
+def viz_debug(request):
+    """
+    Get:
+    Requests a visualization with a query string
+    """
+
+    json_body = self.request.GET
+    ret = validate(json_body, viz_get_schema)
+    if ret is not None:
+        return ret
+
+    logger_id = int(json_body.get('logger_id'))
+
+    return perform_viz_request(logger_id, ret)
 
