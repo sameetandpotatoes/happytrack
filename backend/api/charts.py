@@ -279,7 +279,7 @@ def create_mapping(lamb, almost_dict):
     diction = dict(almost_dict)
     return lambda x: diction[lamb(x)]
 
-def organize_data(logs, viz_type):
+def organize_data(logs, viz_type, agg_type=None):
     if viz_type == 'word':
         log_text = [x.other_loggable_text or "" for x in logs]
         aggregation = ''.join(log_text) + 'happy'
@@ -299,7 +299,15 @@ def organize_data(logs, viz_type):
         sel = create_mapping(lambda x: x.content_class, models.LogEntry.CONTENT_CHOICES)
 
     groups = recommender.group_list_by_sel(logs, sel)
-    aggregation = {k: len(v) for k, v in groups.items()}
+
+    if agg_type in (None, 'sum'):
+        aggregation = {k: len(v) for k, v in groups.items()}
+    elif agg_type == 'week_avg':
+        aggregation = dict()
+        for k, v in groups.items():
+            log_week = recommender.logs_by_week(logs)
+            vals = [len(sub_lis) for sub_lis in log_week.values()]
+            aggregation[k] = np.array(vals).mean()
 
     return aggregation
 
@@ -346,7 +354,8 @@ def perform_viz_request(person_id, params):
     # no need to be too efficient
     logs = models.LogEntry.objects.filter(**final_filts).all()
     viz_type = params['field']
-    aggregation = organize_data(logs, viz_type)
+    agg_type = params.get('aggregation')
+    aggregation = organize_data(logs, viz_type, agg_type=agg_type)
     viz_data = gen_image(aggregation, viz_type)
 
     return viz_data

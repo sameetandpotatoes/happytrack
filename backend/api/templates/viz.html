@@ -41,6 +41,10 @@
          width: 100%;
      }
 
+     ul {
+         list-style-type: none;
+     }
+
     </style>
 </head>
 <body>
@@ -56,21 +60,25 @@
 
     <div id="aggregation-div">
         <h2>Aggregation Type</h2>
-        <label><input type="radio" name="agg" value="sum" checked /> Sum</label>
-        <!-- <label><input type="radio" name="agg" value="week_avg" />Week over week average</label> -->
+        <ul>
+            <li><label><input type="radio" name="agg" value="sum" checked />Sum</label></li>
+            <li><label><input type="radio" name="agg" value="week_avg" />Week over week average</label></li>
+        </ul>
         <!-- <label><input type="radio" name="agg" value="week_time" />Week over week time series</label> -->
     </div>
 
 
     <div id="category-div">
         <h2>Category</h2>
-        <label><input type="radio" name="category" value="react" checked /> Reaction</label>
-        <label><input type="radio" name="category" value="people" />People</label>
-        <label><input type="radio" name="category" value="time" />Time of Day</label>
-        <label><input type="radio" name="category" value="context" />Social Context</label>
-        <label><input type="radio" name="category" value="medium" />Interaction Medium</label>
-        <label><input type="radio" name="category" value="content_class" />Content Class</label>
-        <label><input type="radio" name="category" value="word" />Word Cloud</label>
+        <ul>
+        <li><label><input type="radio" name="category" value="react" checked />Reaction</label></li>
+        <li><label><input type="radio" name="category" value="people" />People</label></li>
+        <li><label><input type="radio" name="category" value="time" />Time of Day</label></li>
+        <li><label><input type="radio" name="category" value="context" />Social Context</label></li>
+        <li><label><input type="radio" name="category" value="medium" />Interaction Medium</label></li>
+        <li><label><input type="radio" name="category" value="content_class" />Content Class</label></li>
+        <li><label><input type="radio" name="category" value="word" />Word Cloud</label></li>
+        </ul>
     </div>
 
     <!-- 
@@ -197,6 +205,7 @@
 
              const from_date = from_elem.value;
              const to_date = to_elem.value;
+             console.log(from_date);
 
              //if (group !== 'na') ret['group'] = group;
              if (logger_id !== null) ret['logger_id'] = logger_id;
