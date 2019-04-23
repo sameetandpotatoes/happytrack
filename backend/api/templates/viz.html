@@ -63,8 +63,8 @@
         <ul>
             <li><label><input type="radio" name="agg" value="sum" checked />Sum</label></li>
             <li><label><input type="radio" name="agg" value="week_avg" />Week over week average</label></li>
+            <li><label><input type="radio" name="agg" value="week_time" />Week over week time series</label></li>
         </ul>
-        <!-- <label><input type="radio" name="agg" value="week_time" />Week over week time series</label> -->
     </div>
 
 
@@ -95,13 +95,11 @@
     -->
 
     <div>
-        <h2>(Optional) From Date</h2>
-        <input name='from-date' type='text' value='' class='date-picker' id="from-date" />
-    </div>
-
-    <div>
-        <h2>(Optional) To Date</h2>
-    <input name='to-date' type='text' value='' class='date-picker' id="to-date" />
+        <h2>(Optional) Dates</h2>
+        <ul>
+            <li><label>From Date: <input name='from-date' type='text' value='' class='date-picker' id="from-date" /></label></li>
+            <li><label>To Date: <input name='to-date' type='text' value='' class='date-picker' id="to-date" /></label></li>
+        </ul>
     </div>
 
     <div>

@@ -302,19 +302,41 @@ def organize_data(logs, viz_type, agg_type=None):
 
     if agg_type in (None, 'sum'):
         aggregation = {k: len(v) for k, v in groups.items()}
-    elif agg_type == 'week_avg':
+    elif agg_type in 'week_avg':
         aggregation = dict()
         for k, v in groups.items():
-            log_week = recommender.logs_by_week(logs)
+            log_week = recommender.logs_by_week(v)
             vals = [len(sub_lis) for sub_lis in log_week.values()]
             aggregation[k] = np.array(vals).mean()
+    else:
+        log_week = recommender.logs_by_week(logs)
+        dates = sorted(log_week.keys())
+        aggregation = defaultdict(lambda: [])
+        for date in dates:
+            for k, v in groups.items():
+                log_week = recommender.logs_by_week(v)
+                vals = [len(sub_lis) for sub_lis in log_week.values()]
+                aggregation[k].append(len(log_week.get(date, [])))
+        return (dates, aggregation)
 
     return aggregation
 
-def gen_image(aggregation, viz_type):
+def gen_image(aggregation, viz_type, agg_type=None):
     if viz_type == 'word':
         wordcloud(aggregation)
         plt.title("Word Cloud")
+        return pyplot_to_base64()
+    elif agg_type == 'week_time':
+        dates, aggregation = aggregation
+        keys = list(aggregation.keys())
+        data = np.array([aggregation[k] for k in keys])
+        for i, ys in enumerate(data):
+            plt.plot(dates, ys, label=keys[i], linestyle='--', marker='o',)
+
+        plt.xlabel('Date')
+        plt.ylabel('Num Interactions')
+        plt.title('Week over week interaction')
+        plt.legend()
         return pyplot_to_base64()
 
     vals = []
@@ -332,6 +354,7 @@ def gen_image(aggregation, viz_type):
     plt.ylabel('Num Interactions')
     ax = plt.gca()
     ax.set_xticklabels(labels, rotation = 45, ha="right")
+    ax.xaxis.grid(False)
     plt.tight_layout()
 
     return pyplot_to_base64()
@@ -356,7 +379,7 @@ def perform_viz_request(person_id, params):
     viz_type = params['field']
     agg_type = params.get('aggregation')
     aggregation = organize_data(logs, viz_type, agg_type=agg_type)
-    viz_data = gen_image(aggregation, viz_type)
+    viz_data = gen_image(aggregation, viz_type, agg_type=agg_type)
 
     return viz_data
 
