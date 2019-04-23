@@ -347,6 +347,8 @@ def recommendations_from_logs(logs, user_id):
     small_talk, count_small_talk = _count_small_talk(logs)
 
     for friend in reactions:
+        if friend is None:
+            continue
         name = friend.name
         total = sum(reactions[friend].values())
 
@@ -469,7 +471,7 @@ def rolling_disposition_by_friend(logs_week, recs_week):
 
         counts = _count_all(preceding_logs)
         for person, count in counts.items():
-            rec_obj = next((x for x in rec if x.about_person_id == person.id), None)
+            rec_obj = next((x for x in rec if person != None and x.about_person_id == person.id), None)
             if not rec_obj:
                 continue
 
@@ -496,6 +498,8 @@ def rolling_disposition_by_friend(logs_week, recs_week):
         counts = _count_all(all_logs)
 
         for person, count in counts.items():
+            if person == None:
+                continue
             row = []
             # Row and then date
             row.extend(_aggregate_and_normalize(count, reacc_keys))
@@ -542,16 +546,7 @@ def recommendations_from_ml(logs, user_id, from_dt=None, to_dt=None):
     has_recs = check_recs_now(recs_week)
     rec_list = []
     if has_recs:
-        for rec in has_recs:
-            rec_dict = dict(
-                recommend_person=user_id,
-                rec_type=rec.rec_typ,
-                recommendation=rec.recommendation,
-                rec_description=rec.rec_description,
-                )
-            rec_list.append(rec_dict)
-        return rec_list
-
+        return has_recs
     ml_recs = generate_ml_recommendations(logs_by, recs_week)
     for rec_enum, english_label, person_id in ml_recs:
         person = models.Friend.objects.filter(id=person_id).first()
@@ -564,8 +559,8 @@ def recommendations_from_ml(logs, user_id, from_dt=None, to_dt=None):
                 recommendation="Try acting more positive with {}".format(person.name),
                 rec_description=ML_POS_REC_DESC.format(english_label),
                 )
-            _create_and_save_recommendation(positive_ml_rec, friend_id=person_id)
-            rec_list.append(positive_ml_rec)
+            rec = _create_and_save_recommendation(positive_ml_rec, friend_id=person_id)
+            rec_list.append(rec)
 
         elif rec_enum == 'NE':
             neg_ml_rec = dict(
@@ -574,8 +569,8 @@ def recommendations_from_ml(logs, user_id, from_dt=None, to_dt=None):
                 recommendation="Try a surface-level relationship with {}".format(person.name),
                 rec_description=ML_NEG_REC_DESC.format(english_label),
                 )
-            _create_and_save_recommendation(neg_ml_rec, friend_id=person_id)
-            rec_list.append(neg_ml_rec)
+            rec = _create_and_save_recommendation(neg_ml_rec, friend_id=person_id)
+            rec_list.append(rec)
         else:
             avoid_ml_rec = dict(
                 recommend_person=user_id,
@@ -583,8 +578,8 @@ def recommendations_from_ml(logs, user_id, from_dt=None, to_dt=None):
                 recommendation="Try avoiding {}".format(person.name),
                 rec_description=ML_AVOID_REC_DESC.format(english_label),
                 )
-            _create_and_save_recommendation(avoid_ml_rec, friend_id=person_id)
-            rec_list.append(avoid_ml_rec)
+            rec = _create_and_save_recommendation(avoid_ml_rec, friend_id=person_id)
+            rec_list.append(rec)
 
     return rec_list
 
