@@ -77,9 +77,7 @@ def login(request):
     # Validate token
     token = json_body['token']
     request.session[SESSION_TOKEN_KEY] = token
-    use_fb = False
     graph = facebook.GraphAPI(token)
-    use_fb = True
     args = {'fields' : 'id,name,email', }
     profile = graph.get_object('me', **args)
     name = profile['name']
@@ -90,24 +88,6 @@ def login(request):
     )
     m.name = name
     m.save()
-
-    if use_fb:
-        posts = graph.get_object('me/feed')
-        for post in posts['data']:
-            msg = post.get('message', None)
-            if not msg:
-                continue
-            log = models.LogEntry()
-            log.reaction = 'NE'
-            log.logger = m
-            log.time_of_day = 'NA'
-            log.social_context = 'SO'
-            log.interaction_medium = 'ON'
-            log.content_class = 'NA'
-            log.other_loggable_text = msg
-            log.from_fb = True
-            log.fb_id = post['id']
-            log.save()
 
     # Store in session
     request.session[SESSION_USER_KEY] = str(m.id)
@@ -181,6 +161,33 @@ def interaction(request):
         if ret is not None:
             return ret
         logger_id = request.session[SESSION_USER_KEY]
+        
+        # Fetch all FB interactions from the Graph API
+        user = User.objects.get(id=logger_id)
+        token = request.session[SESSION_TOKEN_KEY]
+        graph = facebook.GraphAPI(token)
+        posts = graph.get_object('me/feed')
+        for post in posts['data']:
+            msg = post.get('message', None)
+            if not msg:
+                continue
+            
+            # Don't re-log existing FB interactions
+            if model.LogEntry.objects.filter(post['id']) != None:
+                continue
+                
+            log = models.LogEntry()
+            log.fb_id = post['id']
+            log.reaction = 'NE'
+            log.logger = user
+            log.time_of_day = 'NA'
+            log.social_context = 'SO'
+            log.interaction_medium = 'ON'
+            log.content_class = 'NA'
+            log.other_loggable_text = msg
+            log.from_fb = True
+            log.save()
+
         base = models.LogEntry.objects.filter(logger_id=logger_id).prefetch_related()
         if 'from' in json_body:
             base = base.filter(created_at__ge=json_body['from'])
