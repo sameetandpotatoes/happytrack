@@ -81,6 +81,61 @@
         </ul>
     </div>
 
+    <div id="group-div">
+        <h2>(Optional) Filters.</h2>
+        <p>Unselect to Remove</p>
+
+        <div class="grouping">
+            <h3>Reaction</h3>
+            <ul>
+                <li><label><input type="checkbox" name="reaction_filter" value="HA" checked />Happy</label></li>
+                <li><label><input type="checkbox" name="reaction_filter" value="NE" checked />Neutral</label></li>
+                <li><label><input type="checkbox" name="reaction_filter" value="TI" checked />Tired</label></li>
+                <li><label><input type="checkbox" name="reaction_filter" value="AN" checked />Angry</label></li>
+                <li><label><input type="checkbox" name="reaction_filter" value="SA" checked />Sad</label></li>
+            </ul>
+        </div>
+
+        <div class="grouping">
+            <h3>Time of Day</h3>
+            <ul>
+                <li><label><input type="checkbox" name="time_filter" value="NA" checked />Not Applicable</label></li>
+                <li><label><input type="checkbox" name="time_filter" value="MO" checked />Morning</label></li>
+                <li><label><input type="checkbox" name="time_filter" value="AF" checked />Afternoon</label></li>
+                <li><label><input type="checkbox" name="time_filter" value="EV" checked />Evening</label></li>
+            </ul>
+        </div>
+
+        <div class="grouping">
+            <h3>Social Context</h3>
+            <ul>
+                <li><label><input type="checkbox" name="social_filter" value='NA' checked />Not Applicable</label></li>
+                <li><label><input type="checkbox" name="social_filter" value='AC' checked />Academic</label></li>
+                <li><label><input type="checkbox" name="social_filter" value='SO' checked />Social</label></li>
+                <li><label><input type="checkbox" name="social_filter" value='OC' checked />Other</label></li>
+                <li><label><input type="checkbox" name="social_filter" value='WO' checked />Work</label></li>
+        </div>
+
+        <div class="grouping">
+            <h3>Interaction Medium</h3>
+            <ul>
+                <li><label><input type="checkbox" name="interact_filter" value='NA' checked />Not Applicable</label></li>
+                <li><label><input type="checkbox" name="interact_filter" value='IP' checked />In Person</label></li>
+                <li><label><input type="checkbox" name="interact_filter" value='ON' checked />Online</label></li>
+                <li><label><input type="checkbox" name="interact_filter" value='PH' checked />Over The Phone</label></li>
+            </ul>
+        </div>
+        <div class="grouping">
+            <h3>Interaction Class</h3>
+            <ul>
+                <li><label><input type="checkbox" name="content_filter" value='NA' checked />Not Applicable</label></li>
+                <li><label><input type="checkbox" name="content_filter" value='SM' checked />Small Talk</label></li>
+                <li><label><input type="checkbox" name="content_filter" value='OP' checked />One Personal</label></li>
+                <li><label><input type="checkbox" name="content_filter" value='BP' checked />Both Personal</label></li>
+            </ul>
+        </div>
+    </div>
+
     <!-- 
     <div id="group-div">
         <h2>Group</h2>
@@ -171,6 +226,16 @@
         }
         return f;
      }
+
+     const aggregate_checks = function(sel, name) {
+         const filter = document.querySelectorAll(`input[name="${sel}"]:checked`);
+         var builder = name + ',';
+         for (let elem of filter) {
+             builder += elem.value + ',';
+         }
+         builder = builder.substring(0, builder.length-1);
+         return builder;
+     };
      ready(function(){
          const format = 'YYYY-MM-DD';
 
@@ -196,14 +261,22 @@
              const category = document.querySelector('input[name="category"]:checked').value;
              //const group = document.querySelector('input[name="group"]:checked').value;
 
+             const builder = [
+                 aggregate_checks('reaction_filter', 'reaction'),
+                 aggregate_checks('time_filter', 'time_of_day'),
+                 aggregate_checks('social_filter', 'social_context'),
+                 aggregate_checks('content_filter', 'content_class'),
+                 aggregate_checks('interact_filter', 'interaction_medium')
+             ].join('|');
+
              const ret = {
                  field: category,
                  aggregation: agg,
+                 filters: builder
              }
 
              const from_date = from_elem.value;
              const to_date = to_elem.value;
-             console.log(from_date);
 
              //if (group !== 'na') ret['group'] = group;
              if (logger_id !== null) ret['logger_id'] = logger_id;

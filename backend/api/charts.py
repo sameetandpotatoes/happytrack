@@ -272,7 +272,6 @@ def apply_filters(filt):
     for filter_s in filt.split('|'):
         key, *rest = filter_s.split(',')
         ret[key + '__in'] = rest
-
     return ret
 
 def create_mapping(lamb, almost_dict):
@@ -307,7 +306,8 @@ def organize_data(logs, viz_type, agg_type=None):
         for k, v in groups.items():
             log_week = recommender.logs_by_week(v)
             vals = [len(sub_lis) for sub_lis in log_week.values()]
-            aggregation[k] = np.array(vals).mean()
+            vals_arr = np.array(vals)
+            aggregation[k] = (vals_arr.mean(), vals_arr.std())
     else:
         log_week = recommender.logs_by_week(logs)
         dates = sorted(log_week.keys())
@@ -339,17 +339,30 @@ def gen_image(aggregation, viz_type, agg_type=None):
         plt.legend()
         return pyplot_to_base64()
 
-    vals = []
-    labels = sorted(aggregation.keys())
-    for k in labels:
-        vals.append(aggregation[k])
-    xs = list(range(len(labels)))
-
-    colors = colors_from_intensities(vals)
     plt.clf()
-    plt.bar(xs, vals, color=colors)
+    viz_name = viz_type.replace('_', ' ').title()
+    if agg_type == 'week_avg':
+        vals = []
+        yerr = []
+        labels = sorted(aggregation.keys())
+        for k in labels:
+            vals.append(aggregation[k][0])
+            yerr.append(aggregation[k][1])
+        xs = list(range(len(labels)))
+        colors = colors_from_intensities(vals)
+        plt.bar(xs, vals, color=colors, yerr=yerr)
+        plt.title("{} Bar Chart (One bar is one standard deviation)".format(viz_name))
+    else:
+        vals = []
+        labels = sorted(aggregation.keys())
+        for k in labels:
+            vals.append(aggregation[k])
+        xs = list(range(len(labels)))
+        colors = colors_from_intensities(vals)
+        plt.bar(xs, vals, color=colors)
+        plt.title("{} Bar Chart".format(viz_name))
+
     plt.xticks(xs, labels)
-    plt.title("Custom Visualization")
     plt.xlabel(viz_type.replace('_', ' ').title())
     plt.ylabel('Num Interactions')
     ax = plt.gca()
@@ -372,7 +385,6 @@ def perform_viz_request(person_id, params):
 
     filt_dj = apply_filters(params.get('filters', ''))
     final_filts = {**filters, **filt_dj}
-
     # Now we have all the filters, grab all the logs
     # no need to be too efficient
     logs = models.LogEntry.objects.filter(**final_filts).all()
