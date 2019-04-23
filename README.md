@@ -15,18 +15,6 @@ Goal: Allow users to discover people in their life that increase or decrease the
 - Medium of interaction (in person, phone, online)
 - How did it make the user feel?
 
+## Setups and Commmands
 
-## App Setup
-
-```
-npm install -g expo-cli
-cd app
-yarn
-npm start
-```
-
-## Backend Setup
-1. do django things
-2. `python3 manage.py loaddata fixtures/random_seed.json` for random data
-3. `python3 manage.py loaddata fixtures/demo_seed.json` for demo data
-**Note:** calling `loaddata` with a valid fixture _will_ overwrite the existing db.sqlite3!
+See the individual folders' READMEs for separate instructions on how to setup and build.
