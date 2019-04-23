@@ -13,7 +13,6 @@ from io import BytesIO
 import base64
 from . import utils
 from . import models
-plt.style.use('ggplot')
 import logging
 from collections import defaultdict
 import calendar
@@ -26,6 +25,7 @@ import os
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 from . import recommender
 
+plt.style.use('bmh')
 logger = logging.getLogger(__name__)
 
 # if this changes, i'm losing it
@@ -52,6 +52,7 @@ def wordcloud(text):
     ax.grid(False)
     ax.set_xticks([])
     ax.set_yticks([])
+    ax.axis('off')
 
 def _counts_by_getter(logs, key_getter):
     ret = defaultdict(lambda: 0)
@@ -74,33 +75,60 @@ def interaction_day_data_string(logs, title):
     counts = {calendar.day_name[k]: v for k, v in _counts_by_getter(logs, lambda l: l.created_at.weekday()).items()}
     ys = [counts.get(day, 0) for day in DAYS_OF_THE_WEEK]
 
-    plt.bar(xs, ys)
+    from_color = np.array([52.9, 80.8, 92.2]) / 100
+    to_color = np.array([0, 20, 40]) / 100
+
+    colors = np.array(ys)
+    colors -= colors.min()
+    color_sum = colors.max()
+    if color_sum != 0:
+        colors = colors / color_sum
+        colors = [from_color * (1-i) + to_color * i for i in colors]
+    else:
+        colors = [to_color for _ in ys]
+    plt.bar(xs, ys, color=colors)
     plt.xticks(xs, DAYS_OF_THE_WEEK)
     plt.title(title)
     plt.xlabel('Day of the Week')
     plt.ylabel('Num Interactions')
     plt.tight_layout()
+    plt.gca().xaxis.grid(False)
     return pyplot_to_base64()
 
 def interaction_context_data_string(logs, title):
     contexts = utils.valid_values_for_enum((models.LogEntry.SOCIAL_CHOICES))
     contexts_map = dict(models.LogEntry.SOCIAL_CHOICES)
+    reacc_map = dict(models.LogEntry.REACTION_CHOICES)
+    social_map = dict(models.LogEntry.SOCIAL_CHOICES)
 
-    counts = {contexts_map[k]: v
-              for k, v in _counts_by_getter(logs, lambda l: l.social_context).items()
-              }
+    first_agg = recommender.group_list_by_sel(logs, lambda l: reacc_map[l.reaction])
+
     plt.clf()
-    xs = list(range(len(contexts)))
-    ys = [counts.get(cont, 0) for cont in contexts]
-    plt.bar(xs, ys)
-    plt.xticks(xs, contexts)
+    keys = sorted(first_agg.keys())
+    sub_keys = sorted(list(social_map.keys()))
+    xs = list(range(len(sub_keys)))
+    bottom = np.zeros_like(xs)
+
+    reacc_order = list(first_agg.keys())
+    for reacc in reacc_order:
+        sub_logs = first_agg[reacc]
+        counts = _counts_by_getter(sub_logs, lambda l: l.social_context)
+
+        ys = [counts.get(cont, 0) for cont in sub_keys]
+        plt.bar(xs, ys, bottom=bottom, label=reacc)
+        bottom += np.array(ys)
+
+    plt.xticks(xs, [social_map[k] for k in sub_keys])
     plt.title(title)
     plt.xlabel("Social Context")
     plt.ylabel('Num Interactions')
+    plt.legend()
     plt.tight_layout()
+    plt.gca().xaxis.grid(False)
     return pyplot_to_base64()
 
 def interaction_time_data_string(logs, title):
+    """
     times = utils.valid_values_for_enum((models.LogEntry.TIME_CHOICES))
     contexts_map = dict(models.LogEntry.TIME_CHOICES)
 
@@ -115,30 +143,124 @@ def interaction_time_data_string(logs, title):
     plt.title(title)
     plt.xlabel("Social Context")
     plt.ylabel('Num Interactions')
+    plt.gca().xaxis.grid(False)
     plt.tight_layout()
     return pyplot_to_base64()
+    """
+
+    contexts = utils.valid_values_for_enum((models.LogEntry.SOCIAL_CHOICES))
+    contexts_map = dict(models.LogEntry.SOCIAL_CHOICES)
+    reacc_map = dict(models.LogEntry.REACTION_CHOICES)
+    interaction_map = dict(models.LogEntry.MEDIUM_CHOICES)
+    time_map = dict(models.LogEntry.TIME_CHOICES)
+
+    first_agg = recommender.group_list_by_sel(logs, lambda l: interaction_map[l.interaction_medium])
+
+    plt.clf()
+    keys = sorted(first_agg.keys())
+    sub_keys = sorted(list(time_map.keys()))
+    xs = np.arange(len(sub_keys)) * 2
+    width = .35
+    colors = np.array([
+        [205,224,241],
+        [190,26,9],
+        [0,105,253],
+        [255,114,0],
+    ]) / 255.0
+
+    for i, reacc in enumerate( keys ):
+        sub_logs = first_agg[reacc]
+        counts = _counts_by_getter(sub_logs, lambda l: l.time_of_day)
+
+        ys = [counts.get(cont, 0) for cont in sub_keys]
+        plt.bar(xs + i * width, ys, width, label=reacc, color=colors[i])
+
+    ax = plt.gca()
+    ax.set_xticks(xs + width * (len(keys) // 2))
+    ax.set_xticklabels([time_map[k] for k in sub_keys])
+    plt.title(title)
+    plt.xlabel("Social Context")
+    plt.ylabel('Num Interactions')
+    plt.legend()
+    ax.xaxis.grid(False)
+    plt.tight_layout()
+    return pyplot_to_base64()
+
+
 
 
 def interaction_person_data_string(logs, title):
     friends_count = _counts_by_getter(logs, lambda l: l.loggee.name)
     friends = list(friends_count.keys())
 
+    from_color = np.array([52.9, 80.8, 92.2]) / 100
+    to_color = np.array([0, 20, 40]) / 100
     plt.clf()
     xs = list(range(len(friends)))
-    plt.bar(xs, [friends_count[friend] for friend in friends])
+    ys = np.array( [friends_count[friend] for friend in friends] )
+    colors = np.array(ys)
+    colors -= colors.min()
+    color_sum = colors.max()
+    if color_sum != 0:
+        colors = colors / color_sum
+        colors = [from_color * (1-i) + to_color * i for i in colors]
+    else:
+        colors = [to_color for _ in ys]
+
+    plt.bar(xs, ys, color=colors)
     plt.xticks(xs, friends)
     plt.title(title)
     plt.xlabel("Friend")
     plt.ylabel('Num Interactions')
+    ax = plt.gca()
+    ax.set_xticklabels(friends, rotation = 45, ha="right")
+
+    plt.tight_layout()
+    plt.gca().xaxis.grid(False)
+    return pyplot_to_base64()
+
+
+def interaction_weekly(user_id, title):
+    all_logs = models.LogEntry.objects.filter(logger_id=user_id).all()
+    log_dict = recommender.logs_by_week(all_logs)
+
+    days = list(sorted(log_dict.keys()))
+    if len(days) == 1:
+        return None
+
+    plt.clf()
+
+    reacc_map = dict(models.LogEntry.REACTION_CHOICES)
+    reaccs = list(sorted(reacc_map.keys()))
+    y_datum_t = []
+    for week in days:
+        sub_logs = log_dict[week]
+
+        friends_count = _counts_by_getter(sub_logs, lambda l: l.reaction)
+        ys = [friends_count.get(key, 0) for key in reaccs]
+        y_datum_t.append(ys)
+
+    y_datum = np.array(y_datum_t).T
+    for ys, reacc in zip(y_datum, reaccs):
+        plt.plot(days, ys, label=reacc_map[reacc], linestyle='--', marker='o',)
+
+    plt.title(title)
+    plt.xlabel("Date")
+    plt.ylabel("Num Interaction")
+    plt.legend()
     plt.tight_layout()
     return pyplot_to_base64()
+
+
 
 def interaction_word_data_string(logs, title):
     plt.clf()
     texts = []
     for log in logs:
         texts.append(log.other_loggable_text or "")
-    text = ' '.join(texts) + 'happy'
+    text = ' '.join(texts)
+    if not text:
+        return None
     wordcloud(text)
     return pyplot_to_base64()
 
@@ -160,7 +282,7 @@ def create_mapping(lamb, almost_dict):
     return lambda x: diction[lamb(x)]
 
 def organize_data(logs, viz_type):
-    if viz_type == 'wordcloud':
+    if viz_type == 'word':
         log_text = [x.other_loggable_text or "" for x in logs]
         aggregation = ''.join(log_text) + 'happy'
         return aggregation
@@ -185,7 +307,9 @@ def organize_data(logs, viz_type):
 
 def gen_image(aggregation, viz_type):
     if viz_type == 'word':
-        viz_data = charts.interaction_word_data_string(logs, 'Word cloud')
+        wordcloud(aggregation)
+        plt.title("Word Cloud")
+        return pyplot_to_base64()
 
     vals = []
     labels = sorted(aggregation.keys())
