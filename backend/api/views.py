@@ -421,8 +421,8 @@ def recommendation(request):
         if feedback_count < ML_SPLIT_THRESHOLD:
             recs = recommender.recommendations_from_logs(logs, user_id)
         else:
-            recs = recommender.recommendations_from_ml(logs, user_id, from_dt=json_body['from'], to_dt=json_body['to'])
-
+            recs = recommender.recommendations_from_ml(logs, user_id, from_dt=json_body.get('from'), to_dt=json_body.get('to'))
+        
         safe_recs = dict(
             data=[
                 {
@@ -435,7 +435,6 @@ def recommendation(request):
                 for rec in recs
             ]
         )
-
         return JsonResponse(safe_recs, status=200)
 
     elif request.method == 'POST':
