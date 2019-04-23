@@ -5,7 +5,8 @@
     <title>Custom Vizualizer</title>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
 
-    <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/es-us.js" ></script>
+     <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
     <style>
      body {
          font-family: "DejaVu Sans",sans-serif;
@@ -149,17 +150,36 @@
              }
          return str.join("&");
      };
+
+     const date_formatter = function(e) {
+         const f = function(date) {
+            const year = date.getFullYear()
+                ,month = date.getMonth() + 1
+                ,day = date.getDate()
+                ,formattedDate = [
+                    year
+                    ,month < 10 ? '0' + month : month
+                    ,day < 10 ? '0' + day : day
+                ].join('-')
+            e.value = formattedDate
+        }
+        return f;
+     }
      ready(function(){
          const format = 'YYYY-MM-DD';
 
-         new Pikaday({
+         const from_elem = document.getElementById('from-date');
+         const to_elem = document.getElementById('to-date');
+         const from_pika = new Pikaday({
              format: format,
-             field: document.getElementById('from-date')
+             onSelect: date_formatter(from_elem),
+             field: from_elem
          });
 
-         new Pikaday({
+         const to_pika = new Pikaday({
              format: format,
-             field: document.getElementById('to-date')
+             onSelect: date_formatter(to_elem),
+             field: to_elem
          });
 
 
@@ -175,8 +195,13 @@
                  aggregation: agg,
              }
 
+             const from_date = from_elem.value;
+             const to_date = to_elem.value;
+
              //if (group !== 'na') ret['group'] = group;
              if (logger_id !== null) ret['logger_id'] = logger_id;
+             if (from_date !== '') ret['from'] = from_date;
+             if (to_date !== '') ret['to'] = to_date;
 
              const good_req = function(e) {
                  const img = document.getElementById('custom-viz');

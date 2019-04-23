@@ -31,6 +31,21 @@ logger = logging.getLogger(__name__)
 # if this changes, i'm losing it
 DAYS_OF_THE_WEEK = ['Sunday', 'Monday', 'Tuesday', "Wednesday", 'Thursday', 'Friday', 'Saturday']
 
+def colors_from_intensities(ys):
+    from_color = np.array([52.9, 80.8, 92.2]) / 100
+    to_color = np.array([0, 20, 40]) / 100
+
+    colors = np.array(ys)
+    colors -= colors.min()
+    color_sum = colors.max()
+    if color_sum != 0:
+        colors = colors / color_sum
+        colors = [from_color * (1-i) + to_color * i for i in colors]
+    else:
+        colors = [to_color for _ in ys]
+
+    return colors
+
 def wordcloud(text):
     alice_coloring=None
     stopwords = set(STOPWORDS)
@@ -74,18 +89,8 @@ def interaction_day_data_string(logs, title):
     xs = list(range(len(DAYS_OF_THE_WEEK)))
     counts = {calendar.day_name[k]: v for k, v in _counts_by_getter(logs, lambda l: l.created_at.weekday()).items()}
     ys = [counts.get(day, 0) for day in DAYS_OF_THE_WEEK]
+    colors = colors_from_intensities(ys)
 
-    from_color = np.array([52.9, 80.8, 92.2]) / 100
-    to_color = np.array([0, 20, 40]) / 100
-
-    colors = np.array(ys)
-    colors -= colors.min()
-    color_sum = colors.max()
-    if color_sum != 0:
-        colors = colors / color_sum
-        colors = [from_color * (1-i) + to_color * i for i in colors]
-    else:
-        colors = [to_color for _ in ys]
     plt.bar(xs, ys, color=colors)
     plt.xticks(xs, DAYS_OF_THE_WEEK)
     plt.title(title)
@@ -198,14 +203,7 @@ def interaction_person_data_string(logs, title):
     plt.clf()
     xs = list(range(len(friends)))
     ys = np.array( [friends_count[friend] for friend in friends] )
-    colors = np.array(ys)
-    colors -= colors.min()
-    color_sum = colors.max()
-    if color_sum != 0:
-        colors = colors / color_sum
-        colors = [from_color * (1-i) + to_color * i for i in colors]
-    else:
-        colors = [to_color for _ in ys]
+    colors = colors_from_intensities(ys)
 
     plt.bar(xs, ys, color=colors)
     plt.xticks(xs, friends)
@@ -317,8 +315,9 @@ def gen_image(aggregation, viz_type):
         vals.append(aggregation[k])
     xs = list(range(len(labels)))
 
+    colors = colors_from_intensities(vals)
     plt.clf()
-    plt.bar(xs, vals)
+    plt.bar(xs, vals, color=colors)
     plt.xticks(xs, labels)
     plt.title("Custom Visualization")
     plt.xlabel(viz_type.replace('_', ' ').title())
@@ -334,11 +333,11 @@ def perform_viz_request(person_id, params):
 
     from_date = params.get('from')
     if from_date:
-        filters['created_at_gte'] = from_date
+        filters['created_at__gte'] = from_date
 
     to_date = params.get('to')
     if to_date:
-        filters['created_at_lte'] = to_date
+        filters['created_at__lte'] = to_date
 
     filt_dj = apply_filters(params.get('filters', ''))
     final_filts = {**filters, **filt_dj}
