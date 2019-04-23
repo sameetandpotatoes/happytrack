@@ -1,6 +1,6 @@
 import React from 'react';
 import Emoji from 'react-native-emoji';
-import { Avatar, Button, Icon, ListItem, Overlay, Text } from 'react-native-elements';
+import { Avatar, Button, Icon, ListItem, SocialIcon, Overlay, Text } from 'react-native-elements';
 import { InteractionManager, Platform, SectionList, StyleSheet, RefreshControl, ScrollView, TouchableWithoutFeedback, View } from 'react-native';
 import moment from 'moment';
 import { NavigationEvents } from 'react-navigation';
@@ -12,32 +12,51 @@ const _ = require('lodash');
 Date.prototype.getUnixTime = function() { return this.getTime()/1000|0 };
 
 export default class InteractionScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => ({    
-    headerLeft: (
-      <Button
-        icon={
-          <Icon
-            name="menu"
-            size={24}
-            color="white"
-          />
-        }
-        transparent='true'
-        onPress={() => navigation.openDrawer()} 
-        buttonStyle={{backgroundColor: 'rgba(0,0,0,0)'}}
-        style={{position: 'absolute', left: 25, top: (Platform.OS === 'ios' ) ? -25 : 0}}>
-      </Button>
-    ),
-    headerTitle: 'HappyTrack'
-  });
-
+  static navigationOptions = ({ navigation }) => {
+    const { params = {} } = navigation.state;
+    return {
+      headerLeft: (
+        <Button
+          icon={
+            <Icon
+              name="menu"
+              size={24}
+              color="white"
+            />
+          }
+          transparent='true'
+          onPress={() => navigation.openDrawer()} 
+          buttonStyle={{backgroundColor: 'rgba(0,0,0,0)'}}
+          style={{position: 'absolute', left: 25, top: (Platform.OS === 'ios' ) ? -25 : 0}}>
+        </Button>
+      ),
+      headerRight: (
+        <Button
+          icon={
+            <Icon
+              name="filter"
+              type="font-awesome"
+              size={24}
+              color="white"
+            />
+          }
+          title='Filter FB'
+          size={25}
+          buttonStyle={{backgroundColor: 'rgba(0,0,0,0)'}}
+          onPress={() => params.handleFilter()}
+        />
+      ),
+      title: 'HappyTrack'
+    }
+  }
   constructor() {
     super()
 
     this.state = {
       interactions: [],
       overlayInfo: null,
-      refreshing: false
+      refreshing: false,
+      filterFB: false
     }
 
     this.navToNewInteractionScreen = this.navToNewInteractionScreen.bind(this)
@@ -63,9 +82,16 @@ export default class InteractionScreen extends React.Component {
   }
 
   componentDidMount() {
+    this.props.navigation.setParams({ handleFilter: this.handleFilter.bind(this) })
     InteractionManager.runAfterInteractions(() => {
       this._onRefresh();
     });
+  }
+
+  handleFilter() {
+    this.setState(prevState => ({
+      filterFB: !prevState.filterFB,
+    }));
   }
 
   getDate(epoch) {
@@ -146,13 +172,15 @@ export default class InteractionScreen extends React.Component {
   render() {
     const emojiFS = 25;
 
+    const filterFB = this.state.filterFB;
     const sortedInteractions = 
         _(this.state.interactions)
         .sortBy(event => event.created_at)
+        .filter(event => !filterFB || (filterFB && event.from_fb)) // If filter is on, show fb interactions, else show all interactions
         .reverse()
         .groupBy(event => moment(event.created_at).format('MM/DD/YYYY'))
         .toPairs()
-        .map((value, key) => ({title: moment(value[0], 'MM/DD/YYYY').format('ddd MMMM DD'), data: value[1]}))
+        .map((value, key) => ({title: moment(value[0], 'MM/DD/YYYY').format('ddd, MMMM DD, YYYY'), data: value[1]}))
         .value();
     return (
       <View style={styles.container}>
@@ -177,15 +205,30 @@ export default class InteractionScreen extends React.Component {
                 <TouchableWithoutFeedback onPress={ () => this.viewDetail(item)}>
                   <View style={styles.SectionListItems} onPress={this.viewDetail}>
                     <Avatar rounded size="medium" title={this.getInitials(item.loggee)} />
-                    <View style={{flexDirection: 'column', marginLeft: 15}}>
+                    <View style={{flexDirection: 'column', flex: 5, marginLeft: 15}}>
                       <Text style={{fontSize: 21}}>{item.reaction} interaction</Text>
                       <Text style={{fontSize: 16}}>{item.loggee} - <Text style={{fontWeight: 'bold'}}>{item.social_context}</Text></Text>
                     </View>
                     <View style={styles.subtitleView}>
+                      <View style={styles.subInnerView}>
+                        { item.from_fb &&
+                          <Icon
+                            name="logo-facebook"
+                            type='ionicon'
+                          />
+                        }
+                      </View>
+                      <View style={styles.subInnerView}>
                       { item.interaction_medium && item.interaction_medium != '' &&
-                        <Emoji name={interactionMediumEmojis[item.interaction_medium][0]} style={{fontSize: emojiFS, position: 'absolute', right: 120, bottom: 10}} />
+                        <Emoji 
+                          name={interactionMediumEmojis[item.interaction_medium][0]} 
+                          style={{fontSize: emojiFS}}
+                        />
                       }
-                      <Text style={{fontSize: 18}}>{ this.getTime(item.created_at) }</Text>
+                      </View>
+                      <View style={[styles.subInnerView, {flex: 2}]}>
+                        <Text style={{fontSize: 18}}>{ this.getTime(item.created_at) }</Text>
+                      </View>
                     </View>
                   </View>
                 </TouchableWithoutFeedback>
@@ -261,6 +304,12 @@ const styles = StyleSheet.create({
   },
   subtitleView: {
     marginLeft: 'auto',
-    justifyContent: 'center'
+    flexDirection: 'row',
+    flex: 4
+  },
+  subInnerView: {
+    flex: 1,
+    justifyContent: 'center',
+    width: 20
   }
 });

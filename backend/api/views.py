@@ -20,6 +20,7 @@ import logging
 import json
 import jsonschema
 import datetime
+import pytz
 
 from .utils import restrict_function, interaction_get_schema, interaction_post_schema, summary_get_schema, email_get_schema
 from . import utils
@@ -163,7 +164,7 @@ def interaction(request):
         logger_id = request.session[SESSION_USER_KEY]
         
         # Fetch all FB interactions from the Graph API
-        user = User.objects.get(id=logger_id)
+        user = models.User.objects.get(id=logger_id)
         token = request.session[SESSION_TOKEN_KEY]
         graph = facebook.GraphAPI(token)
         posts = graph.get_object('me/feed')
@@ -173,19 +174,37 @@ def interaction(request):
                 continue
             
             # Don't re-log existing FB interactions
-            if model.LogEntry.objects.filter(post['id']) != None:
+            if models.LogEntry.objects.filter(fb_id=post['id']).first() != None:
                 continue
-                
-            log = models.LogEntry()
-            log.fb_id = post['id']
-            log.reaction = 'NE'
-            log.logger = user
-            log.time_of_day = 'NA'
-            log.social_context = 'SO'
-            log.interaction_medium = 'ON'
-            log.content_class = 'NA'
-            log.other_loggable_text = msg
-            log.from_fb = True
+            
+            interaction_time = datetime.datetime.strptime(post['created_time'], "%Y-%m-%dT%H:%M:%S%z")
+            # I know this isn't ideal, but all the ways to detect current timezone weren't working and it's not the worst thing I can do
+            interaction_time = interaction_time.astimezone(pytz.timezone("US/Central"))
+            time_of_day = 'NA'
+
+            hour = interaction_time.time().hour
+            if hour >= 5 and hour <= 11:
+                time_of_day = 'MO'
+            elif hour <= 18:
+                time_of_day = 'AF'
+            else:
+                time_of_day = 'EV'
+
+
+            log = models.LogEntry.objects.create(
+                fb_id=post['id'],
+                reaction='NE',
+                logger=user,
+                time_of_day=time_of_day,
+                social_context='SO',
+                interaction_medium='ON',
+                content_class='NA',
+                other_loggable_text=msg,
+                from_fb=True
+            )
+
+            # now update created at to override the auto_now_add
+            log.created_at = interaction_time
             log.save()
 
         base = models.LogEntry.objects.filter(logger_id=logger_id).prefetch_related()
@@ -202,13 +221,14 @@ def interaction(request):
             interaction_json['interactions'].append({
                 "id": it.id,
                 "reaction": it.get_reaction_display(),
-                "loggee": it.loggee.name,
+                "loggee": (it.loggee and it.loggee.name) or "From Facebook",
                 "logger": it.logger.name,
                 "time_of_day": it.get_time_of_day_display(),
                 "social_context": it.get_social_context_display(),
                 "interaction_medium": it.get_interaction_medium_display(),
                 "content_class": it.get_content_class_display(),
                 "other_loggable_text": it.other_loggable_text,
+                "from_fb": it.from_fb,
                 "created_at": it.created_at
             })
         return JsonResponse(interaction_json, status=200)
