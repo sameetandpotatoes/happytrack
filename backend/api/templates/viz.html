@@ -5,42 +5,138 @@
     <title>Custom Vizualizer</title>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
 
-    <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
-    <style>
-     body {
-         font-family: "DejaVu Sans",sans-serif;
-     }
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/es-us.js" ></script>
+     <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+     <style>
+      body {
+          font-family: "DejaVu Sans",sans-serif;
+      }
 
-     p {
-         font-family: "Cambria", sans-serif;
-     }
+      p {
+          font-family: "Cambria", sans-serif;
+      }
 
-     .container {
-         width: 100%;
-         min-height: 70vh;
-         position: relative;
-     }
+      .container {
+          width: 100%;
+          min-height: 70vh;
+          position: relative;
+      }
 
-     .center {
-         width: 50%;
-         margin: auto;
-     }
+      .center {
+          width: 50%;
+          margin: auto;
+      }
 
-     @media only screen and (max-width: 600px) {
-         .center {
-             width: 100%;
-         }
-     }
+      @media only screen and (max-width: 600px) {
+          .center {
+              width: 100%;
+          }
+      }
 
-     .title {
-         padding: 1px 5px;
-     }
+      .title {
+          padding: 1px 5px;
+      }
 
-     img {
-         width: 100%;
-     }
+      img {
+          width: 100%;
+      }
 
-    </style>
+      ul {
+          list-style-type: none;
+      }
+
+      /* Raw style of custom checks based off of https://www.w3schools.com/howto/howto_css_custom_checkbox.asp */
+         /* Customize the label (the label-container) */
+      .label-container {
+          display: block;
+          position: relative;
+          padding-left: 30px;
+          margin-bottom: 6px;
+          cursor: pointer;
+          font-size: 14px;
+
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+      }
+
+      .label-container input {
+          position: absolute;
+          cursor: pointer;
+          height: 0;
+          width: 0;
+          opacity: 0;
+      }
+
+      .checkmark {
+          background-color: #eee;
+          top: 0;
+          left: 0;
+          position: absolute;
+          height: 16px;
+          width: 16px;
+      }
+
+      /* On mouse-over, add a grey background color */
+      .label-container:hover input ~ .checkmark {
+          background-color: #ccc;
+      }
+
+      /* When the checkbox is checked, add a blue background */
+      .label-container input:checked ~ .checkmark {
+          background-color: #003366;
+      }
+
+      /* Create the checkmark/indicator (hidden when not checked) */
+      .checkmark:after {
+          content: "";
+          position: absolute;
+          display: none;
+      }
+
+      .radiobtn {
+          background-color: #eee;
+          height: 16px;
+          width: 16px;
+          position: absolute;
+          top: 0;
+          left: 0;
+          border-radius: 50%;
+      }
+
+      .label-container input:checked ~ .radiobtn {
+          background-color: #003366;
+      }
+
+      .label-container input:checked:hover ~ .radiobtn {
+          background-color: #003366;
+      }
+
+      .label-container input:hover ~ .radiobtn {
+          background-color: #bbb;
+      }
+
+      #submit:focus {
+          outline: 0 !important;
+      }
+
+      #submit {
+          width: 75%;
+          height: 40px;
+          outline: 0 !important;
+          border: none;
+          background-color: #036;
+          color: white;
+          cursor: pointer;
+      }
+
+      #to-date {
+          margin-left: 23px;
+          margin-top: 10px;
+      }
+
+     </style>
 </head>
 <body>
 <div class="container">
@@ -55,21 +151,272 @@
 
     <div id="aggregation-div">
         <h2>Aggregation Type</h2>
-        <label><input type="radio" name="agg" value="sum" checked /> Sum</label>
-        <!-- <label><input type="radio" name="agg" value="week_avg" />Week over week average</label> -->
-        <!-- <label><input type="radio" name="agg" value="week_time" />Week over week time series</label> -->
+        <ul>
+            <li>
+                <label class="label-container">
+                <input type="radio" name="agg" value="sum" checked />
+                Sum
+                <span class="radiobtn"></span>
+            </label>
+            </li>
+
+            <li>
+                <label class="label-container">
+                    <input type="radio" name="agg" value="week_avg" />
+                    Week over week average
+                    <span class="radiobtn"></span>
+                </label>
+            </li>
+            <li>
+                <label class="label-container">
+                    <input type="radio" name="agg" value="week_time" />
+                    Week over week time series
+                    <span class="radiobtn"></span>
+                </label></li>
+        </ul>
     </div>
 
 
     <div id="category-div">
         <h2>Category</h2>
-        <label><input type="radio" name="category" value="react" checked /> Reaction</label>
-        <label><input type="radio" name="category" value="people" />People</label>
-        <label><input type="radio" name="category" value="time" />Time of Day</label>
-        <label><input type="radio" name="category" value="context" />Social Context</label>
-        <label><input type="radio" name="category" value="medium" />Interaction Medium</label>
-        <label><input type="radio" name="category" value="content_class" />Content Class</label>
-        <label><input type="radio" name="category" value="word" />Word Cloud</label>
+        <ul>
+            <li>
+                <label class="label-container">
+                    <input type="radio" name="category" value="react" checked />
+                    Reaction
+                    <span class="radiobtn"></span>
+                </label>
+            </li>
+            <li>
+                <label class="label-container">
+                    <input type="radio" name="category" value="people" />
+                    People
+                    <span class="radiobtn"></span>
+                </label>
+            </li>
+            <li>
+                <label class="label-container">
+                    <input type="radio" name="category" value="time" />
+                    Time of Day
+                    <span class="radiobtn"></span>
+                </label>
+            </li>
+            <li>
+                <label class="label-container">
+                    <input type="radio" name="category" value="context" />
+                    Social Context
+                    <span class="radiobtn"></span>
+                </label>
+            </li>
+            <li>
+                <label class="label-container">
+                    <input type="radio" name="category" value="medium" />
+                    Interaction Medium
+                    <span class="radiobtn"></span>
+                </label>
+            </li>
+            <li>
+                <label class="label-container">
+                    <input type="radio" name="category" value="content_class" />
+                    Content Class
+                    <span class="radiobtn"></span>
+                </label>
+            </li>
+            <li>
+                <label class="label-container">
+                    <input type="radio" name="category" value="word" />
+                    Word Cloud
+                    <span class="radiobtn"></span>
+                </label>
+            </li>
+        </ul>
+    </div>
+
+    <div id="group-div">
+        <h2>(Optional) Filters.</h2>
+        <p>Unselect to Remove</p>
+
+        <div class="grouping">
+            <h3>Reaction</h3>
+            <ul>
+                <li>
+                    <label class="label-container">
+                        <input type="checkbox" name="reaction_filter" value="HA" checked />
+                        Happy
+                        <span class="checkmark" ></span>
+                    </label>
+                </li>
+                <li>
+                    <label class="label-container">
+                        <input type="checkbox" name="reaction_filter" value="NE" checked />
+                        Neutral
+                        <span class="checkmark" ></span>
+                    </label>
+                </li>
+                <li>
+                    <label class="label-container">
+                        <input type="checkbox" name="reaction_filter" value="TI" checked />
+                        Tired
+                        <span class="checkmark" ></span>
+                    </label>
+                </li>
+                <li>
+                    <label class="label-container">
+                        <input type="checkbox" name="reaction_filter" value="AN" checked />
+                        Angry
+                        <span class="checkmark" ></span>
+                    </label>
+                </li>
+                <li>
+                    <label class="label-container">
+                        <input type="checkbox" name="reaction_filter" value="SA" checked />
+                        Sad
+                        <span class="checkmark" ></span>
+                    </label>
+                </li>
+            </ul>
+        </div>
+
+        <div class="grouping">
+            <h3>Time of Day</h3>
+            <ul>
+                <li>
+                    <label class="label-container">
+                        <input type="checkbox" name="time_filter" value="NA" checked />
+                        Not Applicable
+                        <span class="checkmark"></span>
+                    </label>
+                </li>
+                <li>
+                    <label class="label-container">
+                        <input type="checkbox" name="time_filter" value="MO" checked />
+                        Morning
+                        <span class="checkmark" ></span>
+                    </label>
+                </li>
+                <li>
+                    <label class="label-container">
+                        <input type="checkbox" name="time_filter" value="AF" checked />
+                        Afternoon
+                        <span class="checkmark" ></span>
+                    </label>
+                </li>
+                <li>
+                    <label class="label-container">
+                        <input type="checkbox" name="time_filter" value="EV" checked />
+                        Evening
+                        <span class="checkmark" ></span>
+                    </label>
+                </li>
+            </ul>
+        </div>
+
+        <div class="grouping">
+            <h3>Social Context</h3>
+            <ul>
+                <li>
+                    <label class="label-container">
+                        <input type="checkbox" name="social_filter" value='NA' checked />
+                        Not Applicable
+                        <span class="checkmark" ></span>
+                    </label>
+                </li>
+                <li>
+                    <label class="label-container">
+                        <input type="checkbox" name="social_filter" value='AC' checked />
+                        Academic
+                        <span class="checkmark" ></span>
+                    </label>
+                </li>
+                <li>
+                    <label class="label-container">
+                        <input type="checkbox" name="social_filter" value='SO' checked />
+                        Social
+                        <span class="checkmark" ></span>
+                    </label>
+                </li>
+                <li>
+                    <label class="label-container">
+                        <input type="checkbox" name="social_filter" value='OC' checked />
+                        Other
+                        <span class="checkmark" ></span>
+                    </label>
+                </li>
+                <li>
+                    <label class="label-container">
+                        <input type="checkbox" name="social_filter" value='WO' checked />
+                        Work
+                        <span class="checkmark" ></span>
+                    </label>
+                </li>
+        </div>
+
+        <div class="grouping">
+            <h3>Interaction Medium</h3>
+            <ul>
+                <li>
+                    <label class="label-container">
+                        <input type="checkbox" name="interact_filter" value='NA' checked />
+                        Not Applicable
+                        <span class="checkmark" ></span>
+                    </label>
+                </li>
+                <li>
+                    <label class="label-container">
+                        <input type="checkbox" name="interact_filter" value='IP' checked />
+                        In Person
+                        <span class="checkmark" ></span>
+                    </label>
+                </li>
+                <li>
+                    <label class="label-container">
+                        <input type="checkbox" name="interact_filter" value='ON' checked />
+                        Online
+                        <span class="checkmark" ></span>
+                    </label>
+                </li>
+                <li>
+                    <label class="label-container">
+                        <input type="checkbox" name="interact_filter" value='PH' checked />
+                        Over The Phone
+                        <span class="checkmark" ></span>
+                    </label>
+                </li>
+            </ul>
+        </div>
+        <div class="grouping">
+            <h3>Interaction Class</h3>
+            <ul>
+                <li>
+                    <label class="label-container">
+                        <input type="checkbox" name="content_filter" value='NA' checked />
+                        Not Applicable
+                        <span class="checkmark" ></span>
+                    </label>
+                </li>
+                <li>
+                    <label class="label-container">
+                        <input type="checkbox" name="content_filter" value='SM' checked />
+                        Small Talk
+                        <span class="checkmark" ></span>
+                    </label>
+                </li>
+                <li>
+                    <label class="label-container">
+                        <input type="checkbox" name="content_filter" value='OP' checked />
+                        One Personal
+                        <span class="checkmark" ></span>
+                    </label>
+                </li>
+                <li>
+                    <label class="label-container">
+                        <input type="checkbox" name="content_filter" value='BP' checked />
+                        Both Personal
+                        <span class="checkmark" ></span>
+                    </label>
+                </li>
+            </ul>
+        </div>
     </div>
 
     <!-- 
@@ -86,13 +433,11 @@
     -->
 
     <div>
-        <h2>(Optional) From Date</h2>
-        <input name='from-date' type='text' value='' class='date-picker' id="from-date" />
-    </div>
-
-    <div>
-        <h2>(Optional) To Date</h2>
-    <input name='to-date' type='text' value='' class='date-picker' id="to-date" />
+        <h2>(Optional) Dates</h2>
+        <ul>
+            <li><label>From Date: <input name='from-date' type='text' value='' class='date-picker' id="from-date" /></label></li>
+            <li><label>To Date: <input name='to-date' type='text' value='' class='date-picker' id="to-date" /></label></li>
+        </ul>
     </div>
 
     <div>
@@ -149,17 +494,46 @@
              }
          return str.join("&");
      };
+
+     const date_formatter = function(e) {
+         const f = function(date) {
+            const year = date.getFullYear()
+                ,month = date.getMonth() + 1
+                ,day = date.getDate()
+                ,formattedDate = [
+                    year
+                    ,month < 10 ? '0' + month : month
+                    ,day < 10 ? '0' + day : day
+                ].join('-')
+            e.value = formattedDate
+        }
+        return f;
+     }
+
+     const aggregate_checks = function(sel, name) {
+         const filter = document.querySelectorAll(`input[name="${sel}"]:checked`);
+         var builder = name + ',';
+         for (let elem of filter) {
+             builder += elem.value + ',';
+         }
+         builder = builder.substring(0, builder.length-1);
+         return builder;
+     };
      ready(function(){
          const format = 'YYYY-MM-DD';
 
-         new Pikaday({
+         const from_elem = document.getElementById('from-date');
+         const to_elem = document.getElementById('to-date');
+         const from_pika = new Pikaday({
              format: format,
-             field: document.getElementById('from-date')
+             onSelect: date_formatter(from_elem),
+             field: from_elem
          });
 
-         new Pikaday({
+         const to_pika = new Pikaday({
              format: format,
-             field: document.getElementById('to-date')
+             onSelect: date_formatter(to_elem),
+             field: to_elem
          });
 
 
@@ -170,13 +544,27 @@
              const category = document.querySelector('input[name="category"]:checked').value;
              //const group = document.querySelector('input[name="group"]:checked').value;
 
+             const builder = [
+                 aggregate_checks('reaction_filter', 'reaction'),
+                 aggregate_checks('time_filter', 'time_of_day'),
+                 aggregate_checks('social_filter', 'social_context'),
+                 aggregate_checks('content_filter', 'content_class'),
+                 aggregate_checks('interact_filter', 'interaction_medium')
+             ].join('|');
+
              const ret = {
                  field: category,
                  aggregation: agg,
+                 filters: builder
              }
+
+             const from_date = from_elem.value;
+             const to_date = to_elem.value;
 
              //if (group !== 'na') ret['group'] = group;
              if (logger_id !== null) ret['logger_id'] = logger_id;
+             if (from_date !== '') ret['from'] = from_date;
+             if (to_date !== '') ret['to'] = to_date;
 
              const good_req = function(e) {
                  const img = document.getElementById('custom-viz');

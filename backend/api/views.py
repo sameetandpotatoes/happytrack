@@ -475,8 +475,10 @@ def perform_email_logic(logger_id, from_date=None, to_date=None):
     time_png = charts.interaction_time_data_string(log_objs, 'Time Frequency {} - {}'.format(from_datetime, to_datetime))
     person_png = charts.interaction_person_data_string(log_objs, 'Person Frequency {} - {}'.format(from_datetime, to_datetime))
     word_png = charts.interaction_word_data_string(log_objs, 'Word Frequency {} - {}'.format(from_datetime, to_datetime))
+    weekly_png = charts.interaction_weekly(logger_id, 'Interaction Percentages {} - {}'.format(from_datetime, to_datetime))
 
     context = dict(
+        week_over = weekly_png,
         week_start = from_datetime,
         week_end = to_datetime,
         frequency_embed = freq_png,
@@ -519,7 +521,7 @@ def email_debug(request):
     Debug Endpoint: display an email for a particular `logger_id`
     """
     try:
-        logger_id = int(self.request.GET['logger_id'])
+        logger_id = int(request.GET['logger_id'])
     except KeyError as e:
         return HttpResponseBadRequest(str(e))
 

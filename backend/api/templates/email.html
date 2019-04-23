@@ -88,10 +88,24 @@
     <p>These are meant to give you a better picture of your interactions throughout the week.</p>
     </div>
 
+    {% if week_over %}
+    <!-- Interactions by rolling -->
+    <div id="social-context-container">
+        <div id="context-img">
+            <img src="data:image/png;base64,{{ week_over | safe}}" />
+        </div>
+
+        <p>
+            This is your week over week interaction count. We really want you to think about if this week was like any other week. If it was, do you think your interaction tracking helped you? If it wasn't, did you hopefully have better interactions this week?
+        </p>
+    </div>
+    {% endif %}
+
+
     <!-- Interactions by total social count -->
     <div id="count-container">
         <p>
-            Vitae rerum a et quia incidunt voluptatem aut voluptate. Et non officia occaecati qui aut quod fuga consectetur. Perspiciatis impedit blanditiis nesciunt omnis. Quo exercitationem culpa omnis asperiores itaque occaecati. At natus tempora incidunt nihil.…
+            These are your interactions by day. Try to think back and see if this looks normal or if there are any odd spikes. Do you feel more or less drained any particular day? This could be a sign that the quality of interactions goes down as the number of interactions increases.
         </p>
 
         <div id="count-img">
@@ -107,7 +121,7 @@
         </div>
 
         <p>
-            Vitae rerum a et quia incidunt voluptatem aut voluptate. Et non officia occaecati qui aut quod fuga consectetur. Perspiciatis impedit blanditiis nesciunt omnis. Quo exercitationem culpa omnis asperiores itaque occaecati. At natus tempora incidunt nihil.…
+            These are your interaction counts over the different areas of your life. We split them up into the reactions that you gave. Do you think you particularly interact a certain way at a given time of day? Maybe you aren't a morning person; then again, no one is.
         </p>
 
     </div>
@@ -115,7 +129,7 @@
     <!-- Interactions by time of day with pie chart -->
     <div id="time-container">
         <p>
-            Vitae rerum a et quia incidunt voluptatem aut voluptate. Et non officia occaecati qui aut quod fuga consectetur. Perspiciatis impedit blanditiis nesciunt omnis. Quo exercitationem culpa omnis asperiores itaque occaecati. At natus tempora incidunt nihil.…
+            These are your interactions over the general period of time divided up by type of interaction. Do you see a trend with your general mood and what is the predominant interaction type in each category? Do you think some categories are just hurting over than helping.
         </p>
         <div id="time-img">
         <img src="data:image/png;base64,{{ time_embed | safe}}" />
@@ -128,18 +142,20 @@
             <img src="data:image/png;base64,{{ person_embed | safe}}" />
         </div>
         <p>
-            Vitae rerum a et quia incidunt voluptatem aut voluptate. Et non officia occaecati qui aut quod fuga consectetur. Perspiciatis impedit blanditiis nesciunt omnis. Quo exercitationem culpa omnis asperiores itaque occaecati. At natus tempora incidunt nihil.…
+            These are your interactions by people. There are a hundred different ways to try and vizualize this, and we recommend that you can generate your own visualizations at our custom visualizer, but to get give you some inspiration: was this week like any other week? Do you feel you've interacted with someone too much? Not enough?
         </p>
     </div>
 
+    {% if word_embed %}
     <h2>Word Cloud</h2>
 
-    <p>This word cloud is hopefully to pique your interests</p>
+    <p>This word cloud is hopefully to pique your thoughts as to what you were thinking throughout the week when interacting with people. What was the overall picture of your week like with words?</p>
 
     <!-- Interactions by Word cloud by each week/time -->
     <div id="word-cloud-container">
         <img src="data:image/png;base64,{{ word_embed | safe}}" />
     </div>
+    {% endif %}
     </div>
 </div>
 </body>
