@@ -71,6 +71,9 @@ class LogEntry(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    from_fb = models.BooleanField(default=False)
+    fb_id = models.CharField(max_length=512)
+
 class Recommendation(models.Model):
     id = models.AutoField(primary_key=True)
     RECOMMENDATION_CHOICES = (
