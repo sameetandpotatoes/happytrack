@@ -32,6 +32,8 @@ logger = logging.getLogger(__name__)
 DAYS_OF_THE_WEEK = ['Sunday', 'Monday', 'Tuesday', "Wednesday", 'Thursday', 'Friday', 'Saturday']
 
 def colors_from_intensities(ys):
+    if not ys:
+        return
     from_color = np.array([52.9, 80.8, 92.2]) / 100
     to_color = np.array([0, 20, 40]) / 100
 
