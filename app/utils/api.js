@@ -78,6 +78,10 @@ function getEmailUrl() {
     return API_URL + '/api/email/';
 }
 
+function getCustomVizUrl() {
+    return API_URL + '/api/viz_viewer/';
+}
+
 export {
     loginBackend,
     logoutBackend,
@@ -87,5 +91,6 @@ export {
     postFriend,
     getRecommendations,
     postFeedback,
-    getEmailUrl
+    getEmailUrl,
+    getCustomVizUrl
 }

@@ -9,11 +9,11 @@ const rage = () => <Emoji name="rage" style={{fontSize: emojiFont}} />
 const sleeping = () => <Emoji name="sleeping" style={{fontSize: emojiFont}} />
 
 const emojiButtons = [
-  { element: grinning, text: "Happy" },
-  { element: neutral_face, text: "Neutral" },
-  { element: worried, text: "Sad" },
-  { element: rage, text: "Angry" },
-  { element: sleeping, text: "Tired" },
+  { element: grinning, text: "Happy", short: "HA" },
+  { element: neutral_face, text: "Neutral", short: "NE" },
+  { element: worried, text: "Sad", short: "SA" },
+  { element: rage, text: "Angry", short: "AN" },
+  { element: sleeping, text: "Tired", short: "TI" },
 ]
 
 const timeOfDays = [ 'Morning', 'Afternoon', 'Evening' ]

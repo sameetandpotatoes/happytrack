@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
   },
   detailInteraction: {
     flex: 1,
-    padding: 50,
+    padding: 25
   },
   text: {
     fontSize: 18,

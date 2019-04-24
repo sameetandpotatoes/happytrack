@@ -71,7 +71,7 @@ LAUGH_REC_DESC = (
 )
 
 COMPL_REC_DESC = (
-    "Starting a conversation  with a compliment "
+    "Starting a conversation with a compliment "
     "is usually more interesting than  a remark "
     "about the weather. "
     "Pick any feature that actually interests you, "
@@ -358,28 +358,30 @@ def recommendations_from_logs(logs, user_id):
             r['rec_type'] = 'PO'
             r["recommendation"] = "Spend more time with {}.".format(name)
             r["rec_description"] = GENERALLY_POSITIVE_REC_DESC
-            _create_and_save_recommendation(r, friend_id=friend.id)
-            rec_list.append(r)
+            rec = _create_and_save_recommendation(r, friend_id=friend.id)
+            rec_list.append(rec)
         elif (reactions[friend]['Tired']/total * 100) > 10:
             r['rec_type'] = 'PO'
             r["recommendation"] = "Talk to {} at different times.".format(name)
             r["rec_description"] = DIFFERENT_TIME_REC_DESC
-            _create_and_save_recommendation(r, friend_id=friend.id)
-            rec_list.append(r)
+            rec = _create_and_save_recommendation(r, friend_id=friend.id)
+            rec_list.append(rec)
         elif (reactions[friend]['Angry']/total * 100) > 10:
             r['rec_type'] = 'NE'
             r["recommendation"] = "Talk to {} less.".format(name)
             r["rec_description"] = GENERALLY_NEGATIVE_REC_DESC
-            _create_and_save_recommendation(r, friend_id=friend.id)
-            rec_list.append(r)
+            rec = _create_and_save_recommendation(r, friend_id=friend.id)
+            rec_list.append(rec)
         elif (reactions[friend]['Sad']/total * 100) > 10:
             r['rec_type'] = 'AV'
             r["recommendation"] = "Avoid talking to {}.".format(name)
             r["rec_description"] = AVOID_REC_DESC
-            _create_and_save_recommendation(r, friend_id=friend.id)
-            rec_list.append(r)
+            rec = _create_and_save_recommendation(r, friend_id=friend.id)
+            rec_list.append(rec)
 
     for friend in small_talk:
+        if friend is None:
+            continue
         name = friend.name
         small_frac = small_talk[friend]['small']/(small_talk[friend]['small'] + small_talk[friend]['long']) * 100
 
@@ -391,10 +393,9 @@ def recommendations_from_logs(logs, user_id):
                 rec_description=AVOID_SMALL_REC_DESC,
                 )
 
-            _create_and_save_recommendation(small_talk_rec, friend_id=friend.id)
-            rec_list.append(small_talk_rec)
-
-    return dict(data=rec_list)
+            rec = _create_and_save_recommendation(small_talk_rec, friend_id=friend.id)
+            rec_list.append(rec)
+    return rec_list
 
 def group_list_by_sel(lis, sel):
     ret = defaultdict(lambda: [])
