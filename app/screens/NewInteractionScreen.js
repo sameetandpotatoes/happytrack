@@ -75,7 +75,8 @@ export default class NewInteractionScreen extends React.Component {
       return
     }
 
-    let emoji = emojiButtons[selEmoji].text;
+    // Get shorthand version of emoji name
+    let emoji = emojiButtons[selEmoji].short;
     let timeOfDay = (selTimeOfDay == -1) ? "Not Applicable" : timeOfDays[selTimeOfDay];
     let context = (selContext == -1) ? "Not Applicable" : socialContexts[selContext];
     let medium = (selMedium == -1) ? "Not Applicable" : interactionMedium[selMedium];

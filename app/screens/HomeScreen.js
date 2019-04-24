@@ -22,26 +22,21 @@ export default class HomeScreen extends React.Component {
     }
 
     this.loginWithFacebook = this.loginWithFacebook.bind(this)
+    this.checkForAccessToken = this.checkForAccessToken.bind(this)
   }
 
   loginWithFacebook() {
-    LoginManager.logInWithReadPermissions(['email']).then(
-      function(result) {
-        if (!result.isCancelled) {
-          this.checkForAccessToken();
-        }
-      },
-      function(error) {
-        alert('Login failed with error: ' + error);
-      }
-    ).catch(error => {
-      console.log(error);
-    });
+    LoginManager.logInWithReadPermissions(['email'])
+      .then((result) => this.checkForAccessToken())  
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   checkForAccessToken() {
     AccessToken.getCurrentAccessToken()
       .then((data) => {
+        console.log(data);
         if (data && data.accessToken) {
           const { navigate } = this.props.navigation
           console.log(data.accessToken);
@@ -49,6 +44,7 @@ export default class HomeScreen extends React.Component {
             navigate('AppScreen')
           });
         }
+        this.setState({isLoading: false})
       })
       .catch(error => {
         console.error(error)
