@@ -117,7 +117,7 @@ export default class InteractionScreen extends React.Component {
   getDetailedInteraction(overlayInfo) {
     const {
       time_of_day, social_context, content_class, interaction_medium, created_at,
-      reaction, loggee, other_loggable_text
+      loggee, other_loggable_text
     } = overlayInfo;
     return (
       <View style={styles.detailInteraction}>
@@ -185,7 +185,7 @@ export default class InteractionScreen extends React.Component {
     return (
       <View style={styles.container}>
         <NavigationEvents
-          onWillFocus={payload => this.fetchData()}
+          onWillFocus={payload => this._onRefresh()}
         />
         <View style={{flex: 1}}>
           <ScrollView
@@ -257,8 +257,10 @@ export default class InteractionScreen extends React.Component {
         />
         { this.state.overlayInfo &&
           <Overlay
-            isVisible={true}
+            isVisible={this.state.overlayInfo !== null}
+            windowBackgroundColor="rgba(255, 255, 255, .5)"
             onBackdropPress={() => this.setState({ overlayInfo: null })}
+            overlayStyle={styles.overlayStyle}
           >
             {this.getDetailedInteraction(this.state.overlayInfo)}
           </Overlay>
@@ -274,7 +276,11 @@ const styles = StyleSheet.create({
   },
   detailInteraction: {
     flex: 1,
-    padding: 25
+    margin: 20,
+    padding: 15
+  },
+  overlayStyle: {
+    padding: 5
   },
   text: {
     fontSize: 18,

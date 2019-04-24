@@ -34,8 +34,13 @@ def valid_values_for_enum(enum):
     choices = [x[1] for x in enum]
     return choices
 
+def valid_keys_for_enum(enum):
+    choices = [x[0] for x in enum]
+    return choices
+
 def any_of_enum(enum):
     vals = valid_values_for_enum(enum)
+    vals.extend(valid_keys_for_enum(enum))
     return [{'type': 'string', 'pattern': x} for x in vals]
 
 interaction_get_schema = {
