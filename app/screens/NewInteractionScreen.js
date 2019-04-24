@@ -27,7 +27,6 @@ export default class NewInteractionScreen extends React.Component {
     }
     this.updateName = this.updateName.bind(this)
     this.updateEmojiIndex = this.updateEmojiIndex.bind(this)
-    this.handlePostInteraction = this.handlePostInteraction.bind(this)
   }
 
   componentDidMount() {
@@ -65,14 +64,13 @@ export default class NewInteractionScreen extends React.Component {
     const emojiError = this.validate('emoji', selEmoji);
     const nameError = this.validate('name', name);
 
-    this.setState({
-      nameError: nameError,
-      emojiError: emojiError
-    })
-
     // return early if error was found
     if (emojiError || nameError) {
-      return
+      this.setState({
+        nameError: nameError,
+        emojiError: emojiError
+      });
+      return;
     }
 
     // Get shorthand version of emoji name
@@ -171,7 +169,7 @@ export default class NewInteractionScreen extends React.Component {
             buttonStyle={styles.button}
             title="Save Interaction"
             type="solid"
-            onPress={this.handlePostInteraction}
+            onPress={this.handlePostInteraction.bind(this)}
           />
         </ScrollView>
       </View>

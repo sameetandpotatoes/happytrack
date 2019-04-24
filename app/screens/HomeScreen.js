@@ -38,21 +38,22 @@ export default class HomeScreen extends React.Component {
       .then((data) => {
         console.log(data);
         if (data && data.accessToken) {
-          const { navigate } = this.props.navigation
-          console.log(data.accessToken);
+          // const { navigate } = 
           loginBackend(data.accessToken, function(response) {
-            navigate('AppScreen')
-          });
+            this.setState({isLoading: false})
+            this.props.navigation.navigate('AppScreen')
+          }.bind(this));
+        } else {
+          this.setState({isLoading: false})
         }
-        this.setState({isLoading: false})
-      })
+    })
       .catch(error => {
         console.error(error)
         this.setState({isLoading: false})
       });
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.checkForAccessToken();
   }
 
