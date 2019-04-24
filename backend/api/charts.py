@@ -322,6 +322,7 @@ def organize_data(logs, viz_type, agg_type=None):
     return aggregation
 
 def gen_image(aggregation, viz_type, agg_type=None):
+    plt.clf()
     if viz_type == 'word':
         wordcloud(aggregation)
         plt.title("Word Cloud")
@@ -339,7 +340,6 @@ def gen_image(aggregation, viz_type, agg_type=None):
         plt.legend()
         return pyplot_to_base64()
 
-    plt.clf()
     viz_name = viz_type.replace('_', ' ').title()
     if agg_type == 'week_avg':
         vals = []
