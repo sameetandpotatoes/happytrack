@@ -569,6 +569,7 @@
              const good_req = function(e) {
                  const img = document.getElementById('custom-viz');
                  img.src = "data:image/png;base64," + e;
+                 window && window.scroll(0,0);
              };
 
              const bad_req = function(e) {
