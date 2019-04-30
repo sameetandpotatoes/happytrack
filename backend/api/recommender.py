@@ -261,9 +261,7 @@ def _save_generic_recommendations(logs, user_id):
         rec_type = rec_type
         )
 
-
-    _create_and_save_recommendation(body_rec)
-    generic_recs.append(body_rec)
+    generic_recs.append(_create_and_save_recommendation(body_rec))
 
     eval_rec = dict(
         recommendation = "Evaluate and Understand",

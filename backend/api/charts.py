@@ -74,8 +74,9 @@ def wordcloud(text):
 def _counts_by_getter(logs, key_getter):
     ret = defaultdict(lambda: 0)
     for log in logs:
-        key = key_getter(log)
-        ret[key] += 1
+        if log.loggee is not None:
+            key = key_getter(log)
+            ret[key] += 1
     return dict(ret)
 
 def pyplot_to_base64():
